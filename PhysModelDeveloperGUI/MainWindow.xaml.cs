@@ -1,0 +1,44 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace PhysModelDeveloperGUI
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        MainWindowViewModel mainWindowViewModel;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            mainWindowViewModel = new MainWindowViewModel();
+            DataContext = mainWindowViewModel;
+
+            mainWindowViewModel.InitTrendGraph(graphTrends);
+            mainWindowViewModel.InitBloodgasGraph(graphBloodgas);
+            mainWindowViewModel.InitGraphECG(graphECG);
+            mainWindowViewModel.InitGraphSPO2(graphSPO2);
+            mainWindowViewModel.InitGraphABP(graphABP);
+            mainWindowViewModel.InitGraphETCO2(graphETCO2);
+            mainWindowViewModel.InitGraphRESP(graphRESP);
+            mainWindowViewModel.InitModelDiagram(graphDiagram);
+
+
+        }
+    }
+}

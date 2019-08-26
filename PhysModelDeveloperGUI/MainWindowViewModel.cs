@@ -1,0 +1,2617 @@
+﻿using PhysModelLibrary;
+using PhysModelLibrary.BaseClasses;
+using PhysModelLibrary.Compartments;
+using PhysModelLibrary.Connectors;
+using SkiaSharp;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Threading;
+
+namespace PhysModelDeveloperGUI
+{
+
+    public class MainWindowViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        PhysModelLibrary.Model currentModel = new PhysModelLibrary.Model();
+
+        readonly DispatcherTimer updateTimer = new DispatcherTimer(DispatcherPriority.Render);
+        int slowUpdater = 0;
+        int graphicsRefreshInterval = 30;
+
+        private bool diagramVisible = false;
+
+        public bool DiagramVisible
+        {
+            get { return diagramVisible; }
+            set { diagramVisible = value; OnPropertyChanged(); }
+        }
+
+        private bool monitorVisible = false;
+
+        public bool MonitorVisible
+        {
+            get { return monitorVisible; }
+            set { monitorVisible = value; OnPropertyChanged(); }
+        }
+
+        private bool trendVitalsVisible;
+
+        public bool TrendVitalsVisible
+        {
+            get { return trendVitalsVisible; }
+            set { trendVitalsVisible = value; OnPropertyChanged(); }
+        }
+
+        private bool trendBloodgasVisible;
+
+        public bool TrendBloodgasVisible
+        {
+            get { return trendBloodgasVisible; }
+            set { trendBloodgasVisible = value; OnPropertyChanged(); }
+        }
+
+
+        ModelDiagram GraphModelDiagram { get; set; }
+        FastScrollingGraph GraphECG { get; set; }
+        FastScrollingGraph GraphABP { get; set; }
+        FastScrollingGraph GraphSPO2 { get; set; }
+        FastScrollingGraph GraphETCO2 { get; set; }
+        FastScrollingGraph GraphRESP { get; set; }
+
+        TimeBasedGraph TrendGraph { get; set; }
+        TimeBasedGraph BloodgasGraph { get; set; }
+
+        public RelayCommand ChangeBloodCompartmentCommand { get; set; }
+        public RelayCommand ChangeGasCompartmentCommand { get; set; }
+        public RelayCommand ChangeConnectorCommand { get; set; }
+        public RelayCommand ChangeGexUnitCommand { get; set; }
+        public RelayCommand ChangeContainerCommand { get; set; }
+        public RelayCommand SaveModelStateCommand { get; set; }
+        public RelayCommand LoadModelStateCommand { get; set; }
+        public RelayCommand NewModelCommand { get; set; }
+        public RelayCommand ListBoxUpdatedCommand { get; set; }
+        public RelayCommand ExitCommand { get; set; }
+
+        BloodCompartment selectedBloodCompartment { get; set; }
+        GasCompartment selectedGasCompartment { get; set; }
+        Connector selectedConnector { get; set; }
+        GasExchangeBlock selectedGex { get; set; }
+        ContainerCompartment selectedContainer { get; set; }
+
+        public MainWindowViewModel()
+        {      
+            currentModel.Initialize();
+            currentModel.modelInterface.PropertyChanged += ModelInterface_PropertyChanged;
+            currentModel.Start();
+            
+
+            updateTimer.Tick += UpdateTimer_Tick; ; ;
+            updateTimer.Interval = new TimeSpan(0, 0, 0, 0, graphicsRefreshInterval);
+            updateTimer.Start();
+
+            SetCommands();
+            ConstructComponentLists();
+        }
+
+        void SetCommands()
+        {
+            ChangeBloodCompartmentCommand = new RelayCommand(ChangeSelectedBloodCompartment);
+            ChangeGasCompartmentCommand = new RelayCommand(ChangeSelectedGasCompartment);
+            ChangeConnectorCommand = new RelayCommand(ChangeSelectedConnector);
+            ChangeGexUnitCommand = new RelayCommand(ChangeSelectedGex);
+            ChangeContainerCommand = new RelayCommand(ChangeSelectedContainer);
+            SaveModelStateCommand = new RelayCommand(SaveModelState);
+            LoadModelStateCommand = new RelayCommand(LoadModelState);
+            NewModelCommand = new RelayCommand(NewModel);
+            ListBoxUpdatedCommand = new RelayCommand(ListBoxUpdated);
+            ExitCommand = new RelayCommand(ExitProgram);
+        }
+        void ListBoxUpdated(object p)
+        {
+            Console.WriteLine("Tim is gek");
+        }
+        void ExitProgram(object p)
+        {
+            App.Current.Shutdown();
+        }
+        void ConstructComponentLists()
+        {
+            // first clear the lists
+            bloodcompartments.Clear();
+            gascompartments.Clear();
+            connectors.Clear();
+            gasexchangeUnits.Clear();
+            containers.Clear();
+
+            foreach (BloodCompartment c in currentModel.modelState.bloodCompartments)
+            {
+                bloodcompartments.Add(c);
+            }
+            foreach (GasCompartment c in currentModel.modelState.gasCompartments)
+            {
+                gascompartments.Add(c);
+            }
+            foreach (Connector c in currentModel.modelState.bloodCompartmentConnectors)
+            {
+                connectors.Add(c);
+            }
+            foreach (Connector c in currentModel.modelState.gasCompartmentConnectors)
+            {
+                connectors.Add(c);
+            }
+            foreach (Connector c in currentModel.modelState.valveConnectors)
+            {
+                connectors.Add(c);
+            }
+            foreach(GasExchangeBlock c in currentModel.modelState.gasExchangeBlocks)
+            {
+                gasexchangeUnits.Add(c);
+            }
+            foreach (ContainerCompartment c in currentModel.modelState.containerCompartments)
+            {
+                containers.Add(c);
+            }
+        }
+        void ChangeSelectedContainer(object p)
+        {
+            selectedContainer = (ContainerCompartment)p;
+
+        }
+        void ChangeSelectedGex(object p)
+        {
+            selectedGex = (GasExchangeBlock)p;
+        }
+        void ChangeSelectedConnector(object p)
+        {
+            selectedConnector = (Connector)p;
+
+        }
+        void ChangeSelectedBloodCompartment(object p)
+        {
+            selectedBloodCompartment = (BloodCompartment)p;
+
+        }
+        void ChangeSelectedGasCompartment(object p)
+        {
+            selectedGasCompartment = (GasCompartment)p;
+
+        }
+        void SaveModelState(object p)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "modelState";
+            dlg.DefaultExt = ".xml";
+            dlg.Filter = "XML files (.xml)|*.xml";
+
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                currentModel.modelInterface.SaveModelState(dlg.FileName);
+            }
+        }
+        void LoadModelState(object p)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.FileName = ""; 
+            dlg.DefaultExt = ".xml"; 
+            dlg.Filter = "XML files (.xml)|*.xml";
+
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                currentModel.modelInterface.LoadModelState(dlg.FileName);
+                currentModel.Start();
+            }
+        }
+        void NewModel(object p)
+        {
+            currentModel.modelInterface.LoadDefaultModel();
+            currentModel.Start();
+        }
+
+        private void UpdateTimer_Tick(object sender, EventArgs e)
+        {
+            if (DiagramVisible)
+            {
+                GraphModelDiagram.UpdatedMainDiagram();
+            }
+           
+
+            if (MonitorVisible)
+            {
+                GraphECG.Draw();
+                GraphABP.Draw();
+                GraphSPO2.Draw();
+                GraphETCO2.Draw();
+                GraphRESP.Draw();
+            }
+            
+            if (TrendVitalsVisible) TrendGraph.DrawData();
+            if (trendBloodgasVisible) BloodgasGraph.DrawData();
+
+            if (slowUpdater > 1000)
+            {
+                slowUpdater = 0;
+                Heartrate = currentModel.modelInterface.HeartRate.ToString();
+                Spo2 = currentModel.modelInterface.PulseOximeterOutput.ToString();
+                Abp = currentModel.modelInterface.ArterialBloodPressure;
+                Pap = currentModel.modelInterface.PulmonaryArteryPressure.ToString();
+                Cvp = currentModel.modelInterface.CentralVenousPressure.ToString();
+                Resprate = currentModel.modelInterface.RespiratoryRate.ToString();
+                Temp = currentModel.modelInterface.PatientTemperature.ToString();
+                Lvo = currentModel.modelInterface.LeftVentricularOutput.ToString();
+                Rvo = currentModel.modelInterface.RightVentricularOutput.ToString();
+                Ivcflow = currentModel.modelInterface.InferiorVenaCavaFlow.ToString();
+                Svcflow = currentModel.modelInterface.SuperiorVenaCavaFlow.ToString();
+                Myoflow = currentModel.modelInterface.CoronaryFlow.ToString();
+                Lvstroke = currentModel.modelInterface.StrokeVolumeLeftVentricle.ToString();
+                Rvstroke = currentModel.modelInterface.StrokeVolumeRightVentricle.ToString();
+                Rapressures = currentModel.modelInterface.RightAtrialPressures;
+                Lapressures = currentModel.modelInterface.LeftAtrialPressures;
+                Rvpressures = currentModel.modelInterface.RightVentricularPressures;
+                Lvpressures = currentModel.modelInterface.LeftVentricularPressures;
+                Ravolumes = currentModel.modelInterface.RightAtrialVolumes;
+                Lavolumes = currentModel.modelInterface.LeftAtrialVolumes;
+                Rvvolumes = currentModel.modelInterface.RightVentricularVolumes;
+                Lvvolumes = currentModel.modelInterface.LeftVentricularVolumes;
+                Pdaflow = Math.Round(currentModel.modelInterface.PDAFlow, 1).ToString();
+                MyoO2Index = Math.Round(currentModel.modelInterface.Mii, 3).ToString();
+                Myocardialdo2 = currentModel.modelInterface.MyoO2Delivery.ToString();
+                Braindo2 = Math.Round(currentModel.modelInterface.BrainO2Delivery, 1).ToString();
+                Kidneysflow = currentModel.modelInterface.KidneysFlow.ToString();
+                Liverflow = currentModel.modelInterface.LiverFlow.ToString();
+                Brainflow = currentModel.modelInterface.BrainFlow.ToString();
+
+                VTRef = Math.Round(currentModel.modelState.VERef, 0).ToString();
+                VTMax = Math.Round(currentModel.modelState.VEMax, 0).ToString();
+                Tidalvolume = currentModel.modelInterface.TidalVolume.ToString();
+                TidalvolumeTarget = currentModel.modelInterface.TidalVolumeTarget.ToString();
+                Minutevolume = currentModel.modelInterface.MinuteVolume.ToString();
+                MinutevolumeTarget = currentModel.modelInterface.MinuteVolumeTarget.ToString();
+                Alveolarvolume = currentModel.modelInterface.AlveolarVolume;
+                //TotalVolume = currentModel.modelInterface.TotalBloodVolume().ToString();
+
+                Appliedpressure = currentModel.modelInterface.AppliedAirwayPressure;
+                Airwaypressure = currentModel.modelInterface.AirwayPressure;
+                Alvleftpressure = currentModel.modelInterface.AlveolarLeftPressure;
+                Alvrightpressure = currentModel.modelInterface.AlveolarRightPressure;
+
+                Ph = currentModel.modelInterface.ArterialPH.ToString();
+                Pao2 = currentModel.modelInterface.ArterialPO2.ToString();
+                Paco2 = currentModel.modelInterface.ArterialPCO2.ToString();
+                Hco3 = currentModel.modelInterface.ArterialHCO3.ToString();
+                Be = currentModel.modelInterface.ArterialBE.ToString();
+
+                Po2alv = currentModel.modelInterface.AlveolarPO2;
+                Pco2alv = currentModel.modelInterface.AlveolarPCO2;
+                LactateAA = Math.Round(currentModel.modelState.AA.Lact, 1).ToString();
+                LactateUB = Math.Round(currentModel.modelState.UB.Lact, 1).ToString();
+                LactateLB = Math.Round(currentModel.modelState.LB.Lact, 1).ToString();
+                LactateBRAIN = Math.Round(currentModel.modelState.BRAIN.Lact, 1).ToString();
+                LactateLIVER = Math.Round(currentModel.modelState.LIVER.Lact, 1).ToString();
+
+                Endtidalco2 = currentModel.modelInterface.EndTidalCO2.ToString();
+
+                UpdateTrendGraph();
+                UpdateBloodgasGraph();
+
+                GraphECG.UpdateParameterValue(currentModel.modelInterface.HeartRate);
+                GraphSPO2.UpdateParameterValue(currentModel.modelInterface.PulseOximeterOutput);
+                GraphABP.UpdateParameterValue(currentModel.modelInterface.SystolicSystemicArterialPressure, currentModel.modelInterface.DiastolicSystemicArterialPressure);
+                GraphETCO2.UpdateParameterValue(currentModel.modelInterface.EndTidalCO2);
+                GraphRESP.UpdateParameterValue(currentModel.modelInterface.RespiratoryRate);
+
+               
+              
+
+
+            }
+
+            slowUpdater += graphicsRefreshInterval;
+        }
+
+        private void ModelInterface_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ModelUpdated")
+            {
+                if (MonitorVisible)
+                {
+                    GraphECG.WriteBuffer(currentModel.modelInterface.ECGSignal);
+                    GraphABP.WriteBuffer(currentModel.modelInterface.ABPSignal);
+                    GraphSPO2.WriteBuffer(currentModel.modelInterface.SPO2POSTSignal);
+                    GraphETCO2.WriteBuffer(currentModel.modelInterface.ETCO2Signal);
+                    GraphRESP.WriteBuffer(currentModel.modelInterface.RESPVolumeSignal);
+                }
+            
+
+
+
+
+            }
+            if (e.PropertyName ==  "StatusMessage")
+            {
+                ModelLog.Add(DateTime.Now + currentModel.modelInterface.StatusMessage);
+            }
+        }
+
+
+        #region "dependent model variable getters"
+        string _modelName = "";
+        public string ModelName { get { return _modelName; } set { _modelName = value; OnPropertyChanged(); } }
+
+        string _heartrate = "140";
+        public string Heartrate { get { return _heartrate; } set { _heartrate = value; OnPropertyChanged(); } }
+
+        string _spo2 = "99";
+        public string Spo2 { get { return _spo2; } set { _spo2 = value; OnPropertyChanged(); } }
+
+        string _abp = "99";
+        public string Abp { get { return _abp; } set { _abp = value; OnPropertyChanged(); } }
+
+        string _pap = "99";
+        public string Pap { get { return _pap; } set { _pap = value; OnPropertyChanged(); } }
+
+        string _cvp = "99";
+        public string Cvp { get { return _cvp; } set { _cvp = value; OnPropertyChanged(); } }
+
+        string _resprate = "99";
+        public string Resprate { get { return _resprate; } set { _resprate = value; OnPropertyChanged(); } }
+
+        string _temp = "99";
+        public string Temp { get { return _temp; } set { _temp = value; OnPropertyChanged(); } }
+
+        string _lvo = "99";
+        public string Lvo { get { return _lvo; } set { _lvo = value; OnPropertyChanged(); } }
+
+        string _rvo = "99";
+        public string Rvo { get { return _rvo; } set { _rvo = value; OnPropertyChanged(); } }
+
+        string _ivcflow = "99";
+        public string Ivcflow { get { return _ivcflow; } set { _ivcflow = value; OnPropertyChanged(); } }
+
+        string _svcflow = "99";
+        public string Svcflow { get { return _svcflow; } set { _svcflow = value; OnPropertyChanged(); } }
+
+        string _lvstroke = "99";
+        public string Lvstroke { get { return _lvstroke; } set { _lvstroke = value; OnPropertyChanged(); } }
+
+        string _rvstroke = "99";
+        public string Rvstroke { get { return _rvstroke; } set { _rvstroke = value; OnPropertyChanged(); } }
+
+        string _rapressures = "99";
+        public string Rapressures { get { return _rapressures; } set { _rapressures = value; OnPropertyChanged(); } }
+
+        string _lapressures = "99";
+        public string Lapressures { get { return _lapressures; } set { _lapressures = value; OnPropertyChanged(); } }
+
+        string _rvpressures = "99";
+        public string Rvpressures { get { return _rvpressures; } set { _rvpressures = value; OnPropertyChanged(); } }
+
+        string _lvpressures = "99";
+        public string Lvpressures { get { return _lvpressures; } set { _lvpressures = value; OnPropertyChanged(); } }
+
+        string _ravolumes = "99";
+        public string Ravolumes { get { return _ravolumes; } set { _ravolumes = value; OnPropertyChanged(); } }
+
+        string _lavolumes = "99";
+        public string Lavolumes { get { return _lavolumes; } set { _lavolumes = value; OnPropertyChanged(); } }
+
+        string _rvvolumes = "99";
+        public string Rvvolumes { get { return _rvvolumes; } set { _rvvolumes = value; OnPropertyChanged(); } }
+
+        string _lvvolumes = "99";
+        public string Lvvolumes { get { return _lvvolumes; } set { _lvvolumes = value; OnPropertyChanged(); } }
+
+        string _totalVolume = "99";
+        public string TotalVolume { get { return _totalVolume; } set { _totalVolume = value; OnPropertyChanged(); } }
+
+        string _myoflow = "99";
+        public string Myoflow { get { return _myoflow; } set { _myoflow = value; OnPropertyChanged(); } }
+
+        string _myoO2Index = "-";
+        public string MyoO2Index { get { return _myoO2Index; } set { _myoO2Index = value; OnPropertyChanged(); } }
+
+        string _pdaflow = "99";
+        public string Pdaflow { get { return _pdaflow; } set { _pdaflow = value; OnPropertyChanged(); } }
+
+        string _brainflow = "-";
+        public string Brainflow { get { return _brainflow; } set { _brainflow = value; OnPropertyChanged(); } }
+
+        string _kidneysflow = "-";
+        public string Kidneysflow { get { return _kidneysflow; } set { _kidneysflow = value; OnPropertyChanged(); } }
+
+        string _liverflow = "-";
+        public string Liverflow { get { return _liverflow; } set { _liverflow = value; OnPropertyChanged(); } }
+
+        string _intestinesflow = "-";
+        public string Intestinesflow { get { return _intestinesflow; } set { _intestinesflow = value; OnPropertyChanged(); } }
+
+        string _globaldo2 = "-";
+        public string Globaldo2 { get { return _globaldo2; } set { _globaldo2 = value; OnPropertyChanged(); } }
+
+        string _myocardialdo2 = "-";
+        public string Myocardialdo2 { get { return _myocardialdo2; } set { _myocardialdo2 = value; OnPropertyChanged(); } }
+
+        string _braindo2 = "-";
+        public string Braindo2 { get { return _braindo2; } set { _braindo2 = value; OnPropertyChanged(); } }
+
+        string _vtmax = "-";
+        public string VTMax { get { return _vtmax; } set { _vtmax = value; OnPropertyChanged(); } }
+
+        string _vtref = "-";
+        public string VTRef { get { return _vtref; } set { _vtref = value; OnPropertyChanged(); } }
+
+        string _tidalvolume = "-";
+        public string Tidalvolume { get { return _tidalvolume; } set { _tidalvolume = value; OnPropertyChanged(); } }
+
+        string _tidalvolumeTarget = "-";
+        public string TidalvolumeTarget { get { return _tidalvolumeTarget; } set { _tidalvolumeTarget = value; OnPropertyChanged(); } }
+
+        string _minutevolume = "-";
+        public string Minutevolume { get { return _minutevolume; } set { _minutevolume = value; OnPropertyChanged(); } }
+
+        string _minutevolumeTarget = "-";
+        public string MinutevolumeTarget { get { return _minutevolumeTarget; } set { _minutevolumeTarget = value; OnPropertyChanged(); } }
+
+        string _alveolarvolume = "-";
+        public string Alveolarvolume { get { return _alveolarvolume; } set { _alveolarvolume = value; OnPropertyChanged(); } }
+
+        string _appliedpressure = "-";
+        public string Appliedpressure { get { return _appliedpressure; } set { _appliedpressure = value; OnPropertyChanged(); } }
+
+        string _airwaypressure = "-";
+        public string Airwaypressure { get { return _airwaypressure; } set { _airwaypressure = value; OnPropertyChanged(); } }
+
+        string _alvleftpressure = "-";
+        public string Alvleftpressure { get { return _alvleftpressure; } set { _alvleftpressure = value; OnPropertyChanged(); } }
+
+        string _alvrightpressure = "-";
+        public string Alvrightpressure { get { return _alvrightpressure; } set { _alvrightpressure = value; OnPropertyChanged(); } }
+
+        string _ph = "-";
+        public string Ph { get { return _ph; } set { _ph = value; OnPropertyChanged(); } }
+
+        string _pao2 = "-";
+        public string Pao2 { get { return _pao2; } set { _pao2 = value; OnPropertyChanged(); } }
+        string _paco2 = "-";
+        public string Paco2 { get { return _paco2; } set { _paco2 = value; OnPropertyChanged(); } }
+        string _hco3 = "-";
+        public string Hco3 { get { return _hco3; } set { _hco3 = value; OnPropertyChanged(); } }
+        string _be = "-";
+        public string Be { get { return _be; } set { _be = value; OnPropertyChanged(); } }
+        string _po2alv = "-";
+        public string Po2alv { get { return _po2alv; } set { _po2alv = value; OnPropertyChanged(); } }
+        string _pco2alv = "-";
+        public string Pco2alv { get { return _pco2alv; } set { _pco2alv = value; OnPropertyChanged(); } }
+
+        private string lactateAA;
+
+        public string LactateAA
+        {
+            get { return lactateAA; }
+            set { lactateAA = value; OnPropertyChanged(); }
+        }
+
+        private string lactateLB;
+
+        public string LactateLB
+        {
+            get { return lactateLB; }
+            set { lactateLB = value; OnPropertyChanged(); }
+        }
+        private string lactateUB;
+
+        public string LactateUB
+        {
+            get { return lactateUB; }
+            set { lactateUB = value; OnPropertyChanged(); }
+        }
+        private string lactateBRAIN;
+
+        public string LactateBRAIN
+        {
+            get { return lactateBRAIN; }
+            set { lactateBRAIN = value; OnPropertyChanged(); }
+        }
+        private string lactateLIVER;
+
+        public string LactateLIVER
+        {
+            get { return lactateLIVER; }
+            set { lactateLIVER = value; OnPropertyChanged(); }
+        }
+
+
+        string _endtidalco2 = "-";
+        public string Endtidalco2 { get { return _endtidalco2; } set { _endtidalco2 = value; OnPropertyChanged(); } }
+        #endregion
+        #region "independent model parameters setters"
+        // autonomic nervous system model
+        public double ThMAP
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.ThMAP : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.ThMAP = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double OpMAP
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.OpMAP : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.OpMAP = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double SaMAP
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.SaMAP : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.SaMAP = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double ThPO2
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.ThPO2 : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.ThPO2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double OpPO2
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.OpPO2 : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.OpPO2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double SaPO2
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.SaPO2 : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.SaPO2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double ThPH
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.ThPH : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.ThPH = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double OpPH
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.OpPH : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.OpPH = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double SaPH
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.SaPH : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.SaPH = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double ThPCO2
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.ThPCO2 : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.ThPCO2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double OpPCO2
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.OpPCO2 : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.OpPCO2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double SaPCO2
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.SaPCO2 : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.SaPCO2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double GPHVE
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.GPHVe : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.GPHVe = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double GPHCont
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.GPHCont : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.GPHCont = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double TcPHVE
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.TcPHVe : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.TcPHVe = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double TcPHCont
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.TcPHCont : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.TcPHCont = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double GPO2VE
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.GPO2Ve : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.GPO2Ve = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double GPO2HP
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.GPO2Hp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.GPO2Hp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double TcPO2VE
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.TcPO2Ve : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.TcPO2Ve = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double TcPO2HP
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.TcPO2Hp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.TcPO2Hp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double GPCO2VE
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.GPCO2Ve : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.GPCO2Ve = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double GPCO2HP
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.GPCO2Hp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.GPCO2Hp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double TcPCO2VE
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.TcPCO2Ve : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.TcPCO2Ve = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double TcPCO2HP
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.TcPCO2Hp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.TcPCO2Hp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double GMAPHP
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.GMAPHp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.GMAPHp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double TcMAPHP
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.TcMAPHp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.TcMAPHp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double GMAPCont
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.GMAPCont : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.GMAPCont = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double TcMAPCont
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.TcMAPCont : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.TcMAPCont = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double GMAPSVR
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.GMAPRes : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.GMAPRes = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double TcMAPSVR
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.TcMAPRes : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.TcMAPRes = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double GMAPVen
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.GMAPVen : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.GMAPVen = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double TcMAPVen
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.TcMAPVen : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.TcMAPVen = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
+
+        // Breathing model
+        public bool SpontaneousBreathing
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.SpontBreathingEnabled : true;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.SpontBreathingEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double VERef
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.VERef : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.VERef = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double VEMax
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.VEMax : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.VEMax = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double VtRrRatio
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.VtRrRatio : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.VtRrRatio = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double BreathDuration
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.BreathDuration : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.BreathDuration = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double BreathDurationRand
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.BreathDurationRand : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.BreathDurationRand = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double BreathDepthRand
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.BreathDepthRand : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.BreathDepthRand = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ApnoeOccurence
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.ApnoeOccurence : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.ApnoeOccurence = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ApnoeDuration
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.ApnoeDuration : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.ApnoeDuration = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ApnoeDurationRand
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.ApnoeDurationRand : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.ApnoeDurationRand = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        // ecg model
+        public double PQTime
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.PQTime : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.PQTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double QRSTime
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.QRSTime : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.QRSTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double QTTime
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.QTTime : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.QTTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double VentEscapeRate
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.VentEscapeRate : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.VentEscapeRate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double WandPacemakerRate
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.WandPacemakerRate : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.WandPacemakerRate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double PWaveAmp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.PWaveAmp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.PWaveAmp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double TWaveAmp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.TWaveAmp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.TWaveAmp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int NoiseLevel
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.NoiseLevel : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.NoiseLevel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int RhythmType
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.RhythmType : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.RhythmType = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        // mechanical ventilator 
+        public bool VirtualVentilatorEnabled
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.VirtualVentilatorEnabled : true;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.VirtualVentilatorEnabled = value;
+                    currentModel.modelInterface.SwitchVirtualVentilator(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool Vent_VolumeControlled
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Vent_VolumeControlled : true;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.Vent_VolumeControlled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Vent_PIP
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Vent_PIP : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.Vent_PIP = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Vent_PEEP
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Vent_PEEP : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.Vent_PEEP = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Vent_InspFlow
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Vent_InspFlow : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.Vent_InspFlow = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Vent_ExpFlow
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Vent_ExpFlow : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.Vent_ExpFlow = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Vent_TargetTidalVolume
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Vent_TargetTidalVolume : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.Vent_TargetTidalVolume = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Vent_TIn
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Vent_TIn : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.Vent_TIn = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Vent_TOut
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Vent_TOut : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.Vent_TOut = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Vent_TriggerVolume
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Vent_TriggerVolume : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.Vent_TriggerVolume = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double VATP
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.VATPBaseline : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.VATPBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        // oxygen
+
+        public double Hemoglobin
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Hemoglobin : 0;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null)
+                {
+                    currentModel.modelInterface.AdjustHemoglobinConcentration(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DPG
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.DPG_blood : 0;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null)
+                {
+                    currentModel.modelInterface.AdjustDPGConcentration(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        // acid base
+        public double RespQ
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.RespQ : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.RespQ = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double NaPlasma
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Na_Plasma : 0;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null)
+                {
+                    currentModel.modelInterface.AdjustSodiumConcentration(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double KPlasma
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.K_Plasma : 0;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null)
+                {
+                    currentModel.modelInterface.AdjustPotassiumConcentration(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ClPlasma
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Cl_Plasma : 0;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null)
+                {
+                    currentModel.modelInterface.AdjustChlorideConcentration(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double CaPlasma
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Ca_Plasma : 0;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null)
+                {
+                    currentModel.modelInterface.AdjustCalciumConcentration(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double MgPlasma
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Mg_Plasma : 0;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null)
+                {
+                    currentModel.modelInterface.AdjustMagnesiumConcentration(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double PhosPlasma
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Phos_Plasma : 0;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null)
+                {
+                    currentModel.modelInterface.AdjustPhosphatesConcentration(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double AlbPlasma
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Alb_Plasma : 0;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null)
+                {
+                    currentModel.modelInterface.AdjustAlbuminConcentration(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double UaPlasma
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Ua_Plasma : 0;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null)
+                {
+                    currentModel.modelInterface.AdjustUnmeasuredAnionsConcentration(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double UcPlasma
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.Uc_Plasma : 0;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null)
+                {
+                    currentModel.modelInterface.AdjustUnmeasuredCationsConcentration(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double LactateClearanceRate
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.LactateClearanceRate / currentModel.modelState.ModelingStepsize : 0;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null)
+                {
+                    currentModel.modelState.LactateClearanceRate = value * currentModel.modelState.ModelingStepsize;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
+
+        // lung and chestwall model
+
+        public double Resp_UAR_Insp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.OUT_NCA.resistance.RForwardBaseline : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.OUT_NCA.resistance.RForwardBaseline = value;
+
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Resp_UAR_Exp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.OUT_NCA.resistance.RBackwardBaseline : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.OUT_NCA.resistance.RBackwardBaseline = value;
+
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Resp_LARR_Insp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.NCA_ALR.resistance.RForwardBaseline : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.NCA_ALR.resistance.RForwardBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Resp_LARR_Exp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.NCA_ALR.resistance.RBackwardBaseline : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.NCA_ALR.resistance.RBackwardBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Resp_LARL_Insp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.NCA_ALL.resistance.RForwardBaseline : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.NCA_ALL.resistance.RForwardBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double Resp_LARL_Exp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.NCA_ALL.resistance.RBackwardBaseline : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.NCA_ALL.resistance.RBackwardBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        double _lungComplianceChange = 0;
+        public double LungComplianceChange
+        {
+            get
+            {
+                return _lungComplianceChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+                    _lungComplianceChange = value;
+                    currentModel.modelInterface.AdjustLungCompliance(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _lungComplianceChange = 0;
+                }
+            }
+        }
+
+        double _airwayComplianceChange = 0;
+        public double AirwayComplianceChange
+        {
+            get
+            {
+                return _airwayComplianceChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+                    _airwayComplianceChange = value;
+                    currentModel.modelInterface.AdjustAirwayCompliance(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _airwayComplianceChange = 0;
+                }
+            }
+        }
+        double _chestwallComplianceChange = 0;
+        public double ChestwallComplianceChange
+        {
+            get
+            {
+                return _chestwallComplianceChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+                    _chestwallComplianceChange = value;
+                    currentModel.modelInterface.AdjustChestwallCompliance(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _chestwallComplianceChange = 0;
+                }
+            }
+        }
+
+        double _lungDiffCapacity = 0;
+        public double LungDiffusionCapacity
+        {
+            get
+            {
+                return _lungDiffCapacity;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+                    _lungDiffCapacity = value;
+                    currentModel.modelInterface.AdjustLungDiffusionCapacity(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _lungDiffCapacity = 0;
+                }
+            }
+        }
+
+        double _svrChange = 0;
+        public double SystemicVascularResistanceChange
+        {
+            get
+            {
+                return _svrChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _svrChange = value;
+
+                    currentModel.modelInterface.AdjustSystemicVascularResistance(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _svrChange = 0;
+                }
+            }
+        }
+
+        double _pvrChange = 0;
+        public double PulmonaryVascularResistanceChange
+        {
+            get
+            {
+                return _pvrChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _pvrChange = value;
+
+                    currentModel.modelInterface.AdjustPulmonaryVascularResistance(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _pvrChange = 0;
+                }
+            }
+        }
+
+        double _venPoolChange = 0;
+        public double VenousPoolChange
+        {
+            get
+            {
+                return _venPoolChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _venPoolChange = value;
+
+                    currentModel.modelInterface.AdjustVenousPool(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _venPoolChange = 0;
+                }
+            }
+        }
+
+        double _heartDiastFunction = 0;
+        public double HeartDiastolicFunctionChange
+        {
+            get
+            {
+                return _heartDiastFunction;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _heartDiastFunction = value;
+
+                    currentModel.modelInterface.AdjustHeartDiastolicFunction(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _heartDiastFunction = 0;
+                }
+            }
+        }
+
+        double _heartLeftDiastFunction = 0;
+        public double HeartLeftDiastolicFunctionChange
+        {
+            get
+            {
+                return _heartLeftDiastFunction;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _heartLeftDiastFunction = value;
+
+                    currentModel.modelInterface.AdjustHeartLeftDiastolicFunction(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _heartLeftDiastFunction = 0;
+                }
+            }
+        }
+        double _heartRightDiastFunction = 0;
+        public double HeartRightDiastolicFunctionChange
+        {
+            get
+            {
+                return _heartRightDiastFunction;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _heartRightDiastFunction = value;
+
+                    currentModel.modelInterface.AdjustHeartRightDiastolicFunction(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _heartRightDiastFunction = 0;
+                }
+            }
+        }
+
+        double _heartCont = 0;
+        public double HeartContractilityChange
+        {
+            get
+            {
+                return _heartCont;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _heartCont = value;
+
+                    currentModel.modelInterface.AdjustHeartContractility(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _heartCont = 0;
+                }
+            }
+        }
+
+        double _heartLeftCont = 0;
+        public double HeartLeftContractilityChange
+        {
+            get
+            {
+                return _heartLeftCont;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _heartLeftCont = value;
+
+                    currentModel.modelInterface.AdjustLeftHeartContractility(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _heartLeftCont = 0;
+                }
+            }
+        }
+        double _heartRightCont = 0;
+        public double HeartRightContractilityChange
+        {
+            get
+            {
+                return _heartRightCont;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _heartRightCont = value;
+
+                    currentModel.modelInterface.AdjustRightHeartContractility(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _heartRightCont = 0;
+                }
+            }
+        }
+
+        double _avValveStenosisChange = 0;
+        public double AVStenosisChange
+        {
+            get
+            {
+                return _avValveStenosisChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _avValveStenosisChange = value;
+
+                    currentModel.modelInterface.AdjustAVValveStenosis(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _avValveStenosisChange = 0;
+                }
+            }
+        }
+
+        double _avValveRegurgitationChange = 0;
+        public double AVRegurgitationChange
+        {
+            get
+            {
+                return _avValveRegurgitationChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _avValveRegurgitationChange = value;
+
+                    currentModel.modelInterface.AdjustAVValveRegurgitation(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _avValveRegurgitationChange = 0;
+                }
+            }
+        }
+
+        double _pvValveStenosisChange = 0;
+        public double PVStenosisChange
+        {
+            get
+            {
+                return _pvValveStenosisChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _pvValveStenosisChange = value;
+
+                    currentModel.modelInterface.AdjustPVValveStenosis(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _pvValveStenosisChange = 0;
+                }
+            }
+        }
+
+        double _pvValveRegurgitationChange = 0;
+        public double PVRegurgitationChange
+        {
+            get
+            {
+                return _pvValveRegurgitationChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _pvValveRegurgitationChange = value;
+
+                    currentModel.modelInterface.AdjustPVValveRegurgitation(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _pvValveRegurgitationChange = 0;
+                }
+            }
+        }
+
+        double _mvValveStenosisChange = 0;
+        public double MVStenosisChange
+        {
+            get
+            {
+                return _mvValveStenosisChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _mvValveStenosisChange = value;
+
+                    currentModel.modelInterface.AdjustMVValveStenosis(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _mvValveStenosisChange = 0;
+                }
+            }
+        }
+
+        double _mvValveRegurgitationChange = 0;
+        public double MVRegurgitationChange
+        {
+            get
+            {
+                return _mvValveRegurgitationChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _mvValveRegurgitationChange = value;
+
+                    currentModel.modelInterface.AdjustMVValveRegurgitation(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _mvValveRegurgitationChange = 0;
+                }
+            }
+        }
+
+        double _tvValveStenosisChange = 0;
+        public double TVStenosisChange
+        {
+            get
+            {
+                return _tvValveStenosisChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _tvValveStenosisChange = value;
+
+                    currentModel.modelInterface.AdjustTVValveStenosis(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _tvValveStenosisChange = 0;
+                }
+            }
+        }
+
+        double _tvValveRegurgitationChange = 0;
+        public double TVRegurgitationChange
+        {
+            get
+            {
+                return _tvValveRegurgitationChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _tvValveRegurgitationChange = value;
+
+                    currentModel.modelInterface.AdjustTVValveRegurgitation(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _tvValveRegurgitationChange = 0;
+                }
+            }
+        }
+
+        double _pericardiumComplianceChange = 0;
+        public double PericardiumComplianceChange
+        {
+            get
+            {
+                return _pericardiumComplianceChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+                    _pericardiumComplianceChange = value;
+                    currentModel.modelInterface.AdjustPericardialCompliance(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _pericardiumComplianceChange = 0;
+                }
+            }
+        }
+
+        double _bloodVolumeChange = 0;
+        public double BloodVolumeChange
+        {
+            get
+            {
+                return _bloodVolumeChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _bloodVolumeChange = value;
+
+                    currentModel.modelInterface.AdjustBloodVolume(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _bloodVolumeChange = 0;
+                }
+            }
+        }
+
+        double _pdaSize = 0;
+        public double PDASize
+        {
+            get
+            {
+                return _pdaSize;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _pdaSize = value;
+
+                    currentModel.modelInterface.AdjustPDASize(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _pdaSize = 0;
+                }
+            }
+        }
+
+        double _ofoSize = 0;
+        public double OFOSize
+        {
+            get
+            {
+                return _ofoSize;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _ofoSize = value;
+
+                    currentModel.modelInterface.AdjustOFOSize(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _ofoSize = 0;
+                }
+            }
+        }
+        double _vsdSize = 0;
+        public double VSDSize
+        {
+            get
+            {
+                return _vsdSize;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _vsdSize = value;
+
+                    currentModel.modelInterface.AdjustVSDSize(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _vsdSize = 0;
+                }
+            }
+        }
+
+        double _lungShuntSize = 0;
+        public double LUNGShuntSize
+        {
+            get
+            {
+                return _lungShuntSize;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _lungShuntSize = value;
+
+                    currentModel.modelInterface.AdjustLungShuntSize(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _lungShuntSize = 0;
+                }
+            }
+        }
+
+        public ObservableCollection<Compartment> bloodcompartments { get; set; } = new ObservableCollection<Compartment>();
+        public ObservableCollection<Compartment> gascompartments { get; set; } = new ObservableCollection<Compartment>();
+        public ObservableCollection<Connector> connectors { get; set; } = new ObservableCollection<Connector>();
+        public ObservableCollection<ContainerCompartment> containers { get; set; } = new ObservableCollection<ContainerCompartment>();
+        public ObservableCollection<Compartment> containedCompartments { get; set; } = new ObservableCollection<Compartment>();
+
+        public ObservableCollection<GasExchangeBlock> gasexchangeUnits { get; set; } = new ObservableCollection<GasExchangeBlock>();
+        public ObservableCollection<string> rhythmTypes { get; set; } = new ObservableCollection<string>();
+
+        #endregion
+        #region "other couplings"
+            ObservableCollection<string> _modelLog = new ObservableCollection<string>();
+
+            public ObservableCollection<string> ModelLog { get { return _modelLog; } set { _modelLog = value; OnPropertyChanged(); } }
+        #endregion
+        #region "graphs"
+
+
+        public void InitModelDiagram(ModelDiagram p)
+        {
+            GraphModelDiagram = p;
+            GraphModelDiagram.InitModelDiagram(currentModel);
+            GraphModelDiagram.BuildDiagram();
+            GraphModelDiagram.UpdateSkeleton();
+            GraphModelDiagram.UpdatedMainDiagram();
+
+        }
+        public void InitGraphECG(FastScrollingGraph p)
+        {
+            GraphECG = p;
+            GraphECG.GraphTitle = "ecg";
+            GraphECG.ParameterTitle = "hr";
+            GraphECG.ParameterUnit = "/min";
+            GraphECG.GraphTitleColor = new SolidColorBrush(Colors.LimeGreen);
+            GraphECG.GraphPaint1.Color = SKColors.LimeGreen;
+            GraphECG.AutoScale = true;
+
+        }
+        public void InitGraphABP(FastScrollingGraph p)
+        {
+            GraphABP = p;
+            GraphABP.GraphTitle = "abp";
+            GraphABP.ParameterTitle = "abp";
+            GraphABP.ParameterUnit = "mmHg";
+            GraphABP.GraphTitleColor = new SolidColorBrush(Colors.Red);
+            GraphABP.GraphPaint1.Color = SKColors.Red;
+
+            GraphABP.GridXEnabled = false;
+            GraphABP.GridYEnabled = true;
+            GraphABP.GridYMin = 20;
+            GraphABP.GridYMax = 80;
+            GraphABP.GridYStep = 20;
+
+        }
+        public void InitGraphETCO2(FastScrollingGraph p)
+        {
+            GraphETCO2 = p;
+            GraphETCO2.GraphTitle = "co2";
+            GraphETCO2.ParameterTitle = "etCO2";
+            GraphETCO2.ParameterUnit = "mmHg";
+            GraphETCO2.GraphTitleColor = new SolidColorBrush(Colors.Yellow);
+            GraphETCO2.GraphPaint1.Color = SKColors.Yellow;
+            GraphETCO2.xStepSize = 2;
+
+            GraphETCO2.GridXEnabled = false;
+            GraphETCO2.GridYEnabled = true;
+            GraphETCO2.GridYMin = 0;
+            GraphETCO2.GridYMax = 80;
+            GraphETCO2.GridYStep = 20;
+
+        }
+        public void InitGraphRESP(FastScrollingGraph p)
+        {
+            GraphRESP = p;
+            GraphRESP.GraphTitle = "resp";
+            GraphRESP.ParameterTitle = "rf";
+            GraphRESP.ParameterUnit = "/min";
+            GraphRESP.GraphTitleColor = new SolidColorBrush(Colors.White);
+            GraphRESP.GraphPaint1.Color = SKColors.White;
+            GraphRESP.xStepSize = 2;
+            GraphRESP.AutoScale = true;
+
+
+        }
+        public void InitGraphSPO2(FastScrollingGraph p)
+        {
+            GraphSPO2 = p;
+            GraphSPO2.GraphTitle = "spo2";
+            GraphSPO2.ParameterTitle = "SpO2";
+            GraphSPO2.ParameterUnit = "%";
+            GraphSPO2.GraphTitleColor = new SolidColorBrush(Colors.Fuchsia);
+            GraphSPO2.GraphPaint1.Color = SKColors.Fuchsia;
+            GraphSPO2.AutoScale = true;
+
+            GraphSPO2.GridXEnabled = false;
+            GraphSPO2.GridYEnabled = true;
+            GraphSPO2.GridYMin = 20;
+            GraphSPO2.GridYMax = 80;
+            GraphSPO2.GridYStep = 20;
+
+
+        }
+
+        public void InitTrendGraph(TimeBasedGraph p)
+        {
+            TrendGraph = p;
+
+            TrendGraph.InitGraph(300, 400);
+            TrendGraph.GridXStep = 60;
+            TrendGraph.GridYStep = 25;
+            TrendGraph.MaxY = 200;
+            TrendGraph.ShowXLabels = true;
+            TrendGraph.ShowYLabels = true;
+
+            TrendGraph.Data1Enabled = true;
+            TrendGraph.Data2Enabled = true;
+            TrendGraph.Data3Enabled = true;
+            TrendGraph.Data4Enabled = true;
+            TrendGraph.Data5Enabled = true;
+          
+        }
+
+        public void InitBloodgasGraph(TimeBasedGraph p)
+        {
+            BloodgasGraph = p;
+
+            BloodgasGraph.InitGraph(300, 400);
+            BloodgasGraph.GridXStep = 60;
+            BloodgasGraph.GridYStep = 1;
+            BloodgasGraph.MaxY = 15;
+            BloodgasGraph.ShowXLabels = true;
+            BloodgasGraph.ShowYLabels = true;
+
+            BloodgasGraph.Data1Enabled = true;
+            BloodgasGraph.Data2Enabled = true;
+            BloodgasGraph.Data3Enabled = true;
+            BloodgasGraph.Data4Enabled = true;
+            BloodgasGraph.Data5Enabled = true;
+        }
+ 
+        void UpdateTrendGraph()
+        {
+            if (TrendGraph != null)
+            {
+
+                TrendGraph.UpdateData(currentModel.modelInterface.HeartRate, currentModel.modelInterface.PulseOximeterOutput, currentModel.modelInterface.SystolicSystemicArterialPressure, currentModel.modelInterface.DiastolicSystemicArterialPressure, currentModel.modelInterface.RespiratoryRate);
+
+            }
+        }
+        void UpdateBloodgasGraph()
+        {
+            if (BloodgasGraph != null)
+            {
+
+                BloodgasGraph.UpdateData(currentModel.modelInterface.ArterialPH, currentModel.modelInterface.ArterialPCO2, currentModel.modelInterface.ArterialPO2, currentModel.modelInterface.ArterialBE, currentModel.modelInterface.ArterialLactate);
+
+            }
+        }
+        #endregion
+
+    }
+}
