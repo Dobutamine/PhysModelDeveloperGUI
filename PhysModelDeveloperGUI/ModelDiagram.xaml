@@ -4,11 +4,40 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
+             xmlns:telerik ="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:ts="clr-namespace:ToggleSwitch;assembly=ToggleSwitch"
              xmlns:local="clr-namespace:PhysModelDeveloperGUI"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800" Background="White">
+
     <Grid>
+
         <skia:SKElement x:Name="canvasSkeleton" PaintSurface="CanvasSkeleton_PaintSurface"></skia:SKElement>
-        <skia:SKElement x:Name="canvasMain" PaintSurface="CanvasMain_PaintSurface"></skia:SKElement>  
+        <skia:SKElement x:Name="canvasMain" PaintSurface="CanvasMain_PaintSurface"></skia:SKElement>
+        <Grid VerticalAlignment="Bottom" HorizontalAlignment="Left"  Width="120">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Content="SHUNTS" HorizontalAlignment="Center" FontSize="12" FontWeight="Bold"  Grid.ColumnSpan="2"></Label>
+            <Label Content="OFO" FontSize="10" HorizontalAlignment="Left" FontWeight="DemiBold"  Grid.Row="1" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch x:Name="switchOFO" Checked="SwitchOFO_Checked" Unchecked="SwitchOFO_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="1" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Content="PDA" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="2" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch x:Name="switchPDA" Checked="SwitchPDA_Checked_1" Unchecked="SwitchPDA_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="2" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Content="VSD" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="3" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch x:Name="switchVSD" Checked="SwitchVSD_Checked" Unchecked="SwitchVSD_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="3" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Content="LUNG" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="4" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch x:Name="switchLUNG" Checked="SwitchLUNG_Checked" Unchecked="SwitchLUNG_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="4" Grid.Column="1"></ts:HorizontalToggleSwitch>
+
+        </Grid>
+        
     </Grid>
 </UserControl>

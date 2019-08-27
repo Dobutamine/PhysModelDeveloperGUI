@@ -766,5 +766,50 @@ namespace PhysModelDeveloperGUI
                 DrawMainDiagram(MainCanvas, canvasMain.CanvasSize.Width, canvasMain.CanvasSize.Height);
             }
         }
+
+        private void SwitchOFO_Checked(object sender, RoutedEventArgs e)
+        {
+            OFOView(true);
+        }
+
+        private void SwitchOFO_Unchecked(object sender, RoutedEventArgs e)
+        {
+            OFOView(false);
+        }
+
+        private void SwitchPDA_Checked(object sender, RoutedEventArgs e)
+        {
+            PDAView(true);
+        }
+
+        private void SwitchPDA_Checked_1(object sender, RoutedEventArgs e)
+        {
+            PDAView(true);
+        }
+
+        private void SwitchPDA_Unchecked(object sender, RoutedEventArgs e)
+        {
+            PDAView(false);
+        }
+
+        private void SwitchVSD_Checked(object sender, RoutedEventArgs e)
+        {
+            VSDView(true);
+        }
+
+        private void SwitchVSD_Unchecked(object sender, RoutedEventArgs e)
+        {
+            VSDView(false);
+        }
+
+        private void SwitchLUNG_Checked(object sender, RoutedEventArgs e)
+        {
+            LUNGSHUNTView(true);
+        }
+
+        private void SwitchLUNG_Unchecked(object sender, RoutedEventArgs e)
+        {
+            LUNGSHUNTView(false);
+        }
     }
 }
