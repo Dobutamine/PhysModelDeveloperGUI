@@ -1458,6 +1458,12 @@
                         </StackPanel>
                     </Border>
                 </Expander>
+                <Expander IsExpanded="False" Header="Model log" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Foreground="White" BorderThickness="0">
+                    <Border BorderBrush="White"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="White" >
+                        <ListBox x:Name="lstBox" Height="100" Margin="5,5,5,5" ItemsSource="{Binding Path=ModelLog, UpdateSourceTrigger=PropertyChanged}" Background="White" BorderBrush="White" FontSize="10" ScrollViewer.VerticalScrollBarVisibility="Auto" Foreground="Black" >
+                        </ListBox>
+                    </Border>
+                </Expander>
             </StackPanel>
         </ScrollViewer>
         <TextBlock Text="MONITORING" Grid.Column="2" TextAlignment="Center" Foreground="Black" FontWeight="DemiBold" FontSize="14" Margin="0,25,0,0"></TextBlock>
@@ -1844,19 +1850,13 @@
             <StackPanel Margin="10,0,10,0">
                 <Expander IsExpanded="{Binding DiagramVisible, Mode=TwoWay}" Margin="0,0,0,10"  Header="Model diagram" Background="DarkSlateGray" Padding="5,5,5,5" Foreground="White" BorderThickness="0">
                     <Border BorderBrush="White"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="White" >
-                        <local:ModelDiagram x:Name="graphDiagram" Margin="10,10,10,10"  Height="500"></local:ModelDiagram>
+                        <local:ModelDiagram x:Name="graphDiagram" Margin="10,10,10,10"  Height="350"></local:ModelDiagram>
                     </Border>
                 </Expander>
                 
                 <Expander IsExpanded="{Binding MonitorVisible, Mode=TwoWay}" Margin="0,0,0,10"  Header="Patient Monitor" Background="DarkSlateGray" Padding="5,5,5,5" Foreground="White" BorderThickness="0">
                     <Border BorderBrush="White"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="Black" >
-                        <StackPanel Margin="10,10,10,10" >
-                            <local:FastScrollingGraph  x:Name="graphECG" Height="75"></local:FastScrollingGraph>
-                            <local:FastScrollingGraph  x:Name="graphSPO2" Height="75"></local:FastScrollingGraph>
-                            <local:FastScrollingGraph  x:Name="graphABP" Height="75"></local:FastScrollingGraph>
-                            <local:FastScrollingGraph  x:Name="graphETCO2" Height="75"></local:FastScrollingGraph>
-                            <local:FastScrollingGraph  x:Name="graphRESP" Height="75"></local:FastScrollingGraph>
-                        </StackPanel>
+                        <local:PatientMonitor x:Name="graphMonitor" Margin="10,10,10,10"  Height="350"></local:PatientMonitor>
                     </Border>
                 </Expander>
 
@@ -1874,12 +1874,7 @@
 
                
 
-                <Expander IsExpanded="False" Margin="0,0,0,10"  Header="Model log" Background="White" Padding="5,5,5,5"  Foreground="Black" BorderThickness="0">
-                    <Border BorderBrush="Black"  BorderThickness="1" CornerRadius="5" Margin="30,0,30,0" Background="White" >
-                        <ListBox x:Name="lstBox" Height="100" ItemsSource="{Binding Path=ModelLog, UpdateSourceTrigger=PropertyChanged}" Background="White" BorderBrush="White" FontSize="10" ScrollViewer.VerticalScrollBarVisibility="Auto" Foreground="Black" >
-                            </ListBox>
-                    </Border>
-                </Expander>
+             
 
 
             </StackPanel>

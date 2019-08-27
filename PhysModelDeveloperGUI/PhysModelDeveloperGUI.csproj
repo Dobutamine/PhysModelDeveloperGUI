@@ -152,20 +152,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AnimatedBloodCompartment.cs" />
-    <Compile Include="AnimatedBloodConnector.cs" />
-    <Compile Include="AnimatedElementHelper.cs" />
-    <Compile Include="AnimatedGasComp.cs" />
-    <Compile Include="AnimatedGasConnector.cs" />
-    <Compile Include="AnimatedPump.cs" />
-    <Compile Include="AnimatedShunt.cs" />
-    <Compile Include="AnimatedShuntGas.cs" />
-    <Compile Include="AnimatedValve.cs" />
+    <Compile Include="ModelDiagramHelpers\AnimatedBloodCompartment.cs" />
+    <Compile Include="ModelDiagramHelpers\AnimatedBloodConnector.cs" />
+    <Compile Include="ModelDiagramHelpers\AnimatedElementHelper.cs" />
+    <Compile Include="ModelDiagramHelpers\AnimatedGasComp.cs" />
+    <Compile Include="ModelDiagramHelpers\AnimatedGasConnector.cs" />
+    <Compile Include="ModelDiagramHelpers\AnimatedPump.cs" />
+    <Compile Include="ModelDiagramHelpers\AnimatedShunt.cs" />
+    <Compile Include="ModelDiagramHelpers\AnimatedShuntGas.cs" />
+    <Compile Include="ModelDiagramHelpers\AnimatedValve.cs" />
     <Compile Include="FastScrollingGraph.xaml.cs">
       <DependentUpon>FastScrollingGraph.xaml</DependentUpon>
     </Compile>
     <Compile Include="ModelDiagram.xaml.cs">
       <DependentUpon>ModelDiagram.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PatientMonitor.xaml.cs">
+      <DependentUpon>PatientMonitor.xaml</DependentUpon>
     </Compile>
     <Compile Include="RelayCommand.cs" />
     <Compile Include="TimeBasedGraph.xaml.cs">
@@ -188,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ModelDiagram.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PatientMonitor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

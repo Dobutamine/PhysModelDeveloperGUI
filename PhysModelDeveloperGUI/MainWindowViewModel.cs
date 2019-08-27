@@ -63,7 +63,7 @@ namespace PhysModelDeveloperGUI
             set { trendBloodgasVisible = value; OnPropertyChanged(); }
         }
 
-
+        PatientMonitor GraphPatientMonitor { get; set; }
         ModelDiagram GraphModelDiagram { get; set; }
         FastScrollingGraph GraphECG { get; set; }
         FastScrollingGraph GraphABP { get; set; }
@@ -236,17 +236,7 @@ namespace PhysModelDeveloperGUI
             {
                 GraphModelDiagram.UpdatedMainDiagram();
             }
-           
-
-            if (MonitorVisible)
-            {
-                GraphECG.Draw();
-                GraphABP.Draw();
-                GraphSPO2.Draw();
-                GraphETCO2.Draw();
-                GraphRESP.Draw();
-            }
-            
+                  
             if (TrendVitalsVisible) TrendGraph.DrawData();
             if (trendBloodgasVisible) BloodgasGraph.DrawData();
 
@@ -313,19 +303,16 @@ namespace PhysModelDeveloperGUI
 
                 Endtidalco2 = currentModel.modelInterface.EndTidalCO2.ToString();
 
+                if (MonitorVisible)
+                {
+                    GraphPatientMonitor.UpdateParameters(currentModel.modelInterface.HeartRate.ToString(),                                                       
+                                                         currentModel.modelInterface.PulseOximeterOutput.ToString(),
+                                                         currentModel.modelInterface.ArterialBloodPressure,
+                                                         currentModel.modelInterface.EndTidalCO2.ToString(),
+                                                         currentModel.modelInterface.RespiratoryRate.ToString());
+                }
                 UpdateTrendGraph();
                 UpdateBloodgasGraph();
-
-                GraphECG.UpdateParameterValue(currentModel.modelInterface.HeartRate);
-                GraphSPO2.UpdateParameterValue(currentModel.modelInterface.PulseOximeterOutput);
-                GraphABP.UpdateParameterValue(currentModel.modelInterface.SystolicSystemicArterialPressure, currentModel.modelInterface.DiastolicSystemicArterialPressure);
-                GraphETCO2.UpdateParameterValue(currentModel.modelInterface.EndTidalCO2);
-                GraphRESP.UpdateParameterValue(currentModel.modelInterface.RespiratoryRate);
-
-               
-              
-
-
             }
 
             slowUpdater += graphicsRefreshInterval;
@@ -337,17 +324,10 @@ namespace PhysModelDeveloperGUI
             {
                 if (MonitorVisible)
                 {
-                    GraphECG.WriteBuffer(currentModel.modelInterface.ECGSignal);
-                    GraphABP.WriteBuffer(currentModel.modelInterface.ABPSignal);
-                    GraphSPO2.WriteBuffer(currentModel.modelInterface.SPO2POSTSignal);
-                    GraphETCO2.WriteBuffer(currentModel.modelInterface.ETCO2Signal);
-                    GraphRESP.WriteBuffer(currentModel.modelInterface.RESPVolumeSignal);
+                    GraphPatientMonitor.UpdateCurves(currentModel.modelInterface.ECGSignal, currentModel.modelInterface.ABPSignal,
+                                                     currentModel.modelInterface.SPO2POSTSignal, currentModel.modelInterface.ETCO2Signal,
+                                                     currentModel.modelInterface.RESPVolumeSignal);
                 }
-            
-
-
-
-
             }
             if (e.PropertyName ==  "StatusMessage")
             {
@@ -2470,7 +2450,11 @@ namespace PhysModelDeveloperGUI
         #endregion
         #region "graphs"
 
-
+        public void InitPatientMonitor(PatientMonitor p)
+        {
+            GraphPatientMonitor = p;
+            GraphPatientMonitor.InitPatientMonitor();
+        }
         public void InitModelDiagram(ModelDiagram p)
         {
             GraphModelDiagram = p;
@@ -2478,81 +2462,6 @@ namespace PhysModelDeveloperGUI
             GraphModelDiagram.BuildDiagram();
             GraphModelDiagram.UpdateSkeleton();
             GraphModelDiagram.UpdatedMainDiagram();
-
-        }
-        public void InitGraphECG(FastScrollingGraph p)
-        {
-            GraphECG = p;
-            GraphECG.GraphTitle = "ecg";
-            GraphECG.ParameterTitle = "hr";
-            GraphECG.ParameterUnit = "/min";
-            GraphECG.GraphTitleColor = new SolidColorBrush(Colors.LimeGreen);
-            GraphECG.GraphPaint1.Color = SKColors.LimeGreen;
-            GraphECG.AutoScale = true;
-
-        }
-        public void InitGraphABP(FastScrollingGraph p)
-        {
-            GraphABP = p;
-            GraphABP.GraphTitle = "abp";
-            GraphABP.ParameterTitle = "abp";
-            GraphABP.ParameterUnit = "mmHg";
-            GraphABP.GraphTitleColor = new SolidColorBrush(Colors.Red);
-            GraphABP.GraphPaint1.Color = SKColors.Red;
-
-            GraphABP.GridXEnabled = false;
-            GraphABP.GridYEnabled = true;
-            GraphABP.GridYMin = 20;
-            GraphABP.GridYMax = 80;
-            GraphABP.GridYStep = 20;
-
-        }
-        public void InitGraphETCO2(FastScrollingGraph p)
-        {
-            GraphETCO2 = p;
-            GraphETCO2.GraphTitle = "co2";
-            GraphETCO2.ParameterTitle = "etCO2";
-            GraphETCO2.ParameterUnit = "mmHg";
-            GraphETCO2.GraphTitleColor = new SolidColorBrush(Colors.Yellow);
-            GraphETCO2.GraphPaint1.Color = SKColors.Yellow;
-            GraphETCO2.xStepSize = 2;
-
-            GraphETCO2.GridXEnabled = false;
-            GraphETCO2.GridYEnabled = true;
-            GraphETCO2.GridYMin = 0;
-            GraphETCO2.GridYMax = 80;
-            GraphETCO2.GridYStep = 20;
-
-        }
-        public void InitGraphRESP(FastScrollingGraph p)
-        {
-            GraphRESP = p;
-            GraphRESP.GraphTitle = "resp";
-            GraphRESP.ParameterTitle = "rf";
-            GraphRESP.ParameterUnit = "/min";
-            GraphRESP.GraphTitleColor = new SolidColorBrush(Colors.White);
-            GraphRESP.GraphPaint1.Color = SKColors.White;
-            GraphRESP.xStepSize = 2;
-            GraphRESP.AutoScale = true;
-
-
-        }
-        public void InitGraphSPO2(FastScrollingGraph p)
-        {
-            GraphSPO2 = p;
-            GraphSPO2.GraphTitle = "spo2";
-            GraphSPO2.ParameterTitle = "SpO2";
-            GraphSPO2.ParameterUnit = "%";
-            GraphSPO2.GraphTitleColor = new SolidColorBrush(Colors.Fuchsia);
-            GraphSPO2.GraphPaint1.Color = SKColors.Fuchsia;
-            GraphSPO2.AutoScale = true;
-
-            GraphSPO2.GridXEnabled = false;
-            GraphSPO2.GridYEnabled = true;
-            GraphSPO2.GridYMin = 20;
-            GraphSPO2.GridYMax = 80;
-            GraphSPO2.GridYStep = 20;
-
 
         }
 

@@ -31,12 +31,8 @@ namespace PhysModelDeveloperGUI
 
             mainWindowViewModel.InitTrendGraph(graphTrends);
             mainWindowViewModel.InitBloodgasGraph(graphBloodgas);
-            mainWindowViewModel.InitGraphECG(graphECG);
-            mainWindowViewModel.InitGraphSPO2(graphSPO2);
-            mainWindowViewModel.InitGraphABP(graphABP);
-            mainWindowViewModel.InitGraphETCO2(graphETCO2);
-            mainWindowViewModel.InitGraphRESP(graphRESP);
             mainWindowViewModel.InitModelDiagram(graphDiagram);
+            mainWindowViewModel.InitPatientMonitor(graphMonitor);
 
 
         }

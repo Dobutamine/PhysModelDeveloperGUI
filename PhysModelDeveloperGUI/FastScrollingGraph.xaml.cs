@@ -75,7 +75,7 @@ namespace PhysModelDeveloperGUI
             set { fontSizeTitle = value; OnPropertyChanged(); }
         }
 
-        private int fontSizeValue = 15;
+        private int fontSizeValue = 25;
 
         public int FontSizeValue
         {
@@ -201,11 +201,11 @@ namespace PhysModelDeveloperGUI
                     GridCanvas.DrawLine(x, 0, x, graphGrid.CanvasSize.Height, GridPaint1);
                 }
 
-                refresh = true;
+                
             }
 
-            FontSizeTitle = (int) graphGrid.CanvasSize.Height / 20;
-            FontSizeValue = (int)graphGrid.CanvasSize.Height / 7;
+            refresh = true;
+
 
         }
 
@@ -285,18 +285,7 @@ namespace PhysModelDeveloperGUI
             }
         }
 
-        public void UpdateParameterValue(double p1, double p2 = 0, double p3 = 0)
-        {
-            if (p2 == 0)
-            {
-                ParameterValue = p1.ToString();
-            } else
-            {
-                ParameterValue = p1.ToString() + "/" + p2.ToString();
-            }
-            
-
-        }
+   
         public void WriteBuffer(double d1)
         {
             lock (DataBuffer1)
