@@ -116,13 +116,9 @@ namespace PhysModelDeveloperGUI
             SaveModelStateCommand = new RelayCommand(SaveModelState);
             LoadModelStateCommand = new RelayCommand(LoadModelState);
             NewModelCommand = new RelayCommand(NewModel);
-            ListBoxUpdatedCommand = new RelayCommand(ListBoxUpdated);
             ExitCommand = new RelayCommand(ExitProgram);
         }
-        void ListBoxUpdated(object p)
-        {
-            Console.WriteLine("Tim is gek");
-        }
+   
         void ExitProgram(object p)
         {
             App.Current.Shutdown();
@@ -165,30 +161,7 @@ namespace PhysModelDeveloperGUI
                 containers.Add(c);
             }
         }
-        void ChangeSelectedContainer(object p)
-        {
-            selectedContainer = (ContainerCompartment)p;
-
-        }
-        void ChangeSelectedGex(object p)
-        {
-            selectedGex = (GasExchangeBlock)p;
-        }
-        void ChangeSelectedConnector(object p)
-        {
-            selectedConnector = (Connector)p;
-
-        }
-        void ChangeSelectedBloodCompartment(object p)
-        {
-            selectedBloodCompartment = (BloodCompartment)p;
-
-        }
-        void ChangeSelectedGasCompartment(object p)
-        {
-            selectedGasCompartment = (GasCompartment)p;
-
-        }
+       
         void SaveModelState(object p)
         {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
@@ -526,6 +499,7 @@ namespace PhysModelDeveloperGUI
         string _endtidalco2 = "-";
         public string Endtidalco2 { get { return _endtidalco2; } set { _endtidalco2 = value; OnPropertyChanged(); } }
         #endregion
+
         #region "independent model parameters setters"
         // autonomic nervous system model
         public double ThMAP
@@ -2443,11 +2417,13 @@ namespace PhysModelDeveloperGUI
         public ObservableCollection<string> rhythmTypes { get; set; } = new ObservableCollection<string>();
 
         #endregion
+
         #region "other couplings"
             ObservableCollection<string> _modelLog = new ObservableCollection<string>();
 
             public ObservableCollection<string> ModelLog { get { return _modelLog; } set { _modelLog = value; OnPropertyChanged(); } }
         #endregion
+
         #region "graphs"
 
         public void InitPatientMonitor(PatientMonitor p)
@@ -2464,7 +2440,6 @@ namespace PhysModelDeveloperGUI
             GraphModelDiagram.UpdatedMainDiagram();
 
         }
-
         public void InitTrendGraph(TimeBasedGraph p)
         {
             TrendGraph = p;
@@ -2483,7 +2458,6 @@ namespace PhysModelDeveloperGUI
             TrendGraph.Data5Enabled = true;
           
         }
-
         public void InitBloodgasGraph(TimeBasedGraph p)
         {
             BloodgasGraph = p;
@@ -2501,7 +2475,6 @@ namespace PhysModelDeveloperGUI
             BloodgasGraph.Data4Enabled = true;
             BloodgasGraph.Data5Enabled = true;
         }
- 
         void UpdateTrendGraph()
         {
             if (TrendGraph != null)
@@ -2518,6 +2491,697 @@ namespace PhysModelDeveloperGUI
 
                 BloodgasGraph.UpdateData(currentModel.modelInterface.ArterialPH, currentModel.modelInterface.ArterialPCO2, currentModel.modelInterface.ArterialPO2, currentModel.modelInterface.ArterialBE, currentModel.modelInterface.ArterialLactate);
 
+            }
+        }
+
+        #endregion
+
+        #region "bloodcompartment settings"
+        void ChangeSelectedBloodCompartment(object p)
+        {
+            selectedBloodCompartment = (BloodCompartment)p;
+            UVolBlood = selectedBloodCompartment.VolUBaseline;
+            ElBaselineBlood = selectedBloodCompartment.elastanceModel.ElBaseline;
+            ElContractionBaselineBlood = selectedBloodCompartment.elastanceModel.ElContractionBaseline;
+            ElKMinVolumeBlood = selectedBloodCompartment.elastanceModel.ElKMinVolume;
+            ElK1Blood = selectedBloodCompartment.elastanceModel.ElK1;
+            ElKMaxVolumeBlood = selectedBloodCompartment.elastanceModel.ElKMaxVolume;
+            ElK2Blood = selectedBloodCompartment.elastanceModel.ElK2;
+            FVATP = selectedBloodCompartment.LocalVATPFactor;
+            IsEnabledBlood = selectedBloodCompartment.IsEnabled;
+            HasFixedVolumeBlood = selectedBloodCompartment.HasFixedVolume;
+
+        }
+        public double UVolBlood
+        {
+            get
+            {
+                return selectedBloodCompartment != null ? selectedBloodCompartment.VolUBaseline : 0;
+            }
+            set
+            {
+                if (selectedBloodCompartment != null)
+                {
+                    selectedBloodCompartment.VolUBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElBaselineBlood
+        {
+            get
+            {
+                return selectedBloodCompartment != null ? selectedBloodCompartment.elastanceModel.ElBaseline : 0;
+            }
+            set
+            {
+                if (selectedBloodCompartment != null)
+                {
+                    selectedBloodCompartment.elastanceModel.ElBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElContractionBaselineBlood
+        {
+            get
+            {
+                return selectedBloodCompartment != null ? selectedBloodCompartment.elastanceModel.ElContractionBaseline : 0;
+            }
+            set
+            {
+                if (selectedBloodCompartment != null)
+                {
+                    selectedBloodCompartment.elastanceModel.ElContractionBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElKMinVolumeBlood
+        {
+            get
+            {
+                return selectedBloodCompartment != null ? selectedBloodCompartment.elastanceModel.ElKMinVolume : 0;
+            }
+            set
+            {
+                if (selectedBloodCompartment != null)
+                {
+                    selectedBloodCompartment.elastanceModel.ElKMinVolume = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElK1Blood
+        {
+            get
+            {
+                return selectedBloodCompartment != null ? selectedBloodCompartment.elastanceModel.ElK1 : 0;
+            }
+            set
+            {
+                if (selectedBloodCompartment != null)
+                {
+                    selectedBloodCompartment.elastanceModel.ElK1 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElKMaxVolumeBlood
+        {
+            get
+            {
+                return selectedBloodCompartment != null ? selectedBloodCompartment.elastanceModel.ElKMaxVolume : 0;
+            }
+            set
+            {
+                if (selectedBloodCompartment != null)
+                {
+                    selectedBloodCompartment.elastanceModel.ElKMaxVolume = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElK2Blood
+        {
+            get
+            {
+                return selectedBloodCompartment != null ? selectedBloodCompartment.elastanceModel.ElK2 : 0;
+            }
+            set
+            {
+                if (selectedBloodCompartment != null)
+                {
+                    selectedBloodCompartment.elastanceModel.ElK2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double FVATP
+        {
+            get
+            {
+                return selectedBloodCompartment != null ? selectedBloodCompartment.LocalVATPFactor : 0;
+            }
+            set
+            {
+                if (selectedBloodCompartment != null)
+                {
+                    selectedBloodCompartment.LocalVATPFactor = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool IsEnabledBlood
+        {
+            get
+            {
+                return selectedBloodCompartment != null ? selectedBloodCompartment.IsEnabled : true;
+            }
+            set
+            {
+                if (selectedBloodCompartment != null)
+                {
+                    selectedBloodCompartment.IsEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool HasFixedVolumeBlood
+        {
+            get
+            {
+                return selectedBloodCompartment != null ? selectedBloodCompartment.HasFixedVolume : true;
+            }
+            set
+            {
+                if (selectedBloodCompartment != null)
+                {
+                    selectedBloodCompartment.HasFixedVolume = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region "gascompartment settings"
+        void ChangeSelectedGasCompartment(object p)
+        {
+            selectedGasCompartment = (GasCompartment)p;
+            UVolGas = selectedGasCompartment.VolUBaseline;
+            ElBaselineGas = selectedGasCompartment.elastanceModel.ElBaseline;
+            ElContractionBaselineGas = selectedGasCompartment.elastanceModel.ElContractionBaseline;
+            ElKMinVolumeGas = selectedGasCompartment.elastanceModel.ElKMinVolume;
+            ElK1Gas = selectedGasCompartment.elastanceModel.ElK1;
+            ElKMaxVolumeGas = selectedGasCompartment.elastanceModel.ElKMaxVolume;
+            ElK2Gas = selectedGasCompartment.elastanceModel.ElK2;
+            IsEnabledGas = selectedGasCompartment.IsEnabled;
+            HasFixedVolumeGas = selectedGasCompartment.HasFixedVolume;
+            HasFixedCompositionGas = selectedGasCompartment.FixedGasComposition;
+        }
+        public double UVolGas
+        {
+            get
+            {
+                return selectedGasCompartment != null ? selectedGasCompartment.VolUBaseline : 0;
+            }
+            set
+            {
+                if (selectedGasCompartment != null)
+                {
+                    selectedGasCompartment.VolUBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElBaselineGas
+        {
+            get
+            {
+                return selectedGasCompartment != null ? selectedGasCompartment.elastanceModel.ElBaseline : 0;
+            }
+            set
+            {
+                if (selectedGasCompartment != null)
+                {
+                    selectedGasCompartment.elastanceModel.ElBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElContractionBaselineGas
+        {
+            get
+            {
+                return selectedGasCompartment != null ? selectedGasCompartment.elastanceModel.ElContractionBaseline : 0;
+            }
+            set
+            {
+                if (selectedGasCompartment != null)
+                {
+                    selectedGasCompartment.elastanceModel.ElContractionBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElKMinVolumeGas
+        {
+            get
+            {
+                return selectedGasCompartment != null ? selectedGasCompartment.elastanceModel.ElKMinVolume : 0;
+            }
+            set
+            {
+                if (selectedGasCompartment != null)
+                {
+                    selectedGasCompartment.elastanceModel.ElKMinVolume = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElK1Gas
+        {
+            get
+            {
+                return selectedGasCompartment != null ? selectedGasCompartment.elastanceModel.ElK1 : 0;
+            }
+            set
+            {
+                if (selectedGasCompartment != null)
+                {
+                    selectedGasCompartment.elastanceModel.ElK1 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElKMaxVolumeGas
+        {
+            get
+            {
+                return selectedGasCompartment != null ? selectedGasCompartment.elastanceModel.ElKMaxVolume : 0;
+            }
+            set
+            {
+                if (selectedGasCompartment != null)
+                {
+                    selectedGasCompartment.elastanceModel.ElKMaxVolume = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElK2Gas
+        {
+            get
+            {
+                return selectedGasCompartment != null ? selectedGasCompartment.elastanceModel.ElK2 : 0;
+            }
+            set
+            {
+                if (selectedGasCompartment != null)
+                {
+                    selectedGasCompartment.elastanceModel.ElK2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool IsEnabledGas
+        {
+            get
+            {
+                return selectedGasCompartment != null ? selectedGasCompartment.IsEnabled : true;
+            }
+            set
+            {
+                if (selectedGasCompartment != null)
+                {
+                    selectedGasCompartment.IsEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool HasFixedVolumeGas
+        {
+            get
+            {
+                return selectedGasCompartment != null ? selectedGasCompartment.HasFixedVolume : true;
+            }
+            set
+            {
+                if (selectedGasCompartment != null)
+                {
+                    selectedGasCompartment.HasFixedVolume = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool HasFixedCompositionGas
+        {
+            get
+            {
+                return selectedGasCompartment != null ? selectedGasCompartment.FixedGasComposition : true;
+            }
+            set
+            {
+                if (selectedGasCompartment != null)
+                {
+                    selectedGasCompartment.FixedGasComposition = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region "bloodcompartment connector"
+        void ChangeSelectedConnector(object p)
+        {
+            selectedConnector = (Connector)p;
+            ResForward = selectedConnector.resistance.RForwardBaseline;
+            ResBackward = selectedConnector.resistance.RBackwardBaseline;
+            ResK1 = selectedConnector.resistance.RK1;
+            ResK2 = selectedConnector.resistance.RK2;
+            IsCoupledRes = selectedConnector.resistance.ResCoupled;
+            NoBackFlowRes = selectedConnector.NoBackFlow;
+            IsEnabledRes = selectedConnector.IsEnabled;
+
+        }
+        public double ResForward
+        {
+            get
+            {
+                return selectedConnector != null ? selectedConnector.resistance.RForwardBaseline : 0;
+            }
+            set
+            {
+                if (selectedConnector != null)
+                {
+                    selectedConnector.resistance.RForwardBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ResBackward
+        {
+            get
+            {
+                return selectedConnector != null ? selectedConnector.resistance.RBackwardBaseline : 0;
+            }
+            set
+            {
+                if (selectedConnector != null)
+                {
+                    selectedConnector.resistance.RBackwardBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ResK1
+        {
+            get
+            {
+                return selectedConnector != null ? selectedConnector.resistance.RK1 : 0;
+            }
+            set
+            {
+                if (selectedConnector != null)
+                {
+                    selectedConnector.resistance.RK1 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ResK2
+        {
+            get
+            {
+                return selectedConnector != null ? selectedConnector.resistance.RK2 : 0;
+            }
+            set
+            {
+                if (selectedConnector != null)
+                {
+                    selectedConnector.resistance.RK2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool IsCoupledRes
+        {
+            get
+            {
+                return selectedConnector != null ? selectedConnector.resistance.ResCoupled : false;
+            }
+            set
+            {
+                if (selectedConnector != null)
+                {
+                    selectedConnector.resistance.ResCoupled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool NoBackFlowRes
+        {
+            get
+            {
+                return selectedConnector != null ? selectedConnector.NoBackFlow : false;
+            }
+            set
+            {
+                if (selectedConnector != null)
+                {
+                    selectedConnector.NoBackFlow = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool IsEnabledRes
+        {
+            get
+            {
+                return selectedConnector != null ? selectedConnector.IsEnabled : false;
+            }
+            set
+            {
+                if (selectedConnector != null)
+                {
+                    selectedConnector.IsEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region "container compartments"
+        void ChangeSelectedContainer(object p)
+        {
+            selectedContainer = (ContainerCompartment)p;
+            UVolCont = selectedContainer.VolUBaseline;
+            ElBaselineCont = selectedContainer.elastanceModel.ElBaseline;
+            ElContractionBaselineCont = selectedContainer.elastanceModel.ElContractionBaseline;
+            ElKMinVolumeCont = selectedContainer.elastanceModel.ElKMinVolume;
+            ElK1Cont = selectedContainer.elastanceModel.ElK1;
+            ElKMaxVolumeCont = selectedContainer.elastanceModel.ElKMaxVolume;
+            ElK2Cont = selectedContainer.elastanceModel.ElK2;
+
+            foreach (Compartment c in selectedContainer.bloodCompartments)
+            {
+                containedCompartments.Add(c);
+            }
+            foreach (Compartment c in selectedContainer.gasCompartments)
+            {
+                containedCompartments.Add(c);
+            }
+
+        }
+        public double UVolCont
+        {
+            get
+            {
+                return selectedContainer != null ? selectedContainer.VolUBaseline : 0;
+            }
+            set
+            {
+                if (selectedContainer != null)
+                {
+                    selectedContainer.VolUBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElBaselineCont
+        {
+            get
+            {
+                return selectedContainer != null ? selectedContainer.elastanceModel.ElBaseline : 0;
+            }
+            set
+            {
+                if (selectedContainer != null)
+                {
+                    selectedContainer.elastanceModel.ElBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElContractionBaselineCont
+        {
+            get
+            {
+                return selectedContainer != null ? selectedContainer.elastanceModel.ElContractionBaseline : 0;
+            }
+            set
+            {
+                if (selectedContainer != null)
+                {
+                    selectedContainer.elastanceModel.ElContractionBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElKMinVolumeCont
+        {
+            get
+            {
+                return selectedContainer != null ? selectedContainer.elastanceModel.ElKMinVolume : 0;
+            }
+            set
+            {
+                if (selectedContainer != null)
+                {
+                    selectedContainer.elastanceModel.ElKMinVolume = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElK1Cont
+        {
+            get
+            {
+                return selectedContainer != null ? selectedContainer.elastanceModel.ElK1 : 0;
+            }
+            set
+            {
+                if (selectedContainer != null)
+                {
+                    selectedContainer.elastanceModel.ElK1 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElKMaxVolumeCont
+        {
+            get
+            {
+                return selectedContainer != null ? selectedContainer.elastanceModel.ElKMaxVolume : 0;
+            }
+            set
+            {
+                if (selectedContainer != null)
+                {
+                    selectedContainer.elastanceModel.ElKMaxVolume = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double ElK2Cont
+        {
+            get
+            {
+                return selectedContainer != null ? selectedContainer.elastanceModel.ElK2 : 0;
+            }
+            set
+            {
+                if (selectedContainer != null)
+                {
+                    selectedContainer.elastanceModel.ElK2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        #endregion
+
+        #region "gasexchange units"
+        void ChangeSelectedGex(object p)
+        {
+            selectedGex = (GasExchangeBlock)p;
+            CompBloodGex = selectedGex.CompBlood.Description;
+            CompGasGex = selectedGex.CompGas.Description;
+            DiffO2Gex = selectedGex.DiffCoO2Baseline;
+            DiffCO2Gex = selectedGex.DiffCoCo2Baseline;
+            DiffN2Gex = selectedGex.DiffCoN2Baseline;
+            DiffOtherGex = selectedGex.DiffCoOtherBaseline;
+
+
+        }
+        public string CompBloodGex
+        {
+            get
+            {
+                return selectedGex != null ? selectedGex.CompBlood.Description : "";
+            }
+            set
+            {
+                if (selectedGex != null)
+                {
+                    selectedGex.CompBlood.Description = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public string CompGasGex
+        {
+            get
+            {
+                return selectedGex != null ? selectedGex.CompGas.Description : "";
+            }
+            set
+            {
+                if (selectedGex != null)
+                {
+                    selectedGex.CompGas.Description = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DiffO2Gex
+        {
+            get
+            {
+                return selectedGex != null ? selectedGex.DiffCoO2Baseline : 0;
+            }
+            set
+            {
+                if (selectedGex != null)
+                {
+                    selectedGex.DiffCoO2Baseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DiffCO2Gex
+        {
+            get
+            {
+                return selectedGex != null ? selectedGex.DiffCoCo2Baseline : 0;
+            }
+            set
+            {
+                if (selectedGex != null)
+                {
+                    selectedGex.DiffCoCo2Baseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DiffN2Gex
+        {
+            get
+            {
+                return selectedGex != null ? selectedGex.DiffCoN2Baseline : 0;
+            }
+            set
+            {
+                if (selectedGex != null)
+                {
+                    selectedGex.DiffCoN2Baseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DiffOtherGex
+        {
+            get
+            {
+                return selectedGex != null ? selectedGex.DiffCoOtherBaseline : 0;
+            }
+            set
+            {
+                if (selectedGex != null)
+                {
+                    selectedGex.DiffCoOtherBaseline = value;
+                    OnPropertyChanged();
+                }
             }
         }
         #endregion

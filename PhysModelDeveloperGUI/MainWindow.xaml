@@ -423,96 +423,46 @@
                                     </ComboBox>
 
                                     <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="> unstressed volume" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Value="{Binding UVol, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Value="{Binding UVolBlood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="> baseline elastance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Value="{Binding ElBaseline, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Value="{Binding ElBaselineBlood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Text="mmHg/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> contraction elastance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Value="{Binding ElContractionBaseline, Mode=TwoWay}" Margin="0,2,0,2" FontSize="10">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Value="{Binding ElContractionBaselineBlood, Mode=TwoWay}" Margin="0,2,0,2" FontSize="10"/>
                                     <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="mmHg/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="> min vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Value="{Binding ElKMinVolume, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Value="{Binding ElKMinVolumeBlood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Text="> min vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Value="{Binding ElK1, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Value="{Binding ElK1Blood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Text="> max vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Value="{Binding ElKMaxVolume, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Value="{Binding ElKMaxVolumeBlood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="> max vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Value="{Binding ElK2, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Value="{Binding ElK2Blood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Text="> fraction oxygen use" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="8" Value="{Binding FVO2, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Text="> fraction ATP use" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="8" Value="{Binding FVATP, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="8" Grid.ColumnSpan="2" Text="fraction" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Text="> is enabled" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <CheckBox Grid.Column="2" Grid.Row="9" IsChecked="{Binding IsEnabled}" Margin="0,5,0,0" ></CheckBox>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="> has fixed composition" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <CheckBox Grid.Column="2" Grid.Row="10" IsChecked="{Binding HasFixedComposition}" Margin="0,5,0,0" ></CheckBox>
+                                    <CheckBox Grid.Column="2" Grid.Row="9" IsChecked="{Binding IsEnabledBlood}" Margin="0,5,0,0" ></CheckBox>
 
                                     <TextBlock Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="2" Text="> has fixed volume" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <CheckBox Grid.Column="2" Grid.Row="11" IsChecked="{Binding HasFixedVolume}" Margin="0,5,0,0" ></CheckBox>
+                                    <CheckBox Grid.Column="2" Grid.Row="11" IsChecked="{Binding HasFixedVolumeBlood}" Margin="0,5,0,0" ></CheckBox>
+                                    
+                                    
 
-                                    <TextBlock Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="4" Text="Current elastance curve" FontSize="10" FontWeight="Bold" Margin="5,10,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"></TextBlock>
-                                </Grid>
+                                   </Grid>
 
                             </Border>
                         </Expander>
@@ -554,95 +504,42 @@
                                     </ComboBox>
 
                                     <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="> unstressed volume" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Value="{Binding UVol, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Value="{Binding UVolGas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="> baseline elastance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Value="{Binding ElBaseline, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Value="{Binding ElBaselineGas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Text="mmHg/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> contraction elastance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Value="{Binding ElContractionBaseline, Mode=TwoWay}" Margin="0,2,0,2" FontSize="10">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Value="{Binding ElContractionBaselineGas, Mode=TwoWay}" Margin="0,2,0,2" FontSize="10"/>
                                     <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="mmHg/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="> min vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Value="{Binding ElKMinVolume, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Value="{Binding ElKMinVolumeGas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Text="> min vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Value="{Binding ElK1, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Value="{Binding ElK1Gas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Text="> max vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Value="{Binding ElKMaxVolume, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Value="{Binding ElKMaxVolumeGas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="> max vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Value="{Binding ElK2, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Value="{Binding ElK2Gas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                 
+                                    <TextBlock Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Text="> is enabled" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
+                                    <CheckBox Grid.Column="2" Grid.Row="8" IsChecked="{Binding IsEnabledGas}" Margin="0,5,0,0" ></CheckBox>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Text="> fraction oxygen use" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="8" Value="{Binding FVO2, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="3" Grid.Row="8" Grid.ColumnSpan="2" Text="fraction" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Text="> fixed composition" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
+                                    <CheckBox Grid.Column="2" Grid.Row="9" IsChecked="{Binding HasFixedCompositionGas}" Margin="0,5,0,0" ></CheckBox>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Text="> is enabled" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <CheckBox Grid.Column="2" Grid.Row="9" IsChecked="{Binding IsEnabled}" Margin="0,5,0,0" ></CheckBox>
+                                    <TextBlock Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="> has fixed volume" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
+                                    <CheckBox Grid.Column="2" Grid.Row="10" IsChecked="{Binding HasFixedVolumeGas}" Margin="0,5,0,0" ></CheckBox>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="> has fixed composition" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <CheckBox Grid.Column="2" Grid.Row="10" IsChecked="{Binding HasFixedComposition}" Margin="0,5,0,0" ></CheckBox>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="2" Text="> has fixed volume" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <CheckBox Grid.Column="2" Grid.Row="11" IsChecked="{Binding HasFixedVolume}" Margin="0,5,0,0" ></CheckBox>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="4" Text="Current elastance curve" FontSize="10" FontWeight="Bold" Margin="5,10,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"></TextBlock>
                                 </Grid>
 
                             </Border>
@@ -743,6 +640,7 @@
                                         <RowDefinition Height="*"/>
 
                                     </Grid.RowDefinitions>
+
                                     <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Margin="5,0,0,0" Text="select container " FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
                                     <ComboBox x:Name="cmbContainers" ItemsSource="{Binding containers}"  DisplayMemberPath="Description" Margin="0,0,5,0" FontSize="10" Height="20" Grid.ColumnSpan="2" Grid.Column="2" >
                                         <i:Interaction.Triggers>
@@ -758,66 +656,28 @@
                                     </ListBox>
 
                                     <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="> unstressed volume" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Value="{Binding UVolCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphContainerCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Value="{Binding UVolCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> baseline elastance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Value="{Binding ElBaselineCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphContainerCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Value="{Binding ElBaselineCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="mmHg/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="> min vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Value="{Binding ElKMinVolumeCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphContainerCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Value="{Binding ElKMinVolumeCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Text="> min vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Value="{Binding ElK1Cont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphContainerCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Value="{Binding ElK1Cont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Text="> max vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Value="{Binding ElKMaxVolumeCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphContainerCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Value="{Binding ElKMaxVolumeCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="> max vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Value="{Binding ElK2Cont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding DrawElastanceGraphContainerCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Value="{Binding ElK2Cont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" Text="Current elastance curve" FontSize="10" FontWeight="Bold" Margin="5,10,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"></TextBlock>
 
                                 </Grid>
                             </Border>
@@ -1850,7 +1710,7 @@
             <StackPanel Margin="10,0,10,0">
                 <Expander IsExpanded="{Binding DiagramVisible, Mode=TwoWay}" Margin="0,0,0,10"  Header="Model diagram" Background="DarkSlateGray" Padding="5,5,5,5" Foreground="White" BorderThickness="0">
                     <Border BorderBrush="White"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="White" >
-                        <local:ModelDiagram x:Name="graphDiagram" Margin="10,10,10,10"  Height="350"></local:ModelDiagram>
+                        <local:ModelDiagram x:Name="graphDiagram" Margin="10,10,10,10"  Height="500"></local:ModelDiagram>
                     </Border>
                 </Expander>
                 
