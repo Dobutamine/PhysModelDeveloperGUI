@@ -1844,6 +1844,29 @@ namespace PhysModelDeveloperGUI
             }
         }
 
+        double _lowerAirwayResistanceChange = 0;
+        public double LowerAirwayResistanceChange
+        {
+            get
+            {
+                return _lowerAirwayResistanceChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+                    _lowerAirwayResistanceChange = value;
+                    currentModel.modelInterface.AdjustLowerAirwayResistance(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _lowerAirwayResistanceChange = 0;
+                }
+            }
+        }
+
 
         double _airwayComplianceChange = 0;
         public double AirwayComplianceChange
