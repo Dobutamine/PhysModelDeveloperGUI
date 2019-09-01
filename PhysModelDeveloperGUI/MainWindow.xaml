@@ -1751,6 +1751,7 @@
                         </ListBox>
                     </Border>
                 </Expander>
+                <Button Command="{Binding AddDrugCommand}" Content="TEST BUTTTON"></Button>
             </StackPanel>
         </ScrollViewer>
         <TextBlock Text="MONITORING" Grid.Column="2" TextAlignment="Center" Foreground="Black" FontWeight="DemiBold" FontSize="14" Margin="0,25,0,0"></TextBlock>

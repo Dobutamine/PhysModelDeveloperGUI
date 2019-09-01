@@ -2,6 +2,7 @@
 using PhysModelLibrary.BaseClasses;
 using PhysModelLibrary.Compartments;
 using PhysModelLibrary.Connectors;
+using PhysModelLibrary.Models;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -86,6 +87,8 @@ namespace PhysModelDeveloperGUI
         public RelayCommand ListBoxUpdatedCommand { get; set; }
         public RelayCommand ExitCommand { get; set; }
 
+        public RelayCommand AddDrugCommand { get; set; }
+
         BloodCompartment selectedBloodCompartment { get; set; }
         GasCompartment selectedGasCompartment { get; set; }
         Connector selectedConnector { get; set; }
@@ -119,9 +122,33 @@ namespace PhysModelDeveloperGUI
             NewModelCommand = new RelayCommand(NewModel);
             ExitCommand = new RelayCommand(ExitProgram);
             ChangeRhythmCommand = new RelayCommand(ChangeRhythm);
+            AddDrugCommand = new RelayCommand(AddDrug);
 
         }
    
+        void AddDrug(object p)
+        {
+            Drug newDrug = new Drug()
+            {
+                TotalConcentration = 50,
+                RenalClearanceRate = 1,
+                MetabolicRate = 0.05,
+               
+            };
+
+            DrugEffect newEffect = new DrugEffect()
+            {
+                EffectSite = 1,
+                DoseDependent = true,
+                TimeConstant = 5,
+                Gain = .02
+            };
+
+            newDrug.DrugEffects.Add(newEffect);
+
+
+            currentModel.drugModel.AddNewDrugToModel(newDrug);
+        }
         void ExitProgram(object p)
         {
             App.Current.Shutdown();
