@@ -29,7 +29,7 @@ namespace PhysModelDeveloperGUI
 
         readonly DispatcherTimer updateTimer = new DispatcherTimer(DispatcherPriority.Render);
         int slowUpdater = 0;
-        int graphicsRefreshInterval = 30;
+        int graphicsRefreshInterval = 15;
 
         private bool diagramVisible = false;
 
@@ -213,9 +213,17 @@ namespace PhysModelDeveloperGUI
             // Process open file dialog box results
             if (result == true)
             {
+                selectedBloodCompartment = null;
+                selectedConnector = null;
+                selectedContainer = null;
+                selectedGasCompartment = null;
+                selectedGex = null;
+
                 // Open document
                 currentModel.modelInterface.LoadModelState(dlg.FileName);
                 currentModel.Start();
+                ConstructComponentLists();
+                BuildModelDiagram();
             }
         }
         void NewModel(object p)
@@ -1789,6 +1797,53 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
+        
+
+        double _upperAirwayResistanceChange = 0;
+        public double UpperAirwayResistanceChange
+        {
+            get
+            {
+                return _upperAirwayResistanceChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+                    _upperAirwayResistanceChange = value;
+                    currentModel.modelInterface.AdjustUpperAirwayResistance(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _upperAirwayResistanceChange = 0;
+                }
+            }
+        }
+        double _etTubeResistanceChange = 0;
+        public double EtTubeResistanceChange
+        {
+            get
+            {
+                return _etTubeResistanceChange;
+            }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+                    _etTubeResistanceChange = value;
+                    currentModel.modelInterface.AdjustETTubeResistance(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _etTubeResistanceChange = 0;
+                }
+            }
+        }
+
 
         double _airwayComplianceChange = 0;
         public double AirwayComplianceChange
@@ -1835,25 +1890,25 @@ namespace PhysModelDeveloperGUI
             }
         }
 
-        double _lungDiffCapacity = 0;
-        public double LungDiffusionCapacity
+        double _lungDiffCapacityChange = 0;
+        public double LungDiffusionCapacityChange
         {
             get
             {
-                return _lungDiffCapacity;
+                return _lungDiffCapacityChange;
             }
             set
             {
                 if (currentModel.modelInterface != null && !double.IsNaN(value))
                 {
-                    _lungDiffCapacity = value;
+                    _lungDiffCapacityChange = value;
                     currentModel.modelInterface.AdjustLungDiffusionCapacity(value);
 
                     OnPropertyChanged();
                 }
                 else
                 {
-                    _lungDiffCapacity = 0;
+                    _lungDiffCapacityChange = 0;
                 }
             }
         }
@@ -2479,11 +2534,15 @@ namespace PhysModelDeveloperGUI
         public void InitModelDiagram(ModelDiagram p)
         {
             GraphModelDiagram = p;
+            BuildModelDiagram();    
+
+        }
+        void BuildModelDiagram()
+        {
             GraphModelDiagram.InitModelDiagram(currentModel);
             GraphModelDiagram.BuildDiagram();
             GraphModelDiagram.UpdateSkeleton();
             GraphModelDiagram.UpdatedMainDiagram();
-
         }
         public void InitTrendGraph(TimeBasedGraph p)
         {
@@ -2544,17 +2603,22 @@ namespace PhysModelDeveloperGUI
         #region "bloodcompartment settings"
         void ChangeSelectedBloodCompartment(object p)
         {
+            
             selectedBloodCompartment = (BloodCompartment)p;
-            UVolBlood = selectedBloodCompartment.VolUBaseline;
-            ElBaselineBlood = selectedBloodCompartment.elastanceModel.ElBaseline;
-            ElContractionBaselineBlood = selectedBloodCompartment.elastanceModel.ElContractionBaseline;
-            ElKMinVolumeBlood = selectedBloodCompartment.elastanceModel.ElKMinVolume;
-            ElK1Blood = selectedBloodCompartment.elastanceModel.ElK1;
-            ElKMaxVolumeBlood = selectedBloodCompartment.elastanceModel.ElKMaxVolume;
-            ElK2Blood = selectedBloodCompartment.elastanceModel.ElK2;
-            FVATP = selectedBloodCompartment.LocalVATPFactor;
-            IsEnabledBlood = selectedBloodCompartment.IsEnabled;
-            HasFixedVolumeBlood = selectedBloodCompartment.HasFixedVolume;
+            if (selectedBloodCompartment != null)
+            {
+                UVolBlood = selectedBloodCompartment.VolUBaseline;
+                ElBaselineBlood = selectedBloodCompartment.elastanceModel.ElBaseline;
+                ElContractionBaselineBlood = selectedBloodCompartment.elastanceModel.ElContractionBaseline;
+                ElKMinVolumeBlood = selectedBloodCompartment.elastanceModel.ElKMinVolume;
+                ElK1Blood = selectedBloodCompartment.elastanceModel.ElK1;
+                ElKMaxVolumeBlood = selectedBloodCompartment.elastanceModel.ElKMaxVolume;
+                ElK2Blood = selectedBloodCompartment.elastanceModel.ElK2;
+                FVATP = selectedBloodCompartment.LocalVATPFactor;
+                IsEnabledBlood = selectedBloodCompartment.IsEnabled;
+                HasFixedVolumeBlood = selectedBloodCompartment.HasFixedVolume;
+            }
+           
 
         }
         public double UVolBlood
@@ -2713,16 +2777,20 @@ namespace PhysModelDeveloperGUI
         void ChangeSelectedGasCompartment(object p)
         {
             selectedGasCompartment = (GasCompartment)p;
-            UVolGas = selectedGasCompartment.VolUBaseline;
-            ElBaselineGas = selectedGasCompartment.elastanceModel.ElBaseline;
-            ElContractionBaselineGas = selectedGasCompartment.elastanceModel.ElContractionBaseline;
-            ElKMinVolumeGas = selectedGasCompartment.elastanceModel.ElKMinVolume;
-            ElK1Gas = selectedGasCompartment.elastanceModel.ElK1;
-            ElKMaxVolumeGas = selectedGasCompartment.elastanceModel.ElKMaxVolume;
-            ElK2Gas = selectedGasCompartment.elastanceModel.ElK2;
-            IsEnabledGas = selectedGasCompartment.IsEnabled;
-            HasFixedVolumeGas = selectedGasCompartment.HasFixedVolume;
-            HasFixedCompositionGas = selectedGasCompartment.FixedGasComposition;
+            if (selectedGasCompartment != null)
+            {
+                UVolGas = selectedGasCompartment.VolUBaseline;
+                ElBaselineGas = selectedGasCompartment.elastanceModel.ElBaseline;
+                ElContractionBaselineGas = selectedGasCompartment.elastanceModel.ElContractionBaseline;
+                ElKMinVolumeGas = selectedGasCompartment.elastanceModel.ElKMinVolume;
+                ElK1Gas = selectedGasCompartment.elastanceModel.ElK1;
+                ElKMaxVolumeGas = selectedGasCompartment.elastanceModel.ElKMaxVolume;
+                ElK2Gas = selectedGasCompartment.elastanceModel.ElK2;
+                IsEnabledGas = selectedGasCompartment.IsEnabled;
+                HasFixedVolumeGas = selectedGasCompartment.HasFixedVolume;
+                HasFixedCompositionGas = selectedGasCompartment.FixedGasComposition;
+            }
+   
         }
         public double UVolGas
         {
@@ -2880,13 +2948,17 @@ namespace PhysModelDeveloperGUI
         void ChangeSelectedConnector(object p)
         {
             selectedConnector = (Connector)p;
-            ResForward = selectedConnector.resistance.RForwardBaseline;
-            ResBackward = selectedConnector.resistance.RBackwardBaseline;
-            ResK1 = selectedConnector.resistance.RK1;
-            ResK2 = selectedConnector.resistance.RK2;
-            IsCoupledRes = selectedConnector.resistance.ResCoupled;
-            NoBackFlowRes = selectedConnector.NoBackFlow;
-            IsEnabledRes = selectedConnector.IsEnabled;
+            if (selectedConnector != null)
+            {
+                ResForward = selectedConnector.resistance.RForwardBaseline;
+                ResBackward = selectedConnector.resistance.RBackwardBaseline;
+                ResK1 = selectedConnector.resistance.RK1;
+                ResK2 = selectedConnector.resistance.RK2;
+                IsCoupledRes = selectedConnector.resistance.ResCoupled;
+                NoBackFlowRes = selectedConnector.NoBackFlow;
+                IsEnabledRes = selectedConnector.IsEnabled;
+            }
+        
 
         }
         public double ResForward
@@ -3000,22 +3072,26 @@ namespace PhysModelDeveloperGUI
         void ChangeSelectedContainer(object p)
         {
             selectedContainer = (ContainerCompartment)p;
-            UVolCont = selectedContainer.VolUBaseline;
-            ElBaselineCont = selectedContainer.elastanceModel.ElBaseline;
-            ElContractionBaselineCont = selectedContainer.elastanceModel.ElContractionBaseline;
-            ElKMinVolumeCont = selectedContainer.elastanceModel.ElKMinVolume;
-            ElK1Cont = selectedContainer.elastanceModel.ElK1;
-            ElKMaxVolumeCont = selectedContainer.elastanceModel.ElKMaxVolume;
-            ElK2Cont = selectedContainer.elastanceModel.ElK2;
+            if (selectedContainer != null)
+            {
+                UVolCont = selectedContainer.VolUBaseline;
+                ElBaselineCont = selectedContainer.elastanceModel.ElBaseline;
+                ElContractionBaselineCont = selectedContainer.elastanceModel.ElContractionBaseline;
+                ElKMinVolumeCont = selectedContainer.elastanceModel.ElKMinVolume;
+                ElK1Cont = selectedContainer.elastanceModel.ElK1;
+                ElKMaxVolumeCont = selectedContainer.elastanceModel.ElKMaxVolume;
+                ElK2Cont = selectedContainer.elastanceModel.ElK2;
 
-            foreach (Compartment c in selectedContainer.bloodCompartments)
-            {
-                containedCompartments.Add(c);
+                foreach (Compartment c in selectedContainer.bloodCompartments)
+                {
+                    containedCompartments.Add(c);
+                }
+                foreach (Compartment c in selectedContainer.gasCompartments)
+                {
+                    containedCompartments.Add(c);
+                }
             }
-            foreach (Compartment c in selectedContainer.gasCompartments)
-            {
-                containedCompartments.Add(c);
-            }
+           
 
         }
         public double UVolCont
@@ -3130,14 +3206,15 @@ namespace PhysModelDeveloperGUI
         void ChangeSelectedGex(object p)
         {
             selectedGex = (GasExchangeBlock)p;
-            CompBloodGex = selectedGex.CompBlood.Description;
-            CompGasGex = selectedGex.CompGas.Description;
-            DiffO2Gex = selectedGex.DiffCoO2Baseline;
-            DiffCO2Gex = selectedGex.DiffCoCo2Baseline;
-            DiffN2Gex = selectedGex.DiffCoN2Baseline;
-            DiffOtherGex = selectedGex.DiffCoOtherBaseline;
-
-
+            if (selectedGex != null)
+            {
+                CompBloodGex = selectedGex.CompBlood.Description;
+                CompGasGex = selectedGex.CompGas.Description;
+                DiffO2Gex = selectedGex.DiffCoO2Baseline;
+                DiffCO2Gex = selectedGex.DiffCoCo2Baseline;
+                DiffN2Gex = selectedGex.DiffCoN2Baseline;
+                DiffOtherGex = selectedGex.DiffCoOtherBaseline;
+            }
         }
         public string CompBloodGex
         {
