@@ -56,6 +56,20 @@
             </Style.Triggers>
         </Style>
 
+        <Style TargetType="{x:Type ex:DoubleUpDown}">
+            <Setter Property="Increment">
+                <Setter.Value>
+                    0.1
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Minimum">
+                <Setter.Value>
+                    0
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
 
     </Window.Resources>
     <Grid>
@@ -413,7 +427,7 @@
                                         <RowDefinition Height="*"/>
 
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Margin="5,0,0,0" Text="select blood compartment " FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Margin="5,0,0,0" Text="blood compartment " FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
                                     <ComboBox x:Name="cmbBloodCompartments" ItemsSource="{Binding bloodcompartments}"  DisplayMemberPath="Description" Margin="0,0,5,0" FontSize="10" Height="20" Grid.ColumnSpan="2" Grid.Column="2" >
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="SelectionChanged">
@@ -423,35 +437,35 @@
                                     </ComboBox>
 
                                     <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="> unstressed volume" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Value="{Binding UVolBlood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Increment="0.1" Minimum="0" Value="{Binding UVolBlood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="> baseline elastance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Value="{Binding ElBaselineBlood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Increment="0.01" Minimum="0"  Value="{Binding ElBaselineBlood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Text="mmHg/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> contraction elastance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Value="{Binding ElContractionBaselineBlood, Mode=TwoWay}" Margin="0,2,0,2" FontSize="10"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Increment="0.01" Minimum="0"  Value="{Binding ElContractionBaselineBlood, Mode=TwoWay}" Margin="0,2,0,2" FontSize="10"/>
                                     <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="mmHg/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="> min vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Value="{Binding ElKMinVolumeBlood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Increment="0.1"  Value="{Binding ElKMinVolumeBlood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Text="> min vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Value="{Binding ElK1Blood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Increment="0.01" Minimum="0"  Value="{Binding ElK1Blood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Text="> max vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Value="{Binding ElKMaxVolumeBlood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Increment="0.1"  Value="{Binding ElKMaxVolumeBlood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="> max vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Value="{Binding ElK2Blood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Increment="0.01" Minimum="0"  Value="{Binding ElK2Blood, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Text="> fraction ATP use" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="8" Value="{Binding FVATP, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="8" Increment="0.01" Minimum="0" Maximum="1"  Value="{Binding FVATP, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="8" Grid.ColumnSpan="2" Text="fraction" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Text="> is enabled" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
@@ -504,31 +518,31 @@
                                     </ComboBox>
 
                                     <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="> unstressed volume" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Value="{Binding UVolGas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Increment="0.1" Minimum="0" Value="{Binding UVolGas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="> baseline elastance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Value="{Binding ElBaselineGas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Increment="0.01" Minimum="0" Value="{Binding ElBaselineGas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Text="mmHg/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> contraction elastance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Value="{Binding ElContractionBaselineGas, Mode=TwoWay}" Margin="0,2,0,2" FontSize="10"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Increment="0.01" Minimum="0"  Value="{Binding ElContractionBaselineGas, Mode=TwoWay}" Margin="0,2,0,2" FontSize="10"/>
                                     <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="mmHg/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="> min vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Value="{Binding ElKMinVolumeGas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Increment="0.1" Value="{Binding ElKMinVolumeGas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Text="> min vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Value="{Binding ElK1Gas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Increment="0.01"   Value="{Binding ElK1Gas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Text="> max vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Value="{Binding ElKMaxVolumeGas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Increment="0.1" Value="{Binding ElKMaxVolumeGas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="> max vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Value="{Binding ElK2Gas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Increment="0.01"  Value="{Binding ElK2Gas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
                                  
                                     <TextBlock Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Text="> is enabled" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
@@ -583,20 +597,20 @@
                                     </ComboBox>
 
                                     <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="> forward resistance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Value="{Binding ResForward, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Increment="0.1" Minimum="0.01"  Value="{Binding ResForward, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
                                     </ex:DoubleUpDown>
                                     <TextBlock Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Text="mmHg/sec/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="> backward resistance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Value="{Binding ResBackward, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Increment="0.1" Minimum="0.01" Value="{Binding ResBackward, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Text="mmHg/sec/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> resistance K1" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Value="{Binding ResK1, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Increment="0.01" Value="{Binding ResK1, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="> resistance K2" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Value="{Binding ResK2, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Increment="0.01" Value="{Binding ResK2, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Text="> resistance coupling" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
@@ -656,27 +670,27 @@
                                     </ListBox>
 
                                     <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="> unstressed volume" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Value="{Binding UVolCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Increment="0.1" Value="{Binding UVolCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> baseline elastance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Value="{Binding ElBaselineCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Increment="0.01" Value="{Binding ElBaselineCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="mmHg/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="> min vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Value="{Binding ElKMinVolumeCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Increment="0.1" Value="{Binding ElKMinVolumeCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Text="> min vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Value="{Binding ElK1Cont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Increment="0.01" Value="{Binding ElK1Cont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Text="> max vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Value="{Binding ElKMaxVolumeCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Increment="0.1" Value="{Binding ElKMaxVolumeCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="> max vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Value="{Binding ElK2Cont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Increment="0.01" Value="{Binding ElK2Cont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                 </Grid>
@@ -722,19 +736,19 @@
                                     <TextBlock Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding CompGasGex}" FontSize="10" Margin="5,5,5,5" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> diffusion O2" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Value="{Binding DiffO2Gex, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Increment="0.000001" Minimum="0" Value="{Binding DiffO2Gex, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="> diffusion CO2" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Value="{Binding DiffCO2Gex, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Increment="0.000001" Minimum="0" Value="{Binding DiffCO2Gex, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Text="> diffusion N2" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Value="{Binding DiffN2Gex, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Increment="0.000001" Minimum="0" Value="{Binding DiffN2Gex, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Text="> diffusion other gasses" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Value="{Binding DiffOtherGex, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Increment="0.000001" Minimum="0" Value="{Binding DiffOtherGex, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
 
@@ -776,7 +790,7 @@
                                             <TextBlock Grid.Column="2" Grid.Row="0" Text="mmHg" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                             <TextBlock Grid.Column="0" Grid.Row="1" FontSize="10" Text="operating point"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                            <ex:DoubleUpDown Grid.Row="1" Grid.Column="1"  Value="{Binding OpMAP,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                            <ex:DoubleUpDown Grid.Row="1" Grid.Column="1" Value="{Binding OpMAP,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
                                             <TextBlock Grid.Column="2" Grid.Row="1" Text="mmHg" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                             <TextBlock Grid.Column="0" Grid.Row="2" FontSize="10" Text="threshold"   Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
@@ -1012,7 +1026,7 @@
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
-
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Grid.Column="0" Grid.Row="0" FontSize="10" Text="spontaneous breathing" Margin="0,0,0,5"></TextBlock>
@@ -1049,6 +1063,13 @@
                                     <TextBlock Grid.Column="0" Grid.Row="8" FontSize="10" Text="apnoe duration randomness"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Row="8" Grid.Column="1" Value="{Binding ApnoeDurationRand,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="2" Grid.Row="8" Text="ml/min" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="9" FontSize="10" Text="inspired oxygen concentration"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Row="9" Grid.Column="1" Increment="0.01" Minimum="0.21" Maximum="1" Value="{Binding FiO2,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="9" Text="" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                 
+
 
                                 </Grid>
                             </Border>
@@ -1116,6 +1137,9 @@
                                     <ex:DoubleUpDown Grid.Row="9" Grid.Column="1" Value="{Binding Vent_TriggerVolume,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="2" Grid.Row="9" Text="ml" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
+                                    <TextBlock Grid.Column="0" Grid.Row="10" FontSize="10" Text="inspired oxygen concentration"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Row="10" Grid.Column="1" Increment="0.01" Minimum="0.21" Maximum="1"  Value="{Binding FiO2,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="10" Text="" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
                                 </Grid>
                             </Border>
                         </Expander>

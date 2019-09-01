@@ -75,6 +75,7 @@ namespace PhysModelDeveloperGUI
         TimeBasedGraph BloodgasGraph { get; set; }
 
         public RelayCommand ChangeBloodCompartmentCommand { get; set; }
+        public RelayCommand ChangeRhythmCommand { get; set; }
         public RelayCommand ChangeGasCompartmentCommand { get; set; }
         public RelayCommand ChangeConnectorCommand { get; set; }
         public RelayCommand ChangeGexUnitCommand { get; set; }
@@ -117,6 +118,8 @@ namespace PhysModelDeveloperGUI
             LoadModelStateCommand = new RelayCommand(LoadModelState);
             NewModelCommand = new RelayCommand(NewModel);
             ExitCommand = new RelayCommand(ExitProgram);
+            ChangeRhythmCommand = new RelayCommand(ChangeRhythm);
+
         }
    
         void ExitProgram(object p)
@@ -160,8 +163,26 @@ namespace PhysModelDeveloperGUI
             {
                 containers.Add(c);
             }
+
+            rhythmTypes.Add("SINUS");
+            rhythmTypes.Add("PAC");
+            rhythmTypes.Add("PVC");
+            rhythmTypes.Add("AVBLOCK1");
+            rhythmTypes.Add("AVBLOCK2a");
+            rhythmTypes.Add("AVBLOCK2b");
+            rhythmTypes.Add("AVBLOCK Complete");
+            rhythmTypes.Add("VTOUTPUT");
+            rhythmTypes.Add("VF");
+            rhythmTypes.Add("LONGQT");
+            rhythmTypes.Add("WPW");
+            rhythmTypes.Add("SVT");
         }
        
+        void ChangeRhythm(object p)
+        {
+            int selection = (int)p;
+            currentModel.ecg.ChangeRhythm(selection);
+        }
         void SaveModelState(object p)
         {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
@@ -2406,6 +2427,30 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
+
+        private double _fiO2 = 0.21;
+
+        public double FiO2
+        {
+            get { return _fiO2; }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _fiO2 = value;
+
+                    currentModel.modelInterface.AdjustFiO2(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _fiO2 = 0.21;
+                }
+            }
+        }
+
 
         public ObservableCollection<Compartment> bloodcompartments { get; set; } = new ObservableCollection<Compartment>();
         public ObservableCollection<Compartment> gascompartments { get; set; } = new ObservableCollection<Compartment>();

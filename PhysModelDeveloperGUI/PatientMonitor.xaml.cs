@@ -128,7 +128,7 @@ namespace PhysModelDeveloperGUI
             set { param5Unit = value; OnPropertyChanged(); }
         }
 
-        public int GraphicsUpdateInterval { get; set; } = 30;
+        public int GraphicsUpdateInterval { get; set; } = 15;
 
         public bool MonitorVisible
         {
@@ -212,6 +212,7 @@ namespace PhysModelDeveloperGUI
             graph1.ParameterUnit = "/min";
             graph1.GraphTitleColor = new SolidColorBrush(Colors.LimeGreen);
             graph1.GraphPaint1.Color = SKColors.LimeGreen;
+            graph1.xStepSize = 2;
             graph1.AutoScale = true;
 
         }
@@ -227,7 +228,8 @@ namespace PhysModelDeveloperGUI
             graph3.GridXEnabled = false;
             graph3.GridYEnabled = true;
             graph3.GridYMin = 20;
-            graph3.GridYMax = 80;
+            graph3.GridYMax = 100;
+            graph3.xStepSize = 2;
             graph3.GridYStep = 20;
 
         }
@@ -246,6 +248,7 @@ namespace PhysModelDeveloperGUI
             graph2.GridYMin = 20;
             graph2.GridYMax = 80;
             graph2.GridYStep = 20;
+            graph2.xStepSize = 2;
 
 
         }
@@ -257,7 +260,7 @@ namespace PhysModelDeveloperGUI
             graph4.ParameterUnit = "mmHg";
             graph4.GraphTitleColor = new SolidColorBrush(Colors.Yellow);
             graph4.GraphPaint1.Color = SKColors.Yellow;
-            graph4.xStepSize = 2;
+            graph4.xStepSize = 1;
 
             graph4.GridXEnabled = false;
             graph4.GridYEnabled = true;
@@ -273,7 +276,7 @@ namespace PhysModelDeveloperGUI
             graph5.ParameterUnit = "/min";
             graph5.GraphTitleColor = new SolidColorBrush(Colors.White);
             graph5.GraphPaint1.Color = SKColors.White;
-            graph5.xStepSize = 2;
+            graph5.xStepSize = 1;
             graph5.AutoScale = true;
 
 
