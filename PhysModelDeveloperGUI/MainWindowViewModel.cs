@@ -130,7 +130,10 @@ namespace PhysModelDeveloperGUI
         {
             Drug newDrug = new Drug()
             {
+                Name = "caffein",
+                ID = 0,
                 TotalConcentration = 50,
+                HepaticClearanceRate = 0,
                 RenalClearanceRate = 1,
                 MetabolicRate = 0.05,
                
@@ -138,16 +141,21 @@ namespace PhysModelDeveloperGUI
 
             DrugEffect newEffect = new DrugEffect()
             {
-                EffectSite = 1,
+                EffectSite = 0,
+                EffectSize = 0,
+                EffectConcentrationSaturation = 100,
+                EffectConcentrationThreshold = 1,
                 DoseDependent = true,
                 TimeConstant = 5,
-                Gain = .02
+                Gain = 1
             };
 
             newDrug.DrugEffects.Add(newEffect);
 
+            currentModel.modelState.AvailableDrugs.Add(newDrug);
 
-            currentModel.drugModel.AddNewDrugToModel(newDrug);
+
+          
         }
         void ExitProgram(object p)
         {
