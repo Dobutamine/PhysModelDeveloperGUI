@@ -75,6 +75,8 @@ namespace PhysModelDeveloperGUI
         TimeBasedGraph TrendGraph { get; set; }
         TimeBasedGraph BloodgasGraph { get; set; }
 
+        public RelayCommand ChangeDrugEffectCommand { get; set; }
+        public RelayCommand ChangeDrugCommand { get; set; }
         public RelayCommand ChangeBloodCompartmentCommand { get; set; }
         public RelayCommand ChangeRhythmCommand { get; set; }
         public RelayCommand ChangeGasCompartmentCommand { get; set; }
@@ -89,6 +91,8 @@ namespace PhysModelDeveloperGUI
 
         public RelayCommand AddDrugCommand { get; set; }
 
+        DrugEffect selectedDrugEffect { get; set; }
+        Drug selectedDrug { get; set; }
         BloodCompartment selectedBloodCompartment { get; set; }
         GasCompartment selectedGasCompartment { get; set; }
         Connector selectedConnector { get; set; }
@@ -123,37 +127,52 @@ namespace PhysModelDeveloperGUI
             ExitCommand = new RelayCommand(ExitProgram);
             ChangeRhythmCommand = new RelayCommand(ChangeRhythm);
             AddDrugCommand = new RelayCommand(AddDrug);
+            ChangeDrugCommand = new RelayCommand(ChangeSelectedDrug);
+            ChangeDrugEffectCommand = new RelayCommand(ChangeSelectedDrugEffect);
 
         }
    
+        void ChangeSelectedDrug(object p)
+        {
+            selectedDrug = (Drug)p;
+            if (selectedDrug != null)
+            {
+                DrugDose = selectedDrug.Dose;
+                DrugMetabolicRate = selectedDrug.MetabolicRate;
+                DrugRenalClearanceRate = selectedDrug.RenalClearanceRate;
+                DrugHepaticClearanceRate = selectedDrug.HepaticClearanceRate;
+                drugEffects.Clear();
+                foreach(DrugEffect d in selectedDrug.DrugEffects)
+                {
+                    drugEffects.Add(d);
+                }
+         
+
+            }
+        }
+
+        void ChangeSelectedDrugEffect(object p)
+        {
+            selectedDrugEffect = (DrugEffect)p;
+            if (selectedDrugEffect != null)
+            {
+                DrugEffectDoseDependent = selectedDrugEffect.DoseDependent;
+                DrugEffectGain = selectedDrugEffect.Gain;
+                DrugEffectTimeConstant = selectedDrugEffect.TimeConstant;
+                DrugEffectSaturation = selectedDrugEffect.EffectConcentrationSaturation;
+                DrugEffectThreshold = selectedDrugEffect.EffectConcentrationThreshold;
+                DrugEffectSite = selectedDrugEffect.EffectSite;
+
+            }
+        }
         void AddDrug(object p)
         {
-            Drug newDrug = new Drug()
+
+        if (selectedDrug != null)
             {
-                Name = "rocuronium",
-                TotalConcentration = 500,
-                HepaticClearanceRate = 0,
-                RenalClearanceRate = 0.1,
-                MetabolicRate = 0.05,
-               
-            };
+                currentModel.drugModel.AddNewActiveDrug(selectedDrug);
+            }
 
-            DrugEffect newEffect = new DrugEffect()
-            {
-                EffectSite = 20,
-                EffectConcentrationSaturation = 500,
-                EffectConcentrationThreshold = 0.02,
-                DoseDependent = true,
-                TimeConstant = 30,
-                Gain = 50
-            };
-
-            newDrug.DrugEffects.Add(newEffect);
-
-            currentModel.drugModel.AddNewActiveDrug(newDrug);
-
-
-          
         }
         void ExitProgram(object p)
         {
@@ -167,6 +186,11 @@ namespace PhysModelDeveloperGUI
             connectors.Clear();
             gasexchangeUnits.Clear();
             containers.Clear();
+
+            foreach (Drug d in currentModel.modelState.AvailableDrugs)
+            {
+                availableDrugs.Add(d);
+            }
 
             foreach (BloodCompartment c in currentModel.modelState.bloodCompartments)
             {
@@ -335,6 +359,17 @@ namespace PhysModelDeveloperGUI
                 LactateLB = Math.Round(currentModel.modelState.LB.Lact, 1).ToString();
                 LactateBRAIN = Math.Round(currentModel.modelState.BRAIN.Lact, 1).ToString();
                 LactateLIVER = Math.Round(currentModel.modelState.LIVER.Lact, 1).ToString();
+
+                Drug1Concentration = currentModel.modelInterface.Drug1Concentration;
+                Drug2Concentration = currentModel.modelInterface.Drug2Concentration;
+                Drug3Concentration = currentModel.modelInterface.Drug3Concentration;
+                Drug4Concentration = currentModel.modelInterface.Drug4Concentration;
+                Drug5Concentration = currentModel.modelInterface.Drug5Concentration;
+                Drug6Concentration = currentModel.modelInterface.Drug6Concentration;
+                Drug7Concentration = currentModel.modelInterface.Drug7Concentration;
+                Drug8Concentration = currentModel.modelInterface.Drug8Concentration;
+                Drug9Concentration = currentModel.modelInterface.Drug9Concentration;
+                Drug10Concentration = currentModel.modelInterface.Drug10Concentration;
 
                 Endtidalco2 = currentModel.modelInterface.EndTidalCO2.ToString();
 
@@ -560,6 +595,37 @@ namespace PhysModelDeveloperGUI
 
         string _endtidalco2 = "-";
         public string Endtidalco2 { get { return _endtidalco2; } set { _endtidalco2 = value; OnPropertyChanged(); } }
+
+        double _drug1Concentration = 0;
+        public double Drug1Concentration { get { return _drug1Concentration; } set { _drug1Concentration = value; OnPropertyChanged(); } }
+
+        double _drug2Concentration = 0;
+        public double Drug2Concentration { get { return _drug2Concentration; } set { _drug2Concentration = value; OnPropertyChanged(); } }
+
+        double _drug3Concentration = 0;
+        public double Drug3Concentration { get { return _drug3Concentration; } set { _drug3Concentration = value; OnPropertyChanged(); } }
+
+        double _drug4Concentration = 0;
+        public double Drug4Concentration { get { return _drug4Concentration; } set { _drug4Concentration = value; OnPropertyChanged(); } }
+
+        double _drug5Concentration = 0;
+        public double Drug5Concentration { get { return _drug5Concentration; } set { _drug5Concentration = value; OnPropertyChanged(); } }
+
+        double _drug6Concentration = 0;
+        public double Drug6Concentration { get { return _drug6Concentration; } set { _drug6Concentration = value; OnPropertyChanged(); } }
+
+        double _drug7Concentration = 0;
+        public double Drug7Concentration { get { return _drug7Concentration; } set { _drug7Concentration = value; OnPropertyChanged(); } }
+
+        double _drug8Concentration = 0;
+        public double Drug8Concentration { get { return _drug8Concentration; } set { _drug8Concentration = value; OnPropertyChanged(); } }
+
+        double _drug9Concentration = 0;
+        public double Drug9Concentration { get { return _drug9Concentration; } set { _drug9Concentration = value; OnPropertyChanged(); } }
+
+        double _drug10Concentration = 0;
+        public double Drug10Concentration { get { return _drug10Concentration; } set { _drug10Concentration = value; OnPropertyChanged(); } }
+
         #endregion
 
         #region "independent model parameters setters"
@@ -2562,7 +2628,8 @@ namespace PhysModelDeveloperGUI
             }
         }
 
-
+        public ObservableCollection<DrugEffect> drugEffects { get; set; } = new ObservableCollection<DrugEffect>();
+        public ObservableCollection<Drug> availableDrugs { get; set; } = new ObservableCollection<Drug>();
         public ObservableCollection<Compartment> bloodcompartments { get; set; } = new ObservableCollection<Compartment>();
         public ObservableCollection<Compartment> gascompartments { get; set; } = new ObservableCollection<Compartment>();
         public ObservableCollection<Connector> connectors { get; set; } = new ObservableCollection<Connector>();
@@ -2827,6 +2894,159 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
+
+        public double DrugHepaticClearanceRate
+        {
+            get
+            {
+                return selectedDrug != null ? selectedDrug.HepaticClearanceRate : 0;
+            }
+            set
+            {
+                if (selectedDrug != null)
+                {
+                    selectedDrug.HepaticClearanceRate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DrugRenalClearanceRate
+        {
+            get
+            {
+                return selectedDrug != null ? selectedDrug.RenalClearanceRate : 0;
+            }
+            set
+            {
+                if (selectedDrug != null)
+                {
+                    selectedDrug.RenalClearanceRate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DrugMetabolicRate
+        {
+            get
+            {
+                return selectedDrug != null ? selectedDrug.MetabolicRate : 0;
+            }
+            set
+            {
+                if (selectedDrug != null)
+                {
+                    selectedDrug.MetabolicRate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DrugDose
+        {
+            get
+            {
+                return selectedDrug != null ? selectedDrug.Dose : 0;
+            }
+            set
+            {
+                if (selectedDrug != null)
+                {
+                    selectedDrug.Dose = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public string DrugEffectSite
+        {
+            get
+            {
+                return selectedDrugEffect != null ? selectedDrugEffect.EffectSite : "";
+            }
+            set
+            {
+                if (selectedDrugEffect != null)
+                {
+                    selectedDrugEffect.EffectSite = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double DrugEffectSaturation
+        {
+            get
+            {
+                return selectedDrugEffect != null ? selectedDrugEffect.EffectConcentrationSaturation : 0;
+            }
+            set
+            {
+                if (selectedDrugEffect != null)
+                {
+                    selectedDrugEffect.EffectConcentrationSaturation = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DrugEffectThreshold
+        {
+            get
+            {
+                return selectedDrugEffect != null ? selectedDrugEffect.EffectConcentrationThreshold : 0;
+            }
+            set
+            {
+                if (selectedDrugEffect != null)
+                {
+                    selectedDrugEffect.EffectConcentrationThreshold = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DrugEffectTimeConstant
+        {
+            get
+            {
+                return selectedDrugEffect != null ? selectedDrugEffect.TimeConstant : 0;
+            }
+            set
+            {
+                if (selectedDrugEffect != null)
+                {
+                    selectedDrugEffect.TimeConstant = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DrugEffectGain
+        {
+            get
+            {
+                return selectedDrugEffect != null ? selectedDrugEffect.Gain : 0;
+            }
+            set
+            {
+                if (selectedDrugEffect != null)
+                {
+                    selectedDrugEffect.Gain = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool DrugEffectDoseDependent
+        {
+            get
+            {
+                return selectedDrugEffect != null ? selectedDrugEffect.DoseDependent : true;
+            }
+            set
+            {
+                if (selectedDrugEffect != null)
+                {
+                    selectedDrugEffect.DoseDependent = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
 
         #region "gascompartment settings"
