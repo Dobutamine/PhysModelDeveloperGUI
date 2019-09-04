@@ -33,6 +33,7 @@ namespace PhysModelDeveloperGUI
             mainWindowViewModel.InitBloodgasGraph(graphBloodgas);
             mainWindowViewModel.InitModelDiagram(graphDiagram);
             mainWindowViewModel.InitPatientMonitor(graphMonitor);
+            mainWindowViewModel.InitPVLoop(graphLoop);
 
 
         }

@@ -64,7 +64,16 @@ namespace PhysModelDeveloperGUI
             set { trendBloodgasVisible = value; OnPropertyChanged(); }
         }
 
+        private bool pVLoopVisible;
+
+        public bool PVLoopVisible
+        {
+            get { return pVLoopVisible; }
+            set { pVLoopVisible = value; OnPropertyChanged(); }
+        }
+
         PatientMonitor GraphPatientMonitor { get; set; }
+        LoopGraph GraphPVLoop { get; set; }
         ModelDiagram GraphModelDiagram { get; set; }
         FastScrollingGraph GraphECG { get; set; }
         FastScrollingGraph GraphABP { get; set; }
@@ -112,6 +121,9 @@ namespace PhysModelDeveloperGUI
 
             SetCommands();
             ConstructComponentLists();
+
+            currentModel.analyzer.SelectBloodCompartment(currentModel.modelState.LV);
+
         }
 
         void SetCommands()
@@ -383,6 +395,9 @@ namespace PhysModelDeveloperGUI
                 }
                 UpdateTrendGraph();
                 UpdateBloodgasGraph();
+
+          
+                GraphPVLoop.Draw();
             }
 
             slowUpdater += graphicsRefreshInterval;
@@ -392,12 +407,10 @@ namespace PhysModelDeveloperGUI
         {
             if (e.PropertyName == "ModelUpdated")
             {
-                if (MonitorVisible)
-                {
-                    GraphPatientMonitor.UpdateCurves(currentModel.modelInterface.ECGSignal, currentModel.modelInterface.ABPSignal,
-                                                     currentModel.modelInterface.SPO2POSTSignal, currentModel.modelInterface.ETCO2Signal,
-                                                     currentModel.modelInterface.RESPVolumeSignal);
-                }
+                UpdatePatientMonitor();
+                UpdatePVLoopGraph();
+
+                
             }
             if (e.PropertyName ==  "StatusMessage")
             {
@@ -2649,11 +2662,47 @@ namespace PhysModelDeveloperGUI
 
         #region "graphs"
 
+        void UpdatePatientMonitor()
+        {
+            if (MonitorVisible && GraphPatientMonitor != null)
+            {
+                GraphPatientMonitor.UpdateCurves(currentModel.modelInterface.ECGSignal, currentModel.modelInterface.ABPSignal,
+                                                 currentModel.modelInterface.SPO2POSTSignal, currentModel.modelInterface.ETCO2Signal,
+                                                 currentModel.modelInterface.RESPVolumeSignal);
+
+            }
+        }
+        void UpdatePVLoopGraph()
+        {
+            if (GraphPVLoop != null && PVLoopVisible)
+            {
+                GraphPVLoop.WriteListToBuffer(currentModel.analyzer.pressuresBloodCompartment, currentModel.analyzer.volumesBloodCompartment);
+            }
+        
+        }
+        public void InitPVLoop(LoopGraph p)
+        {
+            GraphPVLoop = p;
+            GraphPVLoop.GraphTitle = "pv loop";
+            GraphPVLoop.GraphTitleColor = new SolidColorBrush(Colors.LimeGreen);
+            GraphPVLoop.GraphPaint1.Color = SKColors.LimeGreen;
+            GraphPVLoop.GridYMax = 100;
+            GraphPVLoop.GridYStep = 10;
+            GraphPVLoop.GridXStep = 5;
+            GraphPVLoop.GridYMin = 0;
+            GraphPVLoop.GridXMax = 25;
+            GraphPVLoop.GridXMin = 0;
+            GraphPVLoop.GridXEnabled = true;
+            GraphPVLoop.GridYEnabled = true;
+
+            GraphPVLoop.AutoScale = false;
+        }
         public void InitPatientMonitor(PatientMonitor p)
         {
             GraphPatientMonitor = p;
             GraphPatientMonitor.InitPatientMonitor();
         }
+
         public void InitModelDiagram(ModelDiagram p)
         {
             GraphModelDiagram = p;
@@ -2728,6 +2777,13 @@ namespace PhysModelDeveloperGUI
         {
             
             selectedBloodCompartment = (BloodCompartment)p;
+            currentModel.analyzer.SelectBloodCompartment(selectedBloodCompartment);
+            GraphPVLoop.GridYMax = (float)selectedBloodCompartment.dataCollector.PresMax + 0.1f * (float)selectedBloodCompartment.dataCollector.PresMax;
+            GraphPVLoop.GridYMin = (float)selectedBloodCompartment.dataCollector.PresMin - 0.1f * (float)selectedBloodCompartment.dataCollector.PresMin;
+            GraphPVLoop.GridXMax = (float)selectedBloodCompartment.dataCollector.VolMax + 0.1f * (float)selectedBloodCompartment.dataCollector.VolMax;
+            GraphPVLoop.GridXMin = (float)selectedBloodCompartment.dataCollector.VolMin - 0.1f * (float)selectedBloodCompartment.dataCollector.VolMin;
+
+
             if (selectedBloodCompartment != null)
             {
                 UVolBlood = selectedBloodCompartment.VolUBaseline;

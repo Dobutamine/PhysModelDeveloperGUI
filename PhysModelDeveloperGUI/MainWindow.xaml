@@ -2322,6 +2322,11 @@
                         <local:TimeBasedGraph x:Name="graphBloodgas" Margin="10,10,10,10"  Height="250"/>
                     </Border>
                 </Expander>
+                <Expander IsExpanded="{Binding PVLoopVisible, Mode=TwoWay}"  Margin="0,0,0,10"  Header="PV Loop" Background="DarkSlateGray" Padding="5,5,5,5" Foreground="White" BorderThickness="0">
+                    <Border BorderBrush="White"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="Black" >
+                        <local:LoopGraph x:Name="graphLoop" Margin="10,10,10,10"  Height="250"/>
+                    </Border>
+                </Expander>
 
                
 

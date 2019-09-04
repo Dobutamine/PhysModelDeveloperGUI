@@ -152,6 +152,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="LoopGraph.xaml.cs">
+      <DependentUpon>LoopGraph.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ModelDiagramHelpers\AnimatedBloodCompartment.cs" />
     <Compile Include="ModelDiagramHelpers\AnimatedBloodConnector.cs" />
     <Compile Include="ModelDiagramHelpers\AnimatedElementHelper.cs" />
@@ -174,6 +177,10 @@
     <Compile Include="TimeBasedGraph.xaml.cs">
       <DependentUpon>TimeBasedGraph.xaml</DependentUpon>
     </Compile>
+    <Page Include="LoopGraph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
