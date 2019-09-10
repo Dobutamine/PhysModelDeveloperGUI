@@ -66,9 +66,17 @@ namespace PhysModelDeveloperGUI
         public AnimatedBloodConnector SVCRA;
 
         public AnimatedShunt PDA;
+        public AnimatedShunt APShunt;
         public AnimatedShunt VSD;
         public AnimatedShunt OFO;
         public AnimatedShunt LUNGSHUNT;
+        public AnimatedShunt LVPA;
+        public AnimatedShunt RVAA;
+        public AnimatedShunt TAPVC;
+        public AnimatedShunt TAPVCIC;
+        public AnimatedShunt SVCPA;
+        public AnimatedShunt IVCPA;
+
 
         public AnimatedShuntGas OUTNCA;
         public AnimatedBloodCompartment lungs;
@@ -512,6 +520,83 @@ namespace PhysModelDeveloperGUI
             AAUB.AddConnector(currentModel.modelState.AA_BRAIN);
             animatedBloodConnectors.Add(AAUB);
 
+            LVPA = new AnimatedShunt
+            {
+                scaleRelative = 0.035f,
+                RadiusYOffset = 1f,
+                NoLoss = false,
+                StartAngle = 0,
+                EndAngle = 225,
+                Direction = 1,
+                Name = "TGA AORTA"
+            };
+            LVPA.AddConnector(currentModel.modelState.DA_PA);
+
+            RVAA = new AnimatedShunt
+            {
+                scaleRelative = 0.035f,
+                RadiusYOffset = 1f,
+                NoLoss = false,
+                StartAngle = 17,
+                EndAngle = 190,
+                Direction = 1,
+                Name = "TGA PA"
+            };
+            RVAA.AddConnector(currentModel.modelState.DA_PA);
+
+            SVCPA = new AnimatedShunt
+            {
+                YOffsetShape = -50,
+                RadiusYOffset = 0.7f,
+                RadiusXOffset = 1.05f,
+                NoLoss = true,
+                StartAngle = 125,
+                EndAngle = 230,
+                Direction = 1,
+                Name = "BIDIRECTIONAL GLENN"
+
+            };
+            SVCPA.AddConnector(currentModel.modelState.DA_PA);
+
+            IVCPA = new AnimatedShunt
+            {
+                YOffsetShape =0,
+                scaleRelative = 0.035f,
+                RadiusYOffset = 1f,
+                RadiusXOffset = 1.05f,
+                NoLoss = true,
+                StartAngle = 125,
+                EndAngle = 230,
+                Direction = 1,
+                Name = " IVC->PA"
+
+            };
+            IVCPA.AddConnector(currentModel.modelState.DA_PA);
+
+
+            TAPVC = new AnimatedShunt
+            {
+                scaleRelative = 0.035f,
+                RadiusYOffset = 1f,
+                NoLoss = false,
+                StartAngle = 315,
+                EndAngle = 170,
+                Direction = 1,
+                Name = "TAPVC"
+            };
+            TAPVC.AddConnector(currentModel.modelState.DA_PA);
+
+            TAPVCIC = new AnimatedShunt
+            {
+                scaleRelative = 0.035f,
+                RadiusYOffset = 1f,
+                NoLoss = false,
+                StartAngle = 315,
+                EndAngle = 125,
+                Direction = 1,
+                Name = "TAPVC"
+            };
+            TAPVCIC.AddConnector(currentModel.modelState.DA_PA);
 
             PDA = new AnimatedShunt
             {
@@ -525,6 +610,19 @@ namespace PhysModelDeveloperGUI
             };
             PDA.AddConnector(currentModel.modelState.DA_PA);
             PDA.AddConnector(currentModel.modelState.AD_DA);
+
+            APShunt = new AnimatedShunt
+            {
+                scaleRelative = 0.035f,
+                RadiusYOffset = 1f,
+                NoLoss = false,
+                StartAngle = 25,
+                EndAngle = 225,
+                Direction = 1,
+                Name = "AORTO-PULMONARY SHUNT"
+            };
+            APShunt.AddConnector(currentModel.modelState.DA_PA);
+
 
 
             VSD = new AnimatedShunt
@@ -672,6 +770,337 @@ namespace PhysModelDeveloperGUI
 
         }
 
+        public void TAPVCView(bool state)
+        {
+   
+
+            if (state)
+            {
+                switchOFO.IsChecked = true;
+
+                if (!animatedShunts.Contains(TAPVC))
+                    animatedShunts.Add(TAPVC);
+
+                if (animatedBloodConnectors.Contains(PVLA))
+                    animatedBloodConnectors.Remove(PVLA);
+            } else
+            {
+                switchOFO.IsChecked = false;
+
+                if (animatedShunts.Contains(TAPVC))
+                    animatedShunts.Remove(TAPVC);
+
+                if (!animatedBloodConnectors.Contains(PVLA))
+                    animatedBloodConnectors.Add(PVLA);
+            }
+        }
+        public void TAPVCICView(bool state)
+        {
+        
+
+            if (state)
+            {
+                switchOFO.IsChecked = true;
+
+                if (!animatedShunts.Contains(TAPVCIC))
+                    animatedShunts.Add(TAPVCIC);
+
+                if (animatedBloodConnectors.Contains(PVLA))
+                    animatedBloodConnectors.Remove(PVLA);
+            }
+            else
+            {
+                switchOFO.IsChecked = false;
+
+                if (animatedShunts.Contains(TAPVCIC))
+                    animatedShunts.Remove(TAPVCIC);
+
+                if (!animatedBloodConnectors.Contains(PVLA))
+                    animatedBloodConnectors.Add(PVLA);
+            }
+        }
+        public void TGAView(bool state)
+        {
+            if (state)
+            {
+                switchOFO.IsChecked = true;
+                switchPDA.IsChecked = true;
+
+                if (!animatedShunts.Contains(LVPA))
+                    animatedShunts.Add(LVPA);
+
+                if (animatedValves.Contains(aorticValve))
+                    animatedValves.Remove(aorticValve);
+
+                   
+            }
+            else
+            {
+
+                switchOFO.IsChecked = false;
+                switchPDA.IsChecked = false;
+
+                if (animatedShunts.Contains(LVPA))
+                    animatedShunts.Remove(LVPA);
+
+                if (!animatedValves.Contains(aorticValve))
+                    animatedValves.Add(aorticValve);
+            }
+
+            if (state)
+            {
+                if (!animatedShunts.Contains(RVAA))
+                    animatedShunts.Add(RVAA);
+                if (animatedValves.Contains(pulmonaryValve))
+                    animatedValves.Remove(pulmonaryValve);
+            }
+            else
+            {
+                if (animatedShunts.Contains(RVAA))
+                    animatedShunts.Remove(RVAA);
+                if (!animatedValves.Contains(pulmonaryValve))
+                    animatedValves.Add(pulmonaryValve);
+            }
+
+        }
+        public void TruncusArteriosusView(bool state)
+        {
+            if (state)
+            {
+                if (!animatedShunts.Contains(LVPA))
+                    animatedShunts.Add(LVPA);
+
+                switchVSD.IsChecked = true;
+
+            }
+            else
+            {
+                switchVSD.IsChecked = false;
+
+                if (animatedShunts.Contains(LVPA))
+                    animatedShunts.Remove(LVPA);
+
+            }
+
+            if (state)
+            {
+                if (!animatedShunts.Contains(RVAA))
+                    animatedShunts.Add(RVAA);
+
+            }
+            else
+            {
+                if (animatedShunts.Contains(RVAA))
+                    animatedShunts.Remove(RVAA);
+
+            }
+
+        }
+
+        public void PulmonaryAtresiaView(bool state)
+        {
+            if (state)
+            {
+                switchVSD.IsChecked = true;
+                switchOFO.IsChecked = true;
+
+                pulmonaryValve.Width = 2;
+            }
+            else
+            {
+                switchVSD.IsChecked = false;
+                switchOFO.IsChecked = false;
+
+                pulmonaryValve.Width = 22;
+            }
+        }
+        public void GlennView(bool state)
+        {
+            if (state)
+            {
+                // remove connection from svc to RA
+                if (animatedBloodConnectors.Contains(SVCRA))
+                    animatedBloodConnectors.Remove(SVCRA);
+
+                // make connection from svc to PA
+                if (!animatedShunts.Contains(SVCPA))
+                    animatedShunts.Add(SVCPA);
+
+            } else
+            {
+                // restore connection from svc to RA
+                if (!animatedBloodConnectors.Contains(SVCRA))
+                    animatedBloodConnectors.Add(SVCRA);
+
+                // remove connection from svc to PA
+                if (animatedShunts.Contains(SVCPA))
+                    animatedShunts.Remove(SVCPA);
+            }
+        }
+
+        public void FontanView(bool state)
+        {
+            if (state)
+            {
+                // remove connection from ivc to RA
+                if (animatedBloodConnectors.Contains(IVCRA))
+                    animatedBloodConnectors.Remove(IVCRA);
+
+                // make connection from ivc to PA
+                if (!animatedShunts.Contains(IVCPA))
+                    animatedShunts.Add(IVCPA);
+
+                // remove ap shunt
+                if (animatedShunts.Contains(APShunt))
+                    animatedShunts.Remove(APShunt);
+
+            }
+            else
+            {
+                // restore connection from ivc to RA
+                if (!animatedBloodConnectors.Contains(IVCRA))
+                    animatedBloodConnectors.Add(IVCRA);
+
+                // remove connection from ivc to PA
+                if (animatedShunts.Contains(IVCPA))
+                    animatedShunts.Remove(IVCPA);
+            }
+        }
+
+        public void NorwoodView(bool state)
+        {
+            if (state)
+            {
+                switchOFO.IsChecked = true;
+
+                // attach the RV to the AA
+                if (!animatedShunts.Contains(RVAA))
+                    animatedShunts.Add(RVAA);
+
+                // remove the PDA
+                if (animatedShunts.Contains(PDA))
+                    animatedShunts.Remove(PDA);
+
+                // add the BT shunt
+                if (!animatedShunts.Contains(APShunt))
+                    animatedShunts.Add(APShunt);
+
+                // remove the pulmonary connection to the PA
+                if (animatedValves.Contains(pulmonaryValve))
+                    animatedValves.Remove(pulmonaryValve);
+            }
+            else
+            {
+                // remove the RV AA connection
+                if (animatedShunts.Contains(RVAA))
+                    animatedShunts.Remove(RVAA);
+
+                // remove the AP shunt
+                if (animatedShunts.Contains(APShunt))
+                    animatedShunts.Remove(APShunt);
+
+                // reconnect the pulmonary valve to the PA
+                if (!animatedValves.Contains(pulmonaryValve))
+                    animatedValves.Add(pulmonaryValve);
+            }
+
+        }
+        public void FontanSecondStageView(bool state)
+        {
+
+        }
+        public void FontanThirdStageView(bool state)
+        {
+
+        }
+        public void HLHSView(bool state)
+        {
+            if (state)
+            {
+                switchOFO.IsChecked = true;
+                switchPDA.IsChecked = true;
+
+                mitralValve.Width = 2;
+                aorticValve.Width = 2;
+            }
+            else
+            {
+                switchOFO.IsChecked = false;
+                switchPDA.IsChecked = false; 
+
+                mitralValve.Width = 22;
+                aorticValve.Width = 22;
+            }
+        }
+
+        public void AorticValveStenosisView(bool state)
+        {
+            if (state)
+            {
+                switchOFO.IsChecked = true;
+                switchPDA.IsChecked = true;
+
+                aorticValve.Width = 2;
+            }
+            else
+            {
+                switchOFO.IsChecked = false;
+                switchPDA.IsChecked = false;
+
+                aorticValve.Width = 22;
+            }
+        }
+        public void MitralValveStenosisView(bool state)
+        {
+            if (state)
+            {
+
+                switchOFO.IsChecked = true;
+                switchPDA.IsChecked = true;
+
+                mitralValve.Width = 2;
+            }
+            else
+            {
+                switchOFO.IsChecked = false;
+                switchPDA.IsChecked = false;
+
+                mitralValve.Width = 22;
+            }
+        }
+        public void TricuspidValveStenosisView(bool state)
+        {
+            if (state)
+            {
+                switchOFO.IsChecked = true;
+                switchPDA.IsChecked = true;
+                tricuspidValve.Width = 2;
+            }
+            else
+            {
+                switchOFO.IsChecked = false;
+                switchPDA.IsChecked = false;
+
+                tricuspidValve.Width = 22;
+            }
+        }
+        public void PulmonaryValveStenosisView(bool state)
+        {
+            if (state)
+            {
+                switchOFO.IsChecked = true;
+                switchPDA.IsChecked = true;
+
+                pulmonaryValve.Width = 2;
+            }
+            else
+            {
+                switchOFO.IsChecked = false;
+                switchPDA.IsChecked = false;
+
+                pulmonaryValve.Width = 22;
+            }
+        }
 
         public void PDAView(bool state)
         {
@@ -810,6 +1239,86 @@ namespace PhysModelDeveloperGUI
         private void SwitchLUNG_Unchecked(object sender, RoutedEventArgs e)
         {
             LUNGSHUNTView(false);
+        }
+
+        private void SwitchTGA_Checked(object sender, RoutedEventArgs e)
+        {
+            TGAView(true);
+        }
+
+        private void SwitchTGA_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TGAView(false);
+        }
+
+        private void SwitchTAPVC_Checked(object sender, RoutedEventArgs e)
+        {
+            TAPVCICView(true);
+        }
+
+        private void SwitchTAPVC_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TAPVCICView(false);
+        }
+
+        private void SwitchPA_Checked(object sender, RoutedEventArgs e)
+        {
+            PulmonaryAtresiaView(true);
+        }
+
+        private void SwitchPA_Unchecked(object sender, RoutedEventArgs e)
+        {
+            PulmonaryAtresiaView(false);
+        }
+
+        private void SwitchHLHS_Checked(object sender, RoutedEventArgs e)
+        {
+            HLHSView(true);
+        }
+
+        private void SwitchHLHS_Unchecked(object sender, RoutedEventArgs e)
+        {
+            HLHSView(false);
+        }
+
+        private void SwitchTRUNCUS_Checked(object sender, RoutedEventArgs e)
+        {
+            TruncusArteriosusView(true);
+        }
+
+        private void SwitchTRUNCUS_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TruncusArteriosusView(false);
+        }
+
+        private void SwitchNORWOOD_Checked(object sender, RoutedEventArgs e)
+        {
+            NorwoodView(true);
+        }
+
+        private void SwitchNORWOOD_Unchecked(object sender, RoutedEventArgs e)
+        {
+            NorwoodView(false);
+        }
+
+        private void SwitchGLENN_Checked(object sender, RoutedEventArgs e)
+        {
+            GlennView(true);
+        }
+
+        private void SwitchGLENN_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GlennView(false);
+        }
+
+        private void SwitchFONTAN_Checked(object sender, RoutedEventArgs e)
+        {
+            FontanView(true);
+        }
+
+        private void SwitchFONTAN_Unchecked(object sender, RoutedEventArgs e)
+        {
+            FontanView(false);
         }
     }
 }

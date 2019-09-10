@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:PhysModelDeveloperGUI"
         mc:Ignorable="d"
-        Title="Neonatal Physiological Model - Developer Edition" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
+        Title="Neonatal Physiological Model - Developer Edition" Height="800" Width="1280" WindowStartupLocation="CenterScreen">
     <Window.Resources>
 
         <Style TargetType="{x:Type ex:DoubleUpDown}">
@@ -2022,7 +2022,7 @@
                                     <TextBlock Grid.Column="3" Grid.Row="0" Text="ml/min" TextAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,2" FontSize="8"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="1" Text="Kidneys flow" TextAlignment="Left" VerticalAlignment="Top" FontSize="8" Margin="5,0,0,0"></TextBlock>
-                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Kidneysflow}" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Kidneysflow}" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
                                     <TextBlock Grid.Column="0" Grid.Row="1" Text="ml/min" TextAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,2" FontSize="8"></TextBlock>
 
                                     <TextBlock Grid.Column="1" Grid.Row="1" Text="Liver flow" TextAlignment="Left" VerticalAlignment="Top" FontSize="8" Margin="5,0,0,0"></TextBlock>
@@ -2154,7 +2154,7 @@
                             </Border>
                         </Expander>
                        
-                        <Expander Header=" gasses" IsExpanded="True" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
+                        <Expander Header=" gasses" IsExpanded="False" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
                             <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="Black" >
                                 <Grid Margin="5,5,5,5" Background="Black" Opacity="1.0">
                                     <Grid.ColumnDefinitions>

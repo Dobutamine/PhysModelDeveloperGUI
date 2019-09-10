@@ -102,6 +102,7 @@ namespace PhysModelDeveloperGUI
 
         public float XOffset { get; set; } = 0;
         public float YOffset { get; set; } = 0;
+        public float YOffsetShape { get; set; } = 0;
 
         public int Mode { get; set; } = 0;
         public bool NoLoss { get; set; } = false;
@@ -187,6 +188,8 @@ namespace PhysModelDeveloperGUI
             locationOrigen = GetPosition(StartAngle, radius);
             locationTarget = GetPosition(EndAngle, radius);
 
+            locationOrigen.Y += YOffsetShape;
+            locationTarget.Y += YOffsetShape;
 
             float dx = (locationOrigen.X - locationTarget.X) / Math.Abs(StartAngle - EndAngle);
             float dy = (locationOrigen.Y - locationTarget.Y) / Math.Abs(StartAngle - EndAngle);

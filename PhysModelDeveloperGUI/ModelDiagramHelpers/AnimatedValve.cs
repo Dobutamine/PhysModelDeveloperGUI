@@ -91,6 +91,9 @@ namespace PhysModelDeveloperGUI
         public string Title { get; set; } = "O2";
         public bool IsVisible { get; set; } = true;
 
+        public float Width { get; set; } = 22;
+
+
         public void AddConnector(ValveConnector c)
         {
             connectors.Add(c);
@@ -176,7 +179,7 @@ namespace PhysModelDeveloperGUI
             }
             else
             {
-                circleOut.StrokeWidth = 22;
+                circleOut.StrokeWidth = Width;
             }
 
             // calculate position

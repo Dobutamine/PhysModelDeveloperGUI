@@ -148,8 +148,7 @@ namespace PhysModelDeveloperGUI
    
         void RemoveBloodVolume(object p)
         {
-            currentModel.modelInterface.AdjustWeight(1);
-            //currentModel.modelInterface.AddBloodVolume(10);
+            
         }
         void ChangeSelectedDrug(object p)
         {
@@ -358,7 +357,7 @@ namespace PhysModelDeveloperGUI
                 Minutevolume = currentModel.modelInterface.MinuteVolume.ToString();
                 MinutevolumeTarget = currentModel.modelInterface.MinuteVolumeTarget.ToString();
                 Alveolarvolume = currentModel.modelInterface.AlveolarVolume;
-                //TotalVolume = currentModel.modelInterface.TotalBloodVolume().ToString();
+                TotalVolume = currentModel.modelInterface.TotalBloodVolume().ToString();
 
                 Appliedpressure = currentModel.modelInterface.AppliedAirwayPressure;
                 Airwaypressure = currentModel.modelInterface.AirwayPressure;
@@ -403,8 +402,6 @@ namespace PhysModelDeveloperGUI
                 UpdateTrendGraph();
                 UpdateBloodgasGraph();
 
-
-                Console.WriteLine(currentModel.modelInterface.TotalBloodVolume());
 
                 GraphPVLoop.Draw();
             }
