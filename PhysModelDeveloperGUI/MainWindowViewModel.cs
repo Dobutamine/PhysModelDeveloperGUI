@@ -98,6 +98,7 @@ namespace PhysModelDeveloperGUI
         public RelayCommand ListBoxUpdatedCommand { get; set; }
         public RelayCommand ExitCommand { get; set; }
 
+        public RelayCommand RemoveBlood { get; set; }
         public RelayCommand AddDrugCommand { get; set; }
 
         DrugEffect selectedDrugEffect { get; set; }
@@ -139,11 +140,17 @@ namespace PhysModelDeveloperGUI
             ExitCommand = new RelayCommand(ExitProgram);
             ChangeRhythmCommand = new RelayCommand(ChangeRhythm);
             AddDrugCommand = new RelayCommand(AddDrug);
+            RemoveBlood = new RelayCommand(RemoveBloodVolume);
             ChangeDrugCommand = new RelayCommand(ChangeSelectedDrug);
             ChangeDrugEffectCommand = new RelayCommand(ChangeSelectedDrugEffect);
 
         }
    
+        void RemoveBloodVolume(object p)
+        {
+            currentModel.modelInterface.AdjustWeight(1);
+            //currentModel.modelInterface.AddBloodVolume(10);
+        }
         void ChangeSelectedDrug(object p)
         {
             selectedDrug = (Drug)p;
@@ -396,7 +403,9 @@ namespace PhysModelDeveloperGUI
                 UpdateTrendGraph();
                 UpdateBloodgasGraph();
 
-          
+
+                Console.WriteLine(currentModel.modelInterface.TotalBloodVolume());
+
                 GraphPVLoop.Draw();
             }
 
@@ -2695,7 +2704,6 @@ namespace PhysModelDeveloperGUI
             GraphPVLoop.GridXEnabled = true;
             GraphPVLoop.GridYEnabled = true;
 
-            GraphPVLoop.AutoScale = false;
         }
         public void InitPatientMonitor(PatientMonitor p)
         {
@@ -2776,12 +2784,15 @@ namespace PhysModelDeveloperGUI
         void ChangeSelectedBloodCompartment(object p)
         {
             
+            
             selectedBloodCompartment = (BloodCompartment)p;
             currentModel.analyzer.SelectBloodCompartment(selectedBloodCompartment);
-            GraphPVLoop.GridYMax = (float)selectedBloodCompartment.dataCollector.PresMax + 0.1f * (float)selectedBloodCompartment.dataCollector.PresMax;
-            GraphPVLoop.GridYMin = (float)selectedBloodCompartment.dataCollector.PresMin - 0.1f * (float)selectedBloodCompartment.dataCollector.PresMin;
-            GraphPVLoop.GridXMax = (float)selectedBloodCompartment.dataCollector.VolMax + 0.1f * (float)selectedBloodCompartment.dataCollector.VolMax;
-            GraphPVLoop.GridXMin = (float)selectedBloodCompartment.dataCollector.VolMin - 0.1f * (float)selectedBloodCompartment.dataCollector.VolMin;
+
+            GraphPVLoop.GridYMax = (float)selectedBloodCompartment.dataCollector.PresMax + 0.25f * (float)selectedBloodCompartment.dataCollector.PresMax;
+            GraphPVLoop.GridYMin = (float)selectedBloodCompartment.dataCollector.PresMin - 0.25f * (float)selectedBloodCompartment.dataCollector.PresMin;
+            GraphPVLoop.GridXMax = (float)selectedBloodCompartment.dataCollector.VolMax + 0.25f * (float)selectedBloodCompartment.dataCollector.VolMax;
+            GraphPVLoop.GridXMin = (float)selectedBloodCompartment.dataCollector.VolMin - 0.25f * (float)selectedBloodCompartment.dataCollector.VolMin;
+            GraphPVLoop.refresh = true;
 
 
             if (selectedBloodCompartment != null)

@@ -1845,7 +1845,8 @@
                         </ListBox>
                     </Border>
                 </Expander>
-               
+
+                <Button Height="25" Command="{Binding RemoveBlood}"> </Button>
             </StackPanel>
         </ScrollViewer>
         

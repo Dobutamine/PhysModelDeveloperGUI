@@ -81,17 +81,12 @@ namespace PhysModelDeveloperGUI
 
         SKPointMode PointMode1 { get; set; } = SKPointMode.Points;
 
-        public bool AutoScale { get; set; } = false;
-        public int AutoScaleSamples { get; set; } = 300;
-        int sampleCounter = 0;
-        double maxSample = -100000000;
-        double minSample = 100000000;
 
         float pixelsPerUnitY = 1;
         float offsetY = 0;
         float pixelsPerUnitX = 1;
         float offsetX = 0;
-        float autoscaleOffset = 0.50f;
+
 
         public bool GridXEnabled { get; set; } = false;
         public float GridXMin { get; set; } = 0;
@@ -109,11 +104,10 @@ namespace PhysModelDeveloperGUI
 
         SKPaint ErasePaint { get; set; }
 
-        public int ClearRefreshRate { get; set; } = 5;
+        public int ClearRefreshRate { get; set; } = 3;
         int clearRefreshCounter = 0;
-        bool ClearFlag = true;
 
-        bool refresh = true;
+        public bool refresh { get; set; } = true;
 
 
         public float xStepSize { get; set; } = 5;
@@ -127,7 +121,7 @@ namespace PhysModelDeveloperGUI
             DataContext = this;
 
 
-            float[] dashArray = { 6, 6 };
+            float[] dashArray = { 4, 4 };
 
             SKPathEffect dash = SKPathEffect.CreateDash(dashArray, 2);
             GridPaint1 = new SKPaint
@@ -203,61 +197,23 @@ namespace PhysModelDeveloperGUI
             if (clearRefreshCounter > ClearRefreshRate)
             {
                 clearRefreshCounter = 0;
-                MainCanvas.Clear(SKColors.Transparent);
+                refresh = true;
             }
-
             clearRefreshCounter++;
 
+
+            if (refresh)
+            {
+                MainCanvas.Clear(SKColors.Transparent);
+                refresh = false;
+            }
+          
 
             if (displayArray1 != null && displayArray1.Length > 0)
             {
                 MainCanvas.DrawPoints(PointMode1, displayArray1, GraphPaint1);
             }
 
-
-        }
-
-        void AutoScaling(double sample)
-        {
-            if (AutoScale)
-            {
-                if (sample > maxSample) maxSample = sample;
-                if (sample < minSample) minSample = sample;
-
-                if (sampleCounter > AutoScaleSamples)
-                {
-                    GridYMax = (float)maxSample + (float)maxSample * autoscaleOffset;
-                    if (minSample > 0)
-                    {
-                        GridYMin = (float)minSample - (float)minSample * autoscaleOffset;
-                    }
-                    else
-                    {
-                        GridYMin = (float)minSample + (float)minSample * autoscaleOffset;
-                    }
-
-                    // get posible negative offset
-                    if (GridYMin < 0)
-                    {
-                        offsetY = Math.Abs(GridYMin);
-                    }
-                    else
-                    {
-                        offsetY = 0;
-                    }
-                    GridYMax += offsetY;
-                    GridYMin += offsetY;
-
-                    pixelsPerUnitY = graphGrid.CanvasSize.Height / (GridYMax - GridYMin);
-
-
-                    maxSample = -100000000;
-                    minSample = 100000000;
-                    sampleCounter = 0;
-
-                }
-                sampleCounter++;
-            }
         }
 
         public void WriteListToBuffer(double[] d1, double[] d2)
@@ -280,11 +236,13 @@ namespace PhysModelDeveloperGUI
 
         public void DrawGrid()
         {
+            // draw the grid
             graphGrid.InvalidateVisual();
 
         }
         public void Draw()
         {
+            // read the buffer
             ReadBuffer();
 
             // process this DisplayData list
@@ -293,64 +251,59 @@ namespace PhysModelDeveloperGUI
         }
         void ReadBuffer()
         {
-            Console.WriteLine("buffer size = " + arrayPositionY);
+            // to store the data read from the buffer we need to size up an array with the size of the data of the current buffer
             Array.Resize(ref ExtractedDataBufferYArray, arrayPositionY);
+            // copy the buffer into the just sized array
             Array.Copy(DataBufferYArray, 0, ExtractedDataBufferYArray, 0, arrayPositionY);
+            // reset the buffer
             arrayPositionY = 0;
 
+            // to store the data read from the buffer we need to size up an array with the size of the data of the current buffer
             Array.Resize(ref ExtractedDataBufferXArray, arrayPositionX);
+            // copy the buffer into the just sized array
             Array.Copy(DataBufferXArray, 0, ExtractedDataBufferXArray, 0, arrayPositionX);
+            // reset the buffer
             arrayPositionX = 0;
-
         }
 
         void ProcessReadBuffer()
         {
-            try
+
+            int arraySize = 0;
+            // find smallest array to prevent index out of range errors
+            if (ExtractedDataBufferXArray.Length < ExtractedDataBufferYArray.Length)
             {
-
-                int arraySize = 0;
-                // find smallest array
-                if (ExtractedDataBufferXArray.Length < ExtractedDataBufferYArray.Length)
-                {
-                    arraySize = ExtractedDataBufferXArray.Length;
-                } else
-                {
-                    arraySize = ExtractedDataBufferYArray.Length;
-                }
-
-                // determine a display array
-                Array.Resize(ref displayArray1, arraySize);
-
-                double lastY1 = 0;
-                double lastX1 = 0;
-
-                // now we have to form a SKPoint array from this datalist
-                //foreach (double y in ExtractedBufferData1)
-                for (int arrayCounter = 0; arrayCounter < arraySize; arrayCounter++)
-                {
-
-
-                    lastY1 = ExtractedDataBufferYArray[arrayCounter];
-                    lastX1 = ExtractedDataBufferXArray[arrayCounter];
-
-                    AutoScaling(lastY1);
-
-                    pixelsPerUnitY = graphGrid.CanvasSize.Height / (GridYMax - GridYMin);
-                    pixelsPerUnitX = graphGrid.CanvasSize.Width / (GridXMax - GridXMin);
-
-                    displayArray1[arrayCounter].X = ((float)lastX1 - GridXMin) * pixelsPerUnitX + offsetX * pixelsPerUnitX;
-                    displayArray1[arrayCounter].Y = graphMain.CanvasSize.Height - ((float)lastY1 - GridYMin) * pixelsPerUnitY - offsetY * pixelsPerUnitY;
-
-                }
-
-
-                refresh = true;
-
-                // now draw this array
-                graphMain.InvalidateVisual();
+                arraySize = ExtractedDataBufferXArray.Length;
             }
-            catch { }
+            else
+            {
+                arraySize = ExtractedDataBufferYArray.Length;
+            }
+
+            // size up the display array. 
+            Array.Resize(ref displayArray1, arraySize);
+
+            // calculate the scaling
+            pixelsPerUnitY = graphGrid.CanvasSize.Height / (GridYMax - GridYMin);
+            pixelsPerUnitX = graphGrid.CanvasSize.Width / (GridXMax - GridXMin);
+
+            // now we have to form a SKPoint array from this datalist
+
+            // this for loop will iterate over +/- 2000 values, the for loop provides the best performance in this.
+            for (int arrayCounter = 0; arrayCounter < arraySize; arrayCounter++)
+            {
+                float y = (float)ExtractedDataBufferYArray[arrayCounter];
+                float x = (float)ExtractedDataBufferXArray[arrayCounter];
+
+                displayArray1[arrayCounter].X = (x - GridXMin) * pixelsPerUnitX + offsetX * pixelsPerUnitX;
+                displayArray1[arrayCounter].Y = graphMain.CanvasSize.Height - (y - GridYMin) * pixelsPerUnitY - offsetY * pixelsPerUnitY;
+
+            }
+
+           
+            // now draw this array
+            graphMain.InvalidateVisual();
+
 
         }
 
