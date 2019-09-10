@@ -93,7 +93,7 @@ namespace PhysModelDeveloperGUI
         public float RadiusXOffset { get; set; } = 1;
         public float RadiusYOffset { get; set; } = 1;
 
-        float currentAngle = 0;
+        public float currentAngle = 0;
         public float StartAngle { get; set; } = 0;
         public float EndAngle { get; set; } = 0;
         public float Direction { get; set; } = 1;
@@ -194,6 +194,7 @@ namespace PhysModelDeveloperGUI
             float dx = (locationOrigen.X - locationTarget.X) / Math.Abs(StartAngle - EndAngle);
             float dy = (locationOrigen.Y - locationTarget.Y) / Math.Abs(StartAngle - EndAngle);
 
+            
             if (Math.Abs(currentAngle) > Math.Abs(StartAngle - EndAngle))
             {
                 currentAngle = 0;
@@ -201,7 +202,7 @@ namespace PhysModelDeveloperGUI
 
             if (currentAngle < 0)
             {
-                currentAngle = 0;
+                currentAngle = Math.Abs(StartAngle - EndAngle);
             }
 
             if (sizeCompartment != null)

@@ -61,6 +61,15 @@
 
                 <MenuItem x:Name="menuAutoPulse" Header="_Auto pulse" IsCheckable="True" Command="{Binding ToggleAutoPulseCommand}" CommandParameter="{Binding ElementName=menuAutoPulse, Path=IsChecked}"/>
             </MenuItem>
+            <MenuItem Header="_Views">
+                <MenuItem x:Name="menuFetus" Header="_Fetal circulation" IsCheckable="True" Command="{Binding SwitchToFetusCommand}" CommandParameter="{Binding ElementName=menuFetus, Path=IsChecked}"/>
+                <MenuItem Header="_Shunts">
+                    <MenuItem x:Name="menuOFO" Header="_Foramen ovale" IsCheckable="True" IsChecked="{Binding OFOVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuVSD" Header="_Ventricular septal defect" IsCheckable="True" IsChecked="{Binding VSDVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuPDA" Header="_Ductus arteriosus" IsCheckable="True" IsChecked="{Binding PDAVisible, Mode=TwoWay}"/>
+
+                </MenuItem>
+            </MenuItem>
         </Menu>
         <StatusBar VerticalAlignment="Bottom" Height="25" Grid.ColumnSpan="3">
             <StatusBarItem>

@@ -98,9 +98,74 @@ namespace PhysModelDeveloperGUI
         public RelayCommand NewModelCommand { get; set; }
         public RelayCommand ListBoxUpdatedCommand { get; set; }
         public RelayCommand ExitCommand { get; set; }
+        public RelayCommand SwitchToFetusCommand { get; set; }
+
 
         public RelayCommand RemoveBlood { get; set; }
         public RelayCommand AddDrugCommand { get; set; }
+
+        bool _ofoVisible = false;
+        public bool OFOVisible
+        {
+            get
+            {
+                return _ofoVisible;
+            }
+            set
+            {
+                _ofoVisible = value;
+                if (_ofoVisible)
+                {
+                    GraphModelDiagram.OFOView(true);
+                } else
+                {
+                    GraphModelDiagram.OFOView(false);
+                }
+                OnPropertyChanged();
+            }
+        }
+        bool _vsdVisible = false;
+        public bool VSDVisible
+        {
+            get
+            {
+                return _vsdVisible;
+            }
+            set
+            {
+                _vsdVisible = value;
+                if (_vsdVisible)
+                {
+                    GraphModelDiagram.VSDView(true);
+                }
+                else
+                {
+                    GraphModelDiagram.VSDView(false);
+                }
+                OnPropertyChanged();
+            }
+        }
+        bool _pdaVisible = false;
+        public bool PDAVisible
+        {
+            get
+            {
+                return _pdaVisible;
+            }
+            set
+            {
+                _pdaVisible = value;
+                if (_pdaVisible)
+                {
+                    GraphModelDiagram.PDAView(true);
+                }
+                else
+                {
+                    GraphModelDiagram.PDAView(false);
+                }
+                OnPropertyChanged();
+            }
+        }
 
         DrugEffect selectedDrugEffect { get; set; }
         Drug selectedDrug { get; set; }
@@ -147,9 +212,22 @@ namespace PhysModelDeveloperGUI
             RemoveBlood = new RelayCommand(RemoveBloodVolume);
             ChangeDrugCommand = new RelayCommand(ChangeSelectedDrug);
             ChangeDrugEffectCommand = new RelayCommand(ChangeSelectedDrugEffect);
+            SwitchToFetusCommand = new RelayCommand(SwitchToFetus);
+
 
         }
-   
+
+
+        void SwitchToFetus(object p)
+        {
+            bool state = (bool) p;
+
+            OFOVisible = true;
+            PDAVisible = true;
+            GraphModelDiagram.PlacentaView(state);
+        }
+
+
         void RemoveBloodVolume(object p)
         {
             
