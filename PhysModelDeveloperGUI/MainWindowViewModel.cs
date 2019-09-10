@@ -91,6 +91,7 @@ namespace PhysModelDeveloperGUI
         public RelayCommand ChangeGasCompartmentCommand { get; set; }
         public RelayCommand ChangeConnectorCommand { get; set; }
         public RelayCommand ChangeGexUnitCommand { get; set; }
+        public RelayCommand ChangeDifUnitCommand { get; set; }
         public RelayCommand ChangeContainerCommand { get; set; }
         public RelayCommand SaveModelStateCommand { get; set; }
         public RelayCommand LoadModelStateCommand { get; set; }
@@ -107,6 +108,8 @@ namespace PhysModelDeveloperGUI
         GasCompartment selectedGasCompartment { get; set; }
         Connector selectedConnector { get; set; }
         GasExchangeBlock selectedGex { get; set; }
+
+        DiffusionBlock selectedDif { get; set; }
         ContainerCompartment selectedContainer { get; set; }
 
         public MainWindowViewModel()
@@ -133,6 +136,7 @@ namespace PhysModelDeveloperGUI
             ChangeGasCompartmentCommand = new RelayCommand(ChangeSelectedGasCompartment);
             ChangeConnectorCommand = new RelayCommand(ChangeSelectedConnector);
             ChangeGexUnitCommand = new RelayCommand(ChangeSelectedGex);
+            ChangeDifUnitCommand = new RelayCommand(ChangeSelectedDif);
             ChangeContainerCommand = new RelayCommand(ChangeSelectedContainer);
             SaveModelStateCommand = new RelayCommand(SaveModelState);
             LoadModelStateCommand = new RelayCommand(LoadModelState);
@@ -203,13 +207,14 @@ namespace PhysModelDeveloperGUI
             gascompartments.Clear();
             connectors.Clear();
             gasexchangeUnits.Clear();
+            diffusionUnits.Clear();
             containers.Clear();
+            
 
             foreach (Drug d in currentModel.modelState.AvailableDrugs)
             {
                 availableDrugs.Add(d);
             }
-
             foreach (BloodCompartment c in currentModel.modelState.bloodCompartments)
             {
                 bloodcompartments.Add(c);
@@ -233,6 +238,10 @@ namespace PhysModelDeveloperGUI
             foreach(GasExchangeBlock c in currentModel.modelState.gasExchangeBlocks)
             {
                 gasexchangeUnits.Add(c);
+            }
+            foreach (DiffusionBlock c in currentModel.modelState.diffusionBlocks)
+            {
+                diffusionUnits.Add(c);
             }
             foreach (ContainerCompartment c in currentModel.modelState.containerCompartments)
             {
@@ -2656,6 +2665,8 @@ namespace PhysModelDeveloperGUI
         public ObservableCollection<Compartment> containedCompartments { get; set; } = new ObservableCollection<Compartment>();
 
         public ObservableCollection<GasExchangeBlock> gasexchangeUnits { get; set; } = new ObservableCollection<GasExchangeBlock>();
+
+        public ObservableCollection<DiffusionBlock> diffusionUnits { get; set; } = new ObservableCollection<DiffusionBlock>();
         public ObservableCollection<string> rhythmTypes { get; set; } = new ObservableCollection<string>();
 
         #endregion
@@ -3556,6 +3567,19 @@ namespace PhysModelDeveloperGUI
                 DiffOtherGex = selectedGex.DiffCoOtherBaseline;
             }
         }
+        void ChangeSelectedDif(object p)
+        {
+            selectedDif = (DiffusionBlock)p;
+            if (selectedDif != null)
+            {
+                CompBlood1Dif = selectedDif.CompBlood1.Description;
+                CompBlood2Dif = selectedDif.CompBlood2.Description;
+                DiffO2Dif = selectedDif.DiffCoO2Baseline;
+                DiffCO2Dif = selectedDif.DiffCoCo2Baseline;
+                DiffN2Dif = selectedDif.DiffCoN2Baseline;
+                DiffOtherDif = selectedDif.DiffCoOtherBaseline;
+            }
+        }
         public string CompBloodGex
         {
             get
@@ -3646,6 +3670,128 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
+        public bool IsEnabledGex
+        {
+            get
+            {
+                return selectedGex != null ? selectedGex.IsEnabled : false;
+            }
+            set
+            {
+                if (selectedGex != null)
+                {
+                    selectedGex.IsEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string CompBlood1Dif
+        {
+            get
+            {
+                return selectedDif != null ? selectedDif.CompBlood1.Description : "";
+            }
+            set
+            {
+                if (selectedDif != null)
+                {
+                    selectedDif.CompBlood1.Description = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public string CompBlood2Dif
+        {
+            get
+            {
+                return selectedDif != null ? selectedDif.CompBlood2.Description : "";
+            }
+            set
+            {
+                if (selectedDif != null)
+                {
+                    selectedDif.CompBlood2.Description = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DiffO2Dif
+        {
+            get
+            {
+                return selectedDif != null ? selectedDif.DiffCoO2Baseline : 0;
+            }
+            set
+            {
+                if (selectedDif != null)
+                {
+                    selectedDif.DiffCoO2Baseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DiffCO2Dif
+        {
+            get
+            {
+                return selectedDif != null ? selectedDif.DiffCoCo2Baseline : 0;
+            }
+            set
+            {
+                if (selectedDif != null)
+                {
+                    selectedDif.DiffCoCo2Baseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DiffN2Dif
+        {
+            get
+            {
+                return selectedDif != null ? selectedDif.DiffCoN2Baseline : 0;
+            }
+            set
+            {
+                if (selectedDif != null)
+                {
+                    selectedDif.DiffCoN2Baseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double DiffOtherDif
+        {
+            get
+            {
+                return selectedDif != null ? selectedDif.DiffCoOtherBaseline : 0;
+            }
+            set
+            {
+                if (selectedDif != null)
+                {
+                    selectedDif.DiffCoOtherBaseline = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool IsEnabledDif
+        {
+            get
+            {
+                return selectedDif != null ? selectedDif.IsEnabled : false;
+            }
+            set
+            {
+                if (selectedDif != null)
+                {
+                    selectedDif.IsEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
 
     }

@@ -37,31 +37,34 @@
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Content="SHUNTS" HorizontalAlignment="Center" FontSize="12" FontWeight="Bold"  Grid.ColumnSpan="2"></Label>
-            <Label Content="OFO" FontSize="10" HorizontalAlignment="Left" FontWeight="DemiBold"  Grid.Row="1" Grid.Column="0"></Label>
-            <ts:HorizontalToggleSwitch x:Name="switchOFO" Checked="SwitchOFO_Checked" Unchecked="SwitchOFO_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="1" Grid.Column="1"></ts:HorizontalToggleSwitch>
-            <Label Content="PDA" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="2" Grid.Column="0"></Label>
-            <ts:HorizontalToggleSwitch x:Name="switchPDA" Checked="SwitchPDA_Checked_1" Unchecked="SwitchPDA_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="2" Grid.Column="1"></ts:HorizontalToggleSwitch>
-            <Label Content="VSD" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="3" Grid.Column="0"></Label>
-            <ts:HorizontalToggleSwitch x:Name="switchVSD" Checked="SwitchVSD_Checked" Unchecked="SwitchVSD_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="3" Grid.Column="1"></ts:HorizontalToggleSwitch>
-            <Label Content="LUNG" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="4" Grid.Column="0"></Label>
-            <ts:HorizontalToggleSwitch x:Name="switchLUNG" Checked="SwitchLUNG_Checked" Unchecked="SwitchLUNG_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="4" Grid.Column="1"></ts:HorizontalToggleSwitch>
-            <Label Content="TGA" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="5" Grid.Column="0"></Label>
-            <ts:HorizontalToggleSwitch x:Name="switchTGA" Checked="SwitchTGA_Checked" Unchecked="SwitchTGA_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="5" Grid.Column="1"></ts:HorizontalToggleSwitch>
-            <Label Content="TAPVC" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="6" Grid.Column="0"></Label>
-            <ts:HorizontalToggleSwitch x:Name="switchTAPVC" Checked="SwitchTAPVC_Checked" Unchecked="SwitchTAPVC_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="6" Grid.Column="1"></ts:HorizontalToggleSwitch>
-            <Label Content="PA" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="7" Grid.Column="0"></Label>
-            <ts:HorizontalToggleSwitch x:Name="switchPA" Checked="SwitchPA_Checked" Unchecked="SwitchPA_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="7" Grid.Column="1"></ts:HorizontalToggleSwitch>
-            <Label Content="HLHS" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="8" Grid.Column="0"></Label>
-            <ts:HorizontalToggleSwitch x:Name="switchHLHS" Checked="SwitchHLHS_Checked" Unchecked="SwitchHLHS_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="8" Grid.Column="1"></ts:HorizontalToggleSwitch>
-            <Label Content="TRUNCUS" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="9" Grid.Column="0"></Label>
-            <ts:HorizontalToggleSwitch x:Name="switchTRUNCUS" Checked="SwitchTRUNCUS_Checked" Unchecked="SwitchTRUNCUS_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="9" Grid.Column="1"></ts:HorizontalToggleSwitch>
-            <Label Content="NORWOOD" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="10" Grid.Column="0"></Label>
-            <ts:HorizontalToggleSwitch x:Name="switchNORWOOD" Checked="SwitchNORWOOD_Checked" Unchecked="SwitchNORWOOD_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="10" Grid.Column="1"></ts:HorizontalToggleSwitch>
-            <Label Content="GLENN" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="11" Grid.Column="0"></Label>
-            <ts:HorizontalToggleSwitch x:Name="switchGLENN" Checked="SwitchGLENN_Checked" Unchecked="SwitchGLENN_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="11" Grid.Column="1"></ts:HorizontalToggleSwitch>
-            <Label Content="FONTAN" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="12" Grid.Column="0"></Label>
-            <ts:HorizontalToggleSwitch x:Name="switchFONTAN" Checked="SwitchFONTAN_Checked" Unchecked="SwitchFONTAN_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="12" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="SHUNTS" HorizontalAlignment="Center" FontSize="12" FontWeight="Bold"  Grid.ColumnSpan="2"></Label>
+            <Label Visibility="Hidden" Content="OFO" FontSize="10" HorizontalAlignment="Left" FontWeight="DemiBold"  Grid.Row="1" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchOFO" Checked="SwitchOFO_Checked" Unchecked="SwitchOFO_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="1" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="PDA" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="2" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchPDA" Checked="SwitchPDA_Checked_1" Unchecked="SwitchPDA_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="2" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="VSD" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="3" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchVSD" Checked="SwitchVSD_Checked" Unchecked="SwitchVSD_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="3" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="LUNG" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="4" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchLUNG" Checked="SwitchLUNG_Checked" Unchecked="SwitchLUNG_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="4" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="TGA" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="5" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchTGA" Checked="SwitchTGA_Checked" Unchecked="SwitchTGA_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="5" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="TAPVC" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="6" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchTAPVC" Checked="SwitchTAPVC_Checked" Unchecked="SwitchTAPVC_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="6" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="PA" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="7" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchPA" Checked="SwitchPA_Checked" Unchecked="SwitchPA_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="7" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="HLHS" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="8" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchHLHS" Checked="SwitchHLHS_Checked" Unchecked="SwitchHLHS_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="8" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="TRUNCUS" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="9" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchTRUNCUS" Checked="SwitchTRUNCUS_Checked" Unchecked="SwitchTRUNCUS_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="9" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="NORWOOD" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="10" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchNORWOOD" Checked="SwitchNORWOOD_Checked" Unchecked="SwitchNORWOOD_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="10" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="GLENN" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="11" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchGLENN" Checked="SwitchGLENN_Checked" Unchecked="SwitchGLENN_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="11" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="FONTAN" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="12" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchFONTAN" Checked="SwitchFONTAN_Checked" Unchecked="SwitchFONTAN_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="12" Grid.Column="1"></ts:HorizontalToggleSwitch>
+            <Label Visibility="Hidden" Content="PLACENTA" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="13" Grid.Column="0"></Label>
+            <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchPLACENTA" Checked="SwitchPLACENTA_Checked" Unchecked="SwitchPLACENTA_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="13" Grid.Column="1"></ts:HorizontalToggleSwitch>
+
         </Grid>
         
     </Grid>

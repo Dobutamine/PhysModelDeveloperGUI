@@ -1154,12 +1154,78 @@
                                     <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Increment="0.000001" Minimum="0" Value="{Binding DiffOtherGex, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
+                                    <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="> is enabled" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                    <CheckBox Grid.Column="2" Grid.Row="7" IsChecked="{Binding IsEnabledGex}" Margin="0,5,0,0" ></CheckBox>
+
 
 
                                 </Grid>
                             </Border>
                         </Expander>
 
+                        <Expander IsExpanded="false" Header=" diffusion units" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
+                            <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="Black">
+                                <Grid Margin="10,5,10,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+
+
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Margin="5,0,0,0" Text="select unit " FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <ComboBox x:Name="cmbDifUnits" ItemsSource="{Binding diffusionUnits}"  DisplayMemberPath="Description" Margin="0,0,5,0" FontSize="10" Height="20" Grid.ColumnSpan="2" Grid.Column="2" >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectionChanged">
+                                                <i:InvokeCommandAction Command="{Binding ChangeDifUnitCommand}" CommandParameter="{Binding ElementName=cmbDifUnits, Path=SelectedItem}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </ComboBox>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="> blood compartment" FontSize="10" Margin="5,5,5,0" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding CompBlood1Dif}" FontSize="10" Margin="5,5,5,0" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="> blood compartment" FontSize="10" Margin="5,5,5,0" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding CompBlood2Dif}" FontSize="10" Margin="5,5,5,5" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> diffusion O2" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Increment="0.000001" Minimum="0" Value="{Binding DiffO2Dif, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="> diffusion CO2" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Increment="0.000001" Minimum="0" Value="{Binding DiffCO2Dif, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Text="> diffusion N2" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Increment="0.000001" Minimum="0" Value="{Binding DiffN2Dif, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Text="> diffusion other gasses" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Increment="0.000001" Minimum="0" Value="{Binding DiffOtherDif, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="> is enabled" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                    <CheckBox Grid.Column="2" Grid.Row="7" IsChecked="{Binding IsEnabledDif}" Margin="0,5,0,0" ></CheckBox>
+
+
+                                </Grid>
+                            </Border>
+                        </Expander>
+
+                        
                         <Expander Header=" autonomic nervous system model" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
                             <StackPanel Margin="20,0,0,0">
                                 <Expander Header=" MAP baroreceptor activation curve" IsExpanded="False" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
@@ -1846,7 +1912,7 @@
                     </Border>
                 </Expander>
 
-                <Button Height="25" Command="{Binding RemoveBlood}"> </Button>
+       
             </StackPanel>
         </ScrollViewer>
         

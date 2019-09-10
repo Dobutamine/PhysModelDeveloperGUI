@@ -58,6 +58,9 @@ namespace PhysModelDeveloperGUI
         public AnimatedBloodCompartment ALBLOOD;
         public AnimatedBloodConnector ADALBLOOD;
         public AnimatedBloodConnector ALBLOODIVC;
+        public AnimatedBloodCompartment PLACENTA;
+        public AnimatedBloodConnector ADPLACENTA;
+        public AnimatedBloodConnector PLACENTAIVC;
 
         public AnimatedBloodConnector AAUB;
         public AnimatedBloodCompartment upperBody;
@@ -81,7 +84,7 @@ namespace PhysModelDeveloperGUI
         public AnimatedShuntGas OUTNCA;
         public AnimatedBloodCompartment lungs;
         public AnimatedGasComp alveoli;
-        public AnimatedGasComp placenta;
+        public AnimatedBloodCompartment placenta;
 
         public AnimatedBloodCompartment lvad;
         public AnimatedBloodCompartment rvad;
@@ -332,6 +335,8 @@ namespace PhysModelDeveloperGUI
             tricuspidValve.AddConnector(currentModel.modelState.RA_RV);
             animatedValves.Add(tricuspidValve);
 
+          
+
             lowerBody = new AnimatedBloodCompartment
             {
                 scaleRelative = 0.035f,
@@ -342,6 +347,22 @@ namespace PhysModelDeveloperGUI
             lowerBody.AddCompartment(currentModel.modelState.KIDNEYS);
             lowerBody.AddCompartment(currentModel.modelState.LB);
             animatedBloodCompartments.Add(lowerBody);
+
+            placenta = new AnimatedBloodCompartment
+            {
+
+                scaleRelative = 0.035f,
+                IsVessel = true,
+                RadiusYOffset = 1.15f,
+                StartAngle = 110,
+                EndAngle = 70,
+                Degrees = 60,
+                Direction = -1,
+                Name = "PLACENTA"
+            };
+            placenta.AddCompartment(currentModel.modelState.PLACENTA);
+            //animatedBloodCompartments.Add(placenta);
+
 
             lungs = new AnimatedBloodCompartment
             {
@@ -374,10 +395,6 @@ namespace PhysModelDeveloperGUI
             alveoli.AddCompartment(currentModel.modelState.ALL);
             alveoli.AddCompartment(currentModel.modelState.ALR);
             animatedGasCompartments.Add(alveoli);
-
-        
-
-         
 
             LBIVC = new AnimatedBloodConnector
             {
@@ -466,6 +483,33 @@ namespace PhysModelDeveloperGUI
             SVCRA.AddConnector(currentModel.modelState.SVC_RA);
             animatedBloodConnectors.Add(SVCRA);
 
+            PLACENTAIVC = new AnimatedBloodConnector
+            {
+                scaleRelative = 0.035f,
+                RadiusYOffset = 1.15f,
+                RadiusXOffset = 0.85f,
+                NoLoss = true,
+                StartAngle = 110,
+                EndAngle = 130,
+                Direction = 1,
+                Name = "PL->IVC"
+            };
+            PLACENTAIVC.AddConnector(currentModel.modelState.PLACENTA_IVC);
+            //animatedBloodConnectors.Add(PLACENTAIVC);
+
+            ADPLACENTA = new AnimatedBloodConnector
+            {
+                scaleRelative = 0.035f,
+                RadiusYOffset = 1.15f,
+                RadiusXOffset = 1f,
+                NoLoss = true,
+                StartAngle = 30,
+                EndAngle = 70,
+                Direction = 1,
+                Name = "PL->IVC"
+            };
+            ADPLACENTA.AddConnector(currentModel.modelState.AD_PLACENTA);
+            //animatedBloodConnectors.Add(ADPLACENTA);
 
             LUNGPV = new AnimatedBloodConnector
             {
@@ -938,6 +982,26 @@ namespace PhysModelDeveloperGUI
             }
         }
 
+        public void PlacentaView(bool state)
+        {
+            if (state)
+            {
+                if (!animatedBloodCompartments.Contains(placenta))
+                    animatedBloodCompartments.Add(placenta);
+                if (!animatedBloodConnectors.Contains(PLACENTAIVC))
+                    animatedBloodConnectors.Add(PLACENTAIVC);
+                if (!animatedBloodConnectors.Contains(ADPLACENTA))
+                    animatedBloodConnectors.Add(ADPLACENTA);
+            } else
+            {
+                if (animatedBloodCompartments.Contains(placenta))
+                    animatedBloodCompartments.Remove(placenta);
+                if (animatedBloodConnectors.Contains(PLACENTAIVC))
+                    animatedBloodConnectors.Remove(PLACENTAIVC);
+                if (animatedBloodConnectors.Contains(ADPLACENTA))
+                    animatedBloodConnectors.Remove(ADPLACENTA);
+            }
+        }
         public void FontanView(bool state)
         {
             if (state)
@@ -1319,6 +1383,16 @@ namespace PhysModelDeveloperGUI
         private void SwitchFONTAN_Unchecked(object sender, RoutedEventArgs e)
         {
             FontanView(false);
+        }
+
+        private void SwitchPLACENTA_Checked(object sender, RoutedEventArgs e)
+        {
+            PlacentaView(true);
+        }
+
+        private void SwitchPLACENTA_Unchecked(object sender, RoutedEventArgs e)
+        {
+            PlacentaView(false);
         }
     }
 }
