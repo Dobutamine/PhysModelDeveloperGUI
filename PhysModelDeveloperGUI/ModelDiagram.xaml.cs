@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PhysModelLibrary;
+using PhysModelLibrary.Connectors;
 using SkiaSharp;
 
 namespace PhysModelDeveloperGUI
@@ -574,7 +575,7 @@ namespace PhysModelDeveloperGUI
                 Direction = 1,
                 Name = "TGA AORTA"
             };
-            LVPA.AddConnector(currentModel.modelState.DA_PA);
+            LVPA.AddConnector(currentModel.modelState.LV_PA);
 
             RVAA = new AnimatedShunt
             {
@@ -586,7 +587,7 @@ namespace PhysModelDeveloperGUI
                 Direction = 1,
                 Name = "TGA PA"
             };
-            RVAA.AddConnector(currentModel.modelState.DA_PA);
+            RVAA.AddConnector(currentModel.modelState.RV_AA);
 
             SVCPA = new AnimatedShunt
             {
@@ -600,7 +601,7 @@ namespace PhysModelDeveloperGUI
                 Name = "BIDIRECTIONAL GLENN"
 
             };
-            SVCPA.AddConnector(currentModel.modelState.DA_PA);
+            SVCPA.AddConnector(currentModel.modelState.SVC_PA);
 
             IVCPA = new AnimatedShunt
             {
@@ -615,7 +616,7 @@ namespace PhysModelDeveloperGUI
                 Name = " IVC->PA"
 
             };
-            IVCPA.AddConnector(currentModel.modelState.DA_PA);
+            IVCPA.AddConnector(currentModel.modelState.IVC_PA);
 
 
             TAPVC = new AnimatedShunt
@@ -628,7 +629,7 @@ namespace PhysModelDeveloperGUI
                 Direction = 1,
                 Name = "TAPVC"
             };
-            TAPVC.AddConnector(currentModel.modelState.DA_PA);
+            TAPVC.AddConnector(currentModel.modelState.PV_RA);
 
             TAPVCIC = new AnimatedShunt
             {
@@ -640,7 +641,7 @@ namespace PhysModelDeveloperGUI
                 Direction = 1,
                 Name = "TAPVC"
             };
-            TAPVCIC.AddConnector(currentModel.modelState.DA_PA);
+            TAPVCIC.AddConnector(currentModel.modelState.PV_IVC);
 
             PDA = new AnimatedShunt
             {
@@ -652,8 +653,7 @@ namespace PhysModelDeveloperGUI
                 Direction = 1,
                 Name = "DUCTUS ARTERIOSUS"
             };
-            PDA.AddConnector(currentModel.modelState.DA_PA);
-            PDA.AddConnector(currentModel.modelState.AD_DA);
+            PDA.AddConnector(currentModel.modelState.PDA);
 
             APShunt = new AnimatedShunt
             {
@@ -665,7 +665,7 @@ namespace PhysModelDeveloperGUI
                 Direction = 1,
                 Name = "AORTO-PULMONARY SHUNT"
             };
-            APShunt.AddConnector(currentModel.modelState.DA_PA);
+            APShunt.AddConnector(currentModel.modelState.APSHUNT);
 
 
 
@@ -1218,7 +1218,23 @@ namespace PhysModelDeveloperGUI
                     animatedShunts.Remove(LUNGSHUNT);
             }
         }
-
+        public void PulmonaryView(bool state)
+        {
+            if (state)
+            {
+                if (!animatedGasCompartments.Contains(alveoli))
+                    animatedGasCompartments.Add(alveoli);
+                //if (!animatedShuntsGas.Contains(OUTNCA))
+                //    animatedShuntsGas.Add(OUTNCA);
+                   
+            } else
+            {
+                if (animatedGasCompartments.Contains(alveoli))
+                    animatedGasCompartments.Remove(alveoli);
+                //if (animatedShuntsGas.Contains(OUTNCA))
+                //    animatedShuntsGas.Remove(OUTNCA);
+            }
+        }
         public void MYOView(bool state)
         {
             if (state)
