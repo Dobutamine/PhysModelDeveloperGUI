@@ -109,6 +109,16 @@ namespace PhysModelDeveloperGUI
         public string Name { get; set; } = "";
         public string Title { get; set; } = "O2";
 
+        public float Width { get; set; } = 22;
+        float StrokeWidth = 15;
+
+        public float AverageFlow { get; set; } = 0;
+        int averageCounter = 0;
+        float tempAverageFlow = 0;
+
+        float currentStrokeWidth = 0;
+        float strokeStepsize = 0.1f;
+
 
         public void AddConnector(BloodCompartmentConnector c)
         {
@@ -176,6 +186,15 @@ namespace PhysModelDeveloperGUI
                 Title = "";
             }
 
+            tempAverageFlow += totalFlow;
+
+            if (averageCounter > 100)
+            {
+                AverageFlow = Math.Abs(tempAverageFlow) / averageCounter;
+                tempAverageFlow = 0;
+                averageCounter = 0;
+            }
+            averageCounter++;
 
 
             //paint.Color = CalculateColor(totalSpO2 / connectors.Count);
@@ -212,7 +231,19 @@ namespace PhysModelDeveloperGUI
             }
             else
             {
-                circleOut.StrokeWidth = 15;
+                StrokeWidth = AverageFlow * Width;
+                if (StrokeWidth > 30) StrokeWidth = 30;
+                if (StrokeWidth < 2) StrokeWidth = 2;
+
+                strokeStepsize = (StrokeWidth - currentStrokeWidth) / 10;
+                currentStrokeWidth += strokeStepsize;
+                if (Math.Abs(currentStrokeWidth - StrokeWidth) < Math.Abs(strokeStepsize))
+                {
+                    strokeStepsize = 0;
+                    currentStrokeWidth = StrokeWidth;
+                }
+
+                circleOut.StrokeWidth = currentStrokeWidth;
             }
 
             SKRect mainRect = new SKRect(left, top, right, bottom);

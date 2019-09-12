@@ -73,6 +73,15 @@ namespace PhysModelDeveloperGUI
         public string Name { get; set; } = "";
         public bool IsVisible = true;
 
+        public float Width { get; set; } = 22;
+        float StrokeWidth = 15;
+
+        public float AverageFlow { get; set; } = 0;
+        int averageCounter = 0;
+        float tempAverageFlow = 0;
+
+        float currentStrokeWidth = 0;
+        float strokeStepsize = 0.1f;
 
         public void AddConnector(BloodCompartmentConnector c)
         {
@@ -97,6 +106,7 @@ namespace PhysModelDeveloperGUI
                 scale = _radY * scaleRelative;
                 radius = _radY / 2.5f;
             }
+
 
             // calculate the total volume and average spO2 if lumping is the case
             foreach (BloodCompartmentConnector c in connectors)
@@ -132,7 +142,20 @@ namespace PhysModelDeveloperGUI
 
                 }
 
+
             }
+
+
+            tempAverageFlow += totalFlow;
+
+            if (averageCounter > 100)
+            {
+                AverageFlow = Math.Abs(tempAverageFlow) / averageCounter;
+                tempAverageFlow = 0;
+                averageCounter = 0;
+            }
+            averageCounter++;
+
 
             colorTo = AnimatedElementHelper.CalculateBloodColor(totalSpO2To / connectors.Count);
             colorFrom = AnimatedElementHelper.CalculateBloodColor(totalSpO2From / connectors.Count);
@@ -150,7 +173,19 @@ namespace PhysModelDeveloperGUI
             }
             else
             {
-                circleOut.StrokeWidth = 22;
+                StrokeWidth = AverageFlow * Width;
+                if (StrokeWidth > 30) StrokeWidth = 30;
+                if (StrokeWidth < 2) StrokeWidth = 2;
+
+                strokeStepsize = (StrokeWidth - currentStrokeWidth) / 10;
+                currentStrokeWidth += strokeStepsize;
+                if (Math.Abs(currentStrokeWidth - StrokeWidth) < Math.Abs(strokeStepsize))
+                {
+                    strokeStepsize = 0;
+                    currentStrokeWidth = StrokeWidth;
+                }
+
+                circleOut.StrokeWidth = currentStrokeWidth;
             }
 
 

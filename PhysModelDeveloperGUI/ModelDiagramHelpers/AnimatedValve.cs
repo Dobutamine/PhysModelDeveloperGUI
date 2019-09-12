@@ -92,7 +92,14 @@ namespace PhysModelDeveloperGUI
         public bool IsVisible { get; set; } = true;
 
         public float Width { get; set; } = 22;
+        float StrokeWidth = 15;
 
+        public float AverageFlow { get; set; } = 0;
+        int averageCounter = 0;
+        float tempAverageFlow = 0;
+
+        float currentStrokeWidth = 0;
+        float strokeStepsize = 0.1f;
 
         public void AddConnector(ValveConnector c)
         {
@@ -123,6 +130,8 @@ namespace PhysModelDeveloperGUI
             float right = (float)Math.Sin(90 * 0.0174532925) * RadiusXOffset * radius;
             float top = (float)Math.Cos(180 * 0.0174532925) * RadiusYOffset * radius;
             float bottom = (float)Math.Cos(0 * 0.0174532925) * RadiusYOffset * radius;
+
+
 
             // calculate the total volume and average spO2 if lumping is the case
             foreach (ValveConnector c in connectors)
@@ -158,9 +167,18 @@ namespace PhysModelDeveloperGUI
 
                 }
                 Title = "";
+
             }
 
-            totalFlow = totalFlow / connectors.Count;
+            tempAverageFlow += totalFlow;
+
+            if (averageCounter > 100)
+            {
+                AverageFlow = Math.Abs(tempAverageFlow) / averageCounter;
+                tempAverageFlow = 0;
+                averageCounter = 0;
+            }       
+            averageCounter++;
 
             //paint.Color = CalculateColor(totalSpO2 / connectors.Count);
             colorTo = AnimatedElementHelper.CalculateBloodColor(totalSpO2To / connectors.Count);
@@ -179,7 +197,19 @@ namespace PhysModelDeveloperGUI
             }
             else
             {
-                circleOut.StrokeWidth = Width;
+                StrokeWidth = AverageFlow * Width;
+                if (StrokeWidth > 30) StrokeWidth = 30;
+                if (StrokeWidth < 2) StrokeWidth = 2;
+
+                strokeStepsize = (StrokeWidth - currentStrokeWidth) / 10;
+                currentStrokeWidth += strokeStepsize;
+                if (Math.Abs(currentStrokeWidth - StrokeWidth) < Math.Abs(strokeStepsize))
+                {
+                    strokeStepsize = 0;
+                    currentStrokeWidth = StrokeWidth;
+                }
+
+                circleOut.StrokeWidth = currentStrokeWidth;
             }
 
             // calculate position
