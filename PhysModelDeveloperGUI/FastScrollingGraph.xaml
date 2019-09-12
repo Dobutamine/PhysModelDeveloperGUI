@@ -19,7 +19,7 @@
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
             </Grid.RowDefinitions>
             <Label Content="{Binding ParameterTitle}" HorizontalAlignment="Left" FontSize="{Binding FontSizeTitle}" FontWeight="Bold" VerticalAlignment="Top" Foreground="{Binding GraphTitleColor}" Grid.Row="0"></Label>
             <Label Content="{Binding ParameterValue}" HorizontalAlignment="Center" FontSize="{Binding FontSizeValue}" FontWeight="Bold" VerticalAlignment="Center" Foreground="{Binding GraphTitleColor}" Grid.Row="1"></Label>

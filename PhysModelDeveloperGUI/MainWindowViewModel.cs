@@ -572,8 +572,6 @@ namespace PhysModelDeveloperGUI
                 UpdateBloodgasGraph();
 
 
-
-                Console.WriteLine(currentModel.modelState.NCA.PO2);
                 GraphPVLoop.Draw();
             }
 

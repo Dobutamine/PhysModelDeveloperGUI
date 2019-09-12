@@ -214,6 +214,8 @@ namespace PhysModelDeveloperGUI
             graph1.GraphPaint1.Color = SKColors.LimeGreen;
             graph1.xStepSize = 2;
             graph1.AutoScale = true;
+            graph1.FontSizeValue = 14;
+            graph1.FontSizeTitle = 10;
 
         }
 
