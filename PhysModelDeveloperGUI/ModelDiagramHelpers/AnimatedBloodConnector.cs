@@ -33,7 +33,8 @@ namespace PhysModelDeveloperGUI
         SKPaint paint = new SKPaint()
         {
             Style = SKPaintStyle.Fill,
-            Color = SKColors.AliceBlue,
+            Color = SKColors.BlanchedAlmond,
+            
             StrokeWidth = 10
         };
 
@@ -217,7 +218,7 @@ namespace PhysModelDeveloperGUI
             }
 
             location1 = AnimatedElementHelper.GetPosition(StartAngle + currentAngle, radius, RadiusXOffset, RadiusYOffset);
-            canvas.DrawCircle(location1.X + XOffset, location1.Y + YOffset, 10, paint);
+            canvas.DrawCircle(location1.X + XOffset, location1.Y + YOffset, 7, paint);
 
 
 

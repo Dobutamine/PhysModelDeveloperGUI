@@ -89,8 +89,125 @@
         <TextBlock Margin="0,25,0,0" Text="MODEL PARAMETERS" TextAlignment="Center" Foreground="Black" FontWeight="DemiBold" FontSize="15" ></TextBlock>
         <ScrollViewer Grid.Column="0"  Margin="0,50,0,25" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="0,0,5,0">
-                <Expander IsExpanded="False" Header="Interventions" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Opacity="1" Foreground="White" BorderThickness="0">
+                
+                <Expander IsExpanded="true" Header="Interventions" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Opacity="1" Foreground="White" BorderThickness="0">
+                    <StackPanel Margin="5,0,5,5" >
+                        <Expander IsExpanded="False" Header="hemodynamics" Background="DarkSlateGray" Margin="0,0,0,5" Padding="5,5,5,5"  Foreground="White" BorderThickness="0">
+                     
+                            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="Black" >
+                                <Grid x:Name="gridInterventions" Margin="10,5,10,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
 
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Margin="0,0,0,0" Text="systemic vascular resistance "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <Slider Grid.Column="0" Grid.Row="1"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventions}" Margin="10,5,10,5"></Slider>
+                                    <Label Grid.Column="2" Grid.Row="1"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Margin="0,0,0,0" Text="pulmonary vascular resistance "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <Slider Grid.Column="0" Grid.Row="3"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventions}" Margin="10,5,10,5"></Slider>
+                                    <Label Grid.Column="2" Grid.Row="3"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Margin="0,0,0,0" Text="heart contractility "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <Slider Grid.Column="0" Grid.Row="5"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventions}" Margin="10,5,10,5"></Slider>
+                                    <Label Grid.Column="2" Grid.Row="5"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="6" Margin="0,0,0,0" Text="foramen ovale size "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <Slider Grid.Column="0" Grid.Row="7"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventions}" Margin="10,5,10,5"></Slider>
+                                    <Label Grid.Column="2" Grid.Row="7"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="8" Margin="0,0,0,0" Text="ventricular septal defect size "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <Slider Grid.Column="0" Grid.Row="9"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventions}" Margin="10,5,10,5"></Slider>
+                                    <Label Grid.Column="2" Grid.Row="9"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="10" Margin="0,0,0,0" Text="ductus arteriosus size "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <Slider Grid.Column="0" Grid.Row="11"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventions}" Margin="10,5,10,5"></Slider>
+                                    <Label Grid.Column="2" Grid.Row="11"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                                </Grid>
+
+                            </Border>
+                        </Expander>
+                        <Expander IsExpanded="False" Header="ventilator" Background="DarkSlateGray" Margin="0,0,0,5" Padding="5,5,5,5"  Foreground="White" BorderThickness="0">
+
+                            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="Black" >
+                                <Grid x:Name="gridInterventionsVentilator" Margin="10,5,10,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Margin="0,0,0,0" Text="frequency "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <Slider Grid.Column="0" Grid.Row="1"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventionsVentilator}" Margin="10,5,10,5"></Slider>
+                                    <Label Grid.Column="2" Grid.Row="1"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Margin="0,0,0,0" Text="peak inspiratory pressure "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <Slider Grid.Column="0" Grid.Row="3"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventionsVentilator}" Margin="10,5,10,5"></Slider>
+                                    <Label Grid.Column="2" Grid.Row="3"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Margin="0,0,0,0" Text="positive end expiratory pressure "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <Slider Grid.Column="0" Grid.Row="5"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventionsVentilator}" Margin="10,5,10,5"></Slider>
+                                    <Label Grid.Column="2" Grid.Row="5"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="6" Margin="0,0,0,0" Text="tidal volume "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <Slider Grid.Column="0" Grid.Row="7"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventionsVentilator}" Margin="10,5,10,5"></Slider>
+                                    <Label Grid.Column="2" Grid.Row="7"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="8" Margin="0,0,0,0" Text="flow "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <Slider Grid.Column="0" Grid.Row="9"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventionsVentilator}" Margin="10,5,10,5"></Slider>
+                                    <Label Grid.Column="2" Grid.Row="9"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="10" Margin="0,0,0,0" Text="fio2 "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                    <Slider Grid.Column="0" Grid.Row="11"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventionsVentilator}" Margin="10,5,10,5"></Slider>
+                                    <Label Grid.Column="2" Grid.Row="11"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                                </Grid>
+
+                            </Border>
+                        </Expander>
+                    </StackPanel>
+                
                 </Expander>
                 <Expander IsExpanded="False" Header="Global model settings" Background="DarkSlateGray" Margin="10,0,0,10" Padding="5,5,5,5"  Foreground="White" BorderThickness="0">
                     <StackPanel Margin="5,0,5,5" >
@@ -1907,19 +2024,8 @@
                     </StackPanel>
                 </Expander>
 
-                <Expander IsExpanded="False" Header="Model standard tests" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Foreground="White" BorderThickness="0">
-                    <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="Black" Margin="10,0,10,10">
-                        <StackPanel Margin="10,5,10,10">
-                            <Button Content="{Binding ApneaTestStatus}" FontSize="10" Background="SlateGray" Foreground="White" Margin="10,10,10,0" Height="25" Command="{Binding ApneaTestCommand}"></Button>
-                            <Label Content="{Binding ApneaReport}" Foreground="White" FontStyle="Italic" Margin="10,0,10,10"></Label>
-
-                            <Button Content="{Binding CircArrestTestStatus}" FontSize="10" Background="SlateGray" Foreground="White" Margin="10,10,10,0" Height="25" Command="{Binding CircArrestTestCommand}"></Button>
-                            <Label Content="{Binding CircArrestReport}" Foreground="White" FontStyle="Italic" Margin="10,0,10,10"></Label>
-                        </StackPanel>
-                    </Border>
-                </Expander>
                 
-                <Expander IsExpanded="true" Header="Model log" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Foreground="White" BorderThickness="0">
+                <Expander IsExpanded="False" Header="Model log" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Foreground="White" BorderThickness="0">
                     <Border BorderBrush="White"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="White" >
                         <ListBox x:Name="lstBox" Height="100" Margin="5,5,5,5" ItemsSource="{Binding Path=ModelLog, UpdateSourceTrigger=PropertyChanged}" Background="White" BorderBrush="White" FontSize="10" ScrollViewer.VerticalScrollBarVisibility="Auto" Foreground="Black" >
                         </ListBox>

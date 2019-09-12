@@ -21,7 +21,7 @@ namespace PhysModelDeveloperGUI
             Style = SKPaintStyle.Fill,
             FakeBoldText = true,
             IsAntialias = true,
-            Color = SKColors.White,
+            Color = SKColors.Black,
             IsStroke = false,
             TextSize = 16f
         };
@@ -64,7 +64,7 @@ namespace PhysModelDeveloperGUI
         SKPaint paint = new SKPaint()
         {
             Style = SKPaintStyle.Fill,
-            Color = SKColors.AliceBlue,
+            Color = SKColors.BlanchedAlmond,
             StrokeWidth = 10
         };
 
@@ -74,7 +74,7 @@ namespace PhysModelDeveloperGUI
             FakeBoldText = true,
             Style = SKPaintStyle.Fill,
             IsAntialias = true,
-            Color = SKColors.White,
+            Color = SKColors.Black,
             IsStroke = false,
             TextSize = 16f
 
@@ -271,7 +271,7 @@ namespace PhysModelDeveloperGUI
             location1.X = locationOrigen.X - currentAngle * dx;
             location1.Y = locationOrigen.Y - currentAngle * dy;
 
-            canvas.DrawCircle(location1.X + XOffset, location1.Y + YOffset, 10, paint);
+            canvas.DrawCircle(location1.X + XOffset, location1.Y + YOffset, 7, paint);
 
         }
 
