@@ -673,7 +673,7 @@ namespace PhysModelDeveloperGUI
             {
                 scaleRelative = 0.035f,
                 RadiusYOffset = 1f,
-                NoLoss = true,
+                NoLoss = false,
                 StartAngle = 0,
                 EndAngle = 190,
                 Direction = 1,
@@ -686,7 +686,7 @@ namespace PhysModelDeveloperGUI
             {
                 scaleRelative = 0.035f,
                 RadiusYOffset = 1f,
-                NoLoss = true,
+                NoLoss = false,
                 StartAngle = 340,
                 EndAngle = 170,
                 Direction = 1,
@@ -1409,6 +1409,40 @@ namespace PhysModelDeveloperGUI
         private void SwitchPLACENTA_Unchecked(object sender, RoutedEventArgs e)
         {
             PlacentaView(false);
+        }
+
+        private void ButIncreaseWidth_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(AnimatedBloodConnector c in animatedBloodConnectors)
+            {
+                c.Width += 5;
+            }
+            foreach (AnimatedShunt c in animatedShunts)
+            {
+                c.Width += 5;
+            }
+
+            foreach (AnimatedValve c in animatedValves)
+            { 
+                c.Width += 5;
+            }
+        }
+
+        private void ButDecreaseWidth_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (AnimatedBloodConnector c in animatedBloodConnectors)
+            {
+                c.Width -= 5;
+            }
+            foreach (AnimatedShunt c in animatedShunts)
+            {
+                c.Width -= 5;
+            }
+
+            foreach (AnimatedValve c in animatedValves)
+            {
+                c.Width -= 5;
+            }
         }
     }
 }

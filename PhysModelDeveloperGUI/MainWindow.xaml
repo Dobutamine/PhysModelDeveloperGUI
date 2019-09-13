@@ -81,11 +81,7 @@
                 </MenuItem>
 
             </MenuItem>
-            <MenuItem Header="_Settings">
-                <MenuItem x:Name="menuIncrWidth" Header="_Increase width" IsCheckable="False" Command="{Binding IncreaseWidthCommand}"/>
-                <MenuItem x:Name="menuDecWidth" Header="_Decrease width" IsCheckable="False" Command="{Binding DecreaseWidthCommand}"/>
-            </MenuItem>
-
+   
 
         </Menu>
         

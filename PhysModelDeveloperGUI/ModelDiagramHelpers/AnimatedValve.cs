@@ -91,7 +91,7 @@ namespace PhysModelDeveloperGUI
         public string Title { get; set; } = "O2";
         public bool IsVisible { get; set; } = true;
 
-        public float Width { get; set; } = 22;
+        public float Width { get; set; } = 60;
         float StrokeWidth = 15;
 
         public float AverageFlow { get; set; } = 0;

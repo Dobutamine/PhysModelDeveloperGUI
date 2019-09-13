@@ -65,7 +65,10 @@
             <Label Visibility="Hidden" Content="PLACENTA" FontSize="10" HorizontalAlignment="Left"  FontWeight="DemiBold" Grid.Row="13" Grid.Column="0"></Label>
             <ts:HorizontalToggleSwitch Visibility="Hidden" x:Name="switchPLACENTA" Checked="SwitchPLACENTA_Checked" Unchecked="SwitchPLACENTA_Unchecked" Width="70" FontSize="8"   Height="18" FontWeight="DemiBold" Grid.Row="13" Grid.Column="1"></ts:HorizontalToggleSwitch>
 
+         
         </Grid>
-        
+        <Button x:Name="butIncreaseWidth" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="20" Height="20" Margin="0,0,25,0" Content="+" FontWeight="DemiBold" Click="ButIncreaseWidth_Click"> </Button>
+        <Button x:Name="butDecreaseWidth" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="20" Height="20" Margin="0,00,0,0" Content="-" FontWeight="DemiBold" Click="ButDecreaseWidth_Click"></Button>
+
     </Grid>
 </UserControl>

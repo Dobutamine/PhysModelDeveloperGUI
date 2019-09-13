@@ -350,7 +350,6 @@ namespace PhysModelDeveloperGUI
                 OnPropertyChanged();
             }
         }
-
         string stopButtonText = " > ";
         public string StopButtonText
         {
@@ -2190,7 +2189,6 @@ namespace PhysModelDeveloperGUI
 
 
         // lung and chestwall model
-
         public double Resp_UAR_Insp
         {
             get
@@ -2307,7 +2305,6 @@ namespace PhysModelDeveloperGUI
             }
         }
         
-
         double _upperAirwayResistanceChange = 0;
         public double UpperAirwayResistanceChange
         {
@@ -2375,7 +2372,6 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
-
 
         double _airwayComplianceChange = 0;
         public double AirwayComplianceChange
@@ -3016,7 +3012,6 @@ namespace PhysModelDeveloperGUI
         }
 
         private double _fiO2 = 0.21;
-
         public double FiO2
         {
             get { return _fiO2; }
@@ -3045,12 +3040,9 @@ namespace PhysModelDeveloperGUI
         public ObservableCollection<Connector> connectors { get; set; } = new ObservableCollection<Connector>();
         public ObservableCollection<ContainerCompartment> containers { get; set; } = new ObservableCollection<ContainerCompartment>();
         public ObservableCollection<Compartment> containedCompartments { get; set; } = new ObservableCollection<Compartment>();
-
         public ObservableCollection<GasExchangeBlock> gasexchangeUnits { get; set; } = new ObservableCollection<GasExchangeBlock>();
-
         public ObservableCollection<DiffusionBlock> diffusionUnits { get; set; } = new ObservableCollection<DiffusionBlock>();
         public ObservableCollection<string> rhythmTypes { get; set; } = new ObservableCollection<string>();
-
         #endregion
 
         #region "other couplings"
