@@ -11,7 +11,6 @@ namespace PhysModelDeveloperGUI
 {
     public class AnimatedShunt
     {
-
         public List<BloodCompartmentConnector> connectors = new List<BloodCompartmentConnector>();
         public BloodCompartment sizeCompartment;
 
@@ -21,10 +20,11 @@ namespace PhysModelDeveloperGUI
             Style = SKPaintStyle.Fill,
             FakeBoldText = true,
             IsAntialias = true,
-            Color = SKColors.Black,
+            Color = SKColors.White,
             IsStroke = false,
             TextSize = 16f
         };
+
         SKPoint offset = new SKPoint
         {
             X = 80,

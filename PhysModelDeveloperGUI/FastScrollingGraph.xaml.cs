@@ -220,7 +220,7 @@ namespace PhysModelDeveloperGUI
                 refresh = false;
             }
             // draw eraser
-            MainCanvas.DrawRect(currentX, 0, 60, graphMain.CanvasSize.Height, ErasePaint);
+            MainCanvas.DrawRect(currentX, 0, 40, graphMain.CanvasSize.Height, ErasePaint);
 
             if (ClearFlag)
             {

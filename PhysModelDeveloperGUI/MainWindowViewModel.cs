@@ -72,6 +72,37 @@ namespace PhysModelDeveloperGUI
             set { pVLoopVisible = value; OnPropertyChanged(); }
         }
 
+        private bool labVisible = true;
+        public bool LabVisible
+        {
+            get { return labVisible; }
+            set { labVisible = value; OnPropertyChanged(); }
+        }
+
+        private bool drugVisible = false;
+        public bool DrugVisible
+        {
+            get { return drugVisible; }
+            set { drugVisible = value; OnPropertyChanged(); }
+        }
+
+        private bool vitalsVisible = true;
+        public bool VitalsVisible
+        {
+            get { return vitalsVisible; }
+            set { vitalsVisible = value; OnPropertyChanged(); }
+        }
+
+        private bool additionalVisible = false;
+        public bool AdditionalVisible
+        {
+            get { return additionalVisible; }
+            set { additionalVisible = value; OnPropertyChanged(); }
+        }
+
+
+
+
         PatientMonitor GraphPatientMonitor { get; set; }
         LoopGraph GraphPVLoop { get; set; }
         ModelDiagram GraphModelDiagram { get; set; }
@@ -121,6 +152,90 @@ namespace PhysModelDeveloperGUI
                 } else
                 {
                     GraphModelDiagram.OFOView(false);
+                }
+                OnPropertyChanged();
+            }
+        }
+        bool _TGAVisible = false;
+        public bool TGAVisible
+        {
+            get
+            {
+                return _TGAVisible;
+            }
+            set
+            {
+                _TGAVisible = value;
+                if (_TGAVisible)
+                {
+                    GraphModelDiagram.TGAView(true);
+                }
+                else
+                {
+                    GraphModelDiagram.TGAView(false);
+                }
+                OnPropertyChanged();
+            }
+        }
+        bool _TAPVC1Visible = false;
+        public bool TAPVC1Visible
+        {
+            get
+            {
+                return _TAPVC1Visible;
+            }
+            set
+            {
+                _TAPVC1Visible = value;
+                if (_TAPVC1Visible)
+                {
+                    GraphModelDiagram.TAPVCView(true);
+                }
+                else
+                {
+                    GraphModelDiagram.TAPVCView(false);
+                }
+                OnPropertyChanged();
+            }
+        }
+        bool _TAPVC2Visible = false;
+        public bool TAPVC2Visible
+        {
+            get
+            {
+                return _TAPVC2Visible;
+            }
+            set
+            {
+                _TAPVC2Visible = value;
+                if (_TAPVC2Visible)
+                {
+                    GraphModelDiagram.TAPVCICView(true);
+                }
+                else
+                {
+                    GraphModelDiagram.TAPVCICView(false);
+                }
+                OnPropertyChanged();
+            }
+        }
+        bool _TRUNCUSVisible = false;
+        public bool TRUNCUSVisible
+        {
+            get
+            {
+                return _TRUNCUSVisible;
+            }
+            set
+            {
+                _TRUNCUSVisible = value;
+                if (_TRUNCUSVisible)
+                {
+                    GraphModelDiagram.TruncusArteriosusView(true);
+                }
+                else
+                {
+                    GraphModelDiagram.TruncusArteriosusView(false);
                 }
                 OnPropertyChanged();
             }
@@ -468,11 +583,7 @@ namespace PhysModelDeveloperGUI
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
-            if (DiagramVisible)
-            {
-                GraphModelDiagram.UpdatedMainDiagram();
-            }
-                  
+            if (DiagramVisible) GraphModelDiagram.UpdatedMainDiagram();               
             if (TrendVitalsVisible) TrendGraph.DrawData();
             if (trendBloodgasVisible) BloodgasGraph.DrawData();
 
@@ -481,84 +592,101 @@ namespace PhysModelDeveloperGUI
                 slowUpdater = 0;
                 if (currentModel.modelState.Name != ModelName) ModelName = currentModel.modelState.Name;
 
-                Heartrate = currentModel.modelInterface.HeartRate.ToString();
-                Spo2 = currentModel.modelInterface.PulseOximeterOutput.ToString();
-                Abp = currentModel.modelInterface.ArterialBloodPressure;
-                Pap = currentModel.modelInterface.PulmonaryArteryPressure.ToString();
-                Cvp = currentModel.modelInterface.CentralVenousPressure.ToString();
-                Resprate = currentModel.modelInterface.RespiratoryRate.ToString();
-                Temp = currentModel.modelInterface.PatientTemperature.ToString();
-                Lvo = currentModel.modelInterface.LeftVentricularOutput.ToString();
-                Rvo = currentModel.modelInterface.RightVentricularOutput.ToString();
-                Ivcflow = currentModel.modelInterface.InferiorVenaCavaFlow.ToString();
-                Svcflow = currentModel.modelInterface.SuperiorVenaCavaFlow.ToString();
-                Myoflow = currentModel.modelInterface.CoronaryFlow.ToString();
-                Lvstroke = currentModel.modelInterface.StrokeVolumeLeftVentricle.ToString();
-                Rvstroke = currentModel.modelInterface.StrokeVolumeRightVentricle.ToString();
-                Rapressures = currentModel.modelInterface.RightAtrialPressures;
-                Lapressures = currentModel.modelInterface.LeftAtrialPressures;
-                Rvpressures = currentModel.modelInterface.RightVentricularPressures;
-                Lvpressures = currentModel.modelInterface.LeftVentricularPressures;
-                Ravolumes = currentModel.modelInterface.RightAtrialVolumes;
-                Lavolumes = currentModel.modelInterface.LeftAtrialVolumes;
-                Rvvolumes = currentModel.modelInterface.RightVentricularVolumes;
-                Lvvolumes = currentModel.modelInterface.LeftVentricularVolumes;
-                Pdaflow = "NA";
-                MyoO2Index = Math.Round(currentModel.modelInterface.Mii, 3).ToString();
-                Myocardialdo2 = currentModel.modelInterface.MyoO2Delivery.ToString();
-                Braindo2 = Math.Round(currentModel.modelInterface.BrainO2Delivery, 1).ToString();
-                Kidneysflow = currentModel.modelInterface.KidneysFlow.ToString();
-                Liverflow = currentModel.modelInterface.LiverFlow.ToString();
-                Brainflow = currentModel.modelInterface.BrainFlow.ToString();
-                Ubflow = currentModel.modelInterface.UpperBodyFlow().ToString();
-                Lbflow = currentModel.modelInterface.LowerBodyFlow().ToString();
-                Pulmflow = currentModel.modelInterface.PulmonaryFlow.ToString();
-                Systflow = currentModel.modelInterface.SystemicFlow().ToString();
-                Placentalflow = currentModel.modelInterface.PlacentaFlow.ToString();
-                QpQs = currentModel.modelInterface.QpQs.ToString();
+                if (VitalsVisible)
+                {
+                    Heartrate = currentModel.modelInterface.HeartRate.ToString();
+                    Spo2 = currentModel.modelInterface.PulseOximeterOutput.ToString();
+                    Abp = currentModel.modelInterface.ArterialBloodPressure;
+                    Pap = currentModel.modelInterface.PulmonaryArteryPressure.ToString();
+                    Cvp = currentModel.modelInterface.CentralVenousPressure.ToString();
+                    Resprate = currentModel.modelInterface.RespiratoryRate.ToString();
+                    Endtidalco2 = currentModel.modelInterface.EndTidalCO2.ToString();
+                    Temp = currentModel.modelInterface.PatientTemperature.ToString();
+                }
 
-                VTRef = Math.Round(currentModel.modelState.VERef, 0).ToString();
-                VTMax = Math.Round(currentModel.modelState.VEMax, 0).ToString();
-                Tidalvolume = currentModel.modelInterface.TidalVolume.ToString();
-                TidalvolumeTarget = currentModel.modelInterface.TidalVolumeTarget.ToString();
-                Minutevolume = currentModel.modelInterface.MinuteVolume.ToString();
-                MinutevolumeTarget = currentModel.modelInterface.MinuteVolumeTarget.ToString();
-                Alveolarvolume = currentModel.modelInterface.AlveolarVolume;
-                TotalVolume = currentModel.modelInterface.TotalBloodVolume().ToString();
+                if (AdditionalVisible)
+                {
+                    Lvo = currentModel.modelInterface.LeftVentricularOutput.ToString();
+                    Rvo = currentModel.modelInterface.RightVentricularOutput.ToString();
+                    Ivcflow = currentModel.modelInterface.InferiorVenaCavaFlow.ToString();
+                    Svcflow = currentModel.modelInterface.SuperiorVenaCavaFlow.ToString();
+                    Myoflow = currentModel.modelInterface.CoronaryFlow.ToString();
+                    Lvstroke = currentModel.modelInterface.StrokeVolumeLeftVentricle.ToString();
+                    Rvstroke = currentModel.modelInterface.StrokeVolumeRightVentricle.ToString();
+                    Rapressures = currentModel.modelInterface.RightAtrialPressures;
+                    Lapressures = currentModel.modelInterface.LeftAtrialPressures;
+                    Rvpressures = currentModel.modelInterface.RightVentricularPressures;
+                    Lvpressures = currentModel.modelInterface.LeftVentricularPressures;
+                    Ravolumes = currentModel.modelInterface.RightAtrialVolumes;
+                    Lavolumes = currentModel.modelInterface.LeftAtrialVolumes;
+                    Rvvolumes = currentModel.modelInterface.RightVentricularVolumes;
+                    Lvvolumes = currentModel.modelInterface.LeftVentricularVolumes;
+                    MyoO2Index = Math.Round(currentModel.modelInterface.Mii, 3).ToString();
+                    Myocardialdo2 = currentModel.modelInterface.MyoO2Delivery.ToString();
+                    Braindo2 = Math.Round(currentModel.modelInterface.BrainO2Delivery, 1).ToString();
+                    Kidneysflow = currentModel.modelInterface.KidneysFlow.ToString();
+                    Liverflow = currentModel.modelInterface.LiverFlow.ToString();
+                    Brainflow = currentModel.modelInterface.BrainFlow.ToString();
+                    Ubflow = currentModel.modelInterface.UpperBodyFlow().ToString();
+                    Lbflow = currentModel.modelInterface.LowerBodyFlow().ToString();
+                    Pulmflow = currentModel.modelInterface.PulmonaryFlow.ToString();
+                    Systflow = currentModel.modelInterface.SystemicFlow().ToString();
+                    Placentalflow = currentModel.modelInterface.PlacentaFlow.ToString();
+                    QpQs = currentModel.modelInterface.QpQs.ToString();
+                    VTRef = Math.Round(currentModel.modelState.VERef, 0).ToString();
+                    VTMax = Math.Round(currentModel.modelState.VEMax, 0).ToString();
+                    Tidalvolume = currentModel.modelInterface.TidalVolume.ToString();
+                    TidalvolumeTarget = currentModel.modelInterface.TidalVolumeTarget.ToString();
+                    Minutevolume = currentModel.modelInterface.MinuteVolume.ToString();
+                    MinutevolumeTarget = currentModel.modelInterface.MinuteVolumeTarget.ToString();
+                    Alveolarvolume = currentModel.modelInterface.AlveolarVolume;
+                    TotalVolume = currentModel.modelInterface.TotalBloodVolume().ToString();
+                    Appliedpressure = currentModel.modelInterface.AppliedAirwayPressure;
+                    Airwaypressure = currentModel.modelInterface.AirwayPressure;
+                    Alvleftpressure = currentModel.modelInterface.AlveolarLeftPressure;
+                    Alvrightpressure = currentModel.modelInterface.AlveolarRightPressure;
+                    VenousSpo2 = currentModel.modelInterface.VenousSO2.ToString();
+                    Po2alv = currentModel.modelInterface.AlveolarPO2;
+                    Pco2alv = currentModel.modelInterface.AlveolarPCO2;
+                }
+          
+                if (LabVisible)
+                {
+                    Ph = currentModel.modelInterface.ArterialPH.ToString();
+                    Pao2 = currentModel.modelInterface.ArterialPO2.ToString();
+                    Paco2 = currentModel.modelInterface.ArterialPCO2.ToString();
+                    Hco3 = currentModel.modelInterface.ArterialHCO3.ToString();
+                    Be = currentModel.modelInterface.ArterialBE.ToString();
+                    LactateAA = Math.Round(currentModel.modelState.AA.Lact, 1).ToString();
+                    LactateUB = Math.Round(currentModel.modelState.UB.Lact, 1).ToString();
+                    LactateLB = Math.Round(currentModel.modelState.LB.Lact, 1).ToString();
+                    LactateBRAIN = Math.Round(currentModel.modelState.BRAIN.Lact, 1).ToString();
+                    LactateLIVER = Math.Round(currentModel.modelState.LIVER.Lact, 1).ToString();
+                }
 
-                Appliedpressure = currentModel.modelInterface.AppliedAirwayPressure;
-                Airwaypressure = currentModel.modelInterface.AirwayPressure;
-                Alvleftpressure = currentModel.modelInterface.AlveolarLeftPressure;
-                Alvrightpressure = currentModel.modelInterface.AlveolarRightPressure;
+                if (DrugVisible)
+                {
+                    Drug1Concentration = currentModel.modelInterface.Drug1Concentration;
+                    Drug2Concentration = currentModel.modelInterface.Drug2Concentration;
+                    Drug3Concentration = currentModel.modelInterface.Drug3Concentration;
+                    Drug4Concentration = currentModel.modelInterface.Drug4Concentration;
+                    Drug5Concentration = currentModel.modelInterface.Drug5Concentration;
+                    Drug6Concentration = currentModel.modelInterface.Drug6Concentration;
+                    Drug7Concentration = currentModel.modelInterface.Drug7Concentration;
+                    Drug8Concentration = currentModel.modelInterface.Drug8Concentration;
+                    Drug9Concentration = currentModel.modelInterface.Drug9Concentration;
+                    Drug10Concentration = currentModel.modelInterface.Drug10Concentration;
+                }
 
-                VenousSpo2 = currentModel.modelInterface.VenousSO2.ToString();
-
-                Ph = currentModel.modelInterface.ArterialPH.ToString();
-                Pao2 = currentModel.modelInterface.ArterialPO2.ToString();
-                Paco2 = currentModel.modelInterface.ArterialPCO2.ToString();
-                Hco3 = currentModel.modelInterface.ArterialHCO3.ToString();
-                Be = currentModel.modelInterface.ArterialBE.ToString();
-
-                Po2alv = currentModel.modelInterface.AlveolarPO2;
-                Pco2alv = currentModel.modelInterface.AlveolarPCO2;
-                LactateAA = Math.Round(currentModel.modelState.AA.Lact, 1).ToString();
-                LactateUB = Math.Round(currentModel.modelState.UB.Lact, 1).ToString();
-                LactateLB = Math.Round(currentModel.modelState.LB.Lact, 1).ToString();
-                LactateBRAIN = Math.Round(currentModel.modelState.BRAIN.Lact, 1).ToString();
-                LactateLIVER = Math.Round(currentModel.modelState.LIVER.Lact, 1).ToString();
-
-                Drug1Concentration = currentModel.modelInterface.Drug1Concentration;
-                Drug2Concentration = currentModel.modelInterface.Drug2Concentration;
-                Drug3Concentration = currentModel.modelInterface.Drug3Concentration;
-                Drug4Concentration = currentModel.modelInterface.Drug4Concentration;
-                Drug5Concentration = currentModel.modelInterface.Drug5Concentration;
-                Drug6Concentration = currentModel.modelInterface.Drug6Concentration;
-                Drug7Concentration = currentModel.modelInterface.Drug7Concentration;
-                Drug8Concentration = currentModel.modelInterface.Drug8Concentration;
-                Drug9Concentration = currentModel.modelInterface.Drug9Concentration;
-                Drug10Concentration = currentModel.modelInterface.Drug10Concentration;
-
-                Endtidalco2 = currentModel.modelInterface.EndTidalCO2.ToString();
+                SystemicVascularResistanceChange = currentModel.modelState.SVRFactor;
+                PulmonaryVascularResistanceChange = currentModel.modelState.PVRFactor;
+                VenousPoolChange = currentModel.modelState.VenousPoolFactor;
+                PDASize = currentModel.modelState.PDASize;
+                OFOSize = currentModel.modelState.OFOSize;
+                VSDSize = currentModel.modelState.VSDSize;
+                HeartLeftContractilityChange = currentModel.modelState.LeftContFactor;
+                HeartRightContractilityChange = currentModel.modelState.RightContFactor;
+                HeartContractilityChange = currentModel.modelState.HeartContFactor;
 
                 if (MonitorVisible)
                 {
@@ -568,11 +696,11 @@ namespace PhysModelDeveloperGUI
                                                          currentModel.modelInterface.EndTidalCO2.ToString(),
                                                          currentModel.modelInterface.RespiratoryRate.ToString());
                 }
+
                 UpdateTrendGraph();
                 UpdateBloodgasGraph();
 
-
-                GraphPVLoop.Draw();
+                if (PVLoopVisible) GraphPVLoop.Draw();
             }
 
             slowUpdater += graphicsRefreshInterval;
@@ -2259,8 +2387,8 @@ namespace PhysModelDeveloperGUI
 
                     _svrChange = value;
 
-                    currentModel.modelInterface.AdjustSystemicVascularResistance(value);
-
+                    currentModel.modelInterface.AdjustSystemicVascularResistance (value);
+                   
                     OnPropertyChanged();
                 }
                 else

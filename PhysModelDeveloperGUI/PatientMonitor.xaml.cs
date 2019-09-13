@@ -208,6 +208,7 @@ namespace PhysModelDeveloperGUI
         void InitGraph1()
         {
             graph1.GraphTitle = "ecg";
+            
             graph1.ParameterTitle = "hr";
             graph1.ParameterUnit = "/min";
             graph1.GraphTitleColor = new SolidColorBrush(Colors.LimeGreen);
@@ -233,6 +234,8 @@ namespace PhysModelDeveloperGUI
             graph3.GridYMax = 100;
             graph3.xStepSize = 2;
             graph3.GridYStep = 20;
+            graph3.FontSizeValue = 14;
+            graph3.FontSizeTitle = 10;
 
         }
 
@@ -251,6 +254,8 @@ namespace PhysModelDeveloperGUI
             graph2.GridYMax = 80;
             graph2.GridYStep = 20;
             graph2.xStepSize = 2;
+            graph2.FontSizeValue = 14;
+            graph2.FontSizeTitle = 10;
 
 
         }
@@ -269,6 +274,8 @@ namespace PhysModelDeveloperGUI
             graph4.GridYMin = 0;
             graph4.GridYMax = 80;
             graph4.GridYStep = 20;
+            graph4.FontSizeValue = 14;
+            graph4.FontSizeTitle = 10;
 
         }
         void InitGraph5()
@@ -280,6 +287,8 @@ namespace PhysModelDeveloperGUI
             graph5.GraphPaint1.Color = SKColors.White;
             graph5.xStepSize = 1;
             graph5.AutoScale = true;
+            graph5.FontSizeValue = 14;
+            graph5.FontSizeTitle = 10;
 
 
         }

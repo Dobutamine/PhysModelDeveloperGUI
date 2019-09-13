@@ -6,7 +6,7 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
              xmlns:local="clr-namespace:PhysModelDeveloperGUI"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="800" Background="Black">
+             d:DesignHeight="100" d:DesignWidth="800" Background="Black">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -14,14 +14,9 @@
         </Grid.ColumnDefinitions>
         <skia:SKElement x:Name="graphGrid" Grid.Column="0" PaintSurface="GraphGrid_PaintSurface"></skia:SKElement>
         <skia:SKElement x:Name="graphMain" Grid.Column="0" Opacity="0.8" PaintSurface="GraphMain_PaintSurface"></skia:SKElement>
-        <Label Content="{Binding GraphTitle}" Grid.Column="0" Foreground="{Binding GraphTitleColor}" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
+        <Label Content="{Binding GraphTitle}" Grid.Column="0" Foreground="{Binding GraphTitleColor}" FontSize="{Binding FontSizeTitle}" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
 
         <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="4*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Label Content="{Binding ParameterTitle}" HorizontalAlignment="Left" FontSize="{Binding FontSizeTitle}" FontWeight="Bold" VerticalAlignment="Top" Foreground="{Binding GraphTitleColor}" Grid.Row="0"></Label>
             <Label Content="{Binding ParameterValue}" HorizontalAlignment="Center" FontSize="{Binding FontSizeValue}" FontWeight="Bold" VerticalAlignment="Center" Foreground="{Binding GraphTitleColor}" Grid.Row="1"></Label>
         </Grid>
        

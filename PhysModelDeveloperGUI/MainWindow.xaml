@@ -67,14 +67,31 @@
                 <MenuItem x:Name="menuFetus" Header="_Fetal circulation" IsCheckable="True" Command="{Binding SwitchToFetusCommand}" CommandParameter="{Binding ElementName=menuFetus, Path=IsChecked}"/>
                 <MenuItem Header="_Shunts">
                     <MenuItem x:Name="menuOFO" Header="_Foramen ovale" IsCheckable="True" IsChecked="{Binding OFOVisible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuVSD" Header="_Ventricular septal defect" IsCheckable="True" IsChecked="{Binding VSDVisible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuPDA" Header="_Ductus arteriosus" IsCheckable="True" IsChecked="{Binding PDAVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuVSD1" Header="_Ventricular septal defect" IsCheckable="True" IsChecked="{Binding VSDVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuPDA1" Header="_Ductus arteriosus" IsCheckable="True" IsChecked="{Binding PDAVisible, Mode=TwoWay}"/>
 
                 </MenuItem>
+                <MenuItem Header="_Cardiac defects">
+                    <MenuItem x:Name="menuHLHS" Header="_Hypoplastic left heart" IsCheckable="True" IsChecked="{Binding HLHSVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuTGA" Header="_Transposition of the great arteries" IsCheckable="True" IsChecked="{Binding TGAVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuPA" Header="_Pulmonary atresia" IsCheckable="True" IsChecked="{Binding PAVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuTRUNCUS" Header="_Truncus arteriosus" IsCheckable="True" IsChecked="{Binding TRUNCUSVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuPDA2" Header="_Ductus arteriosus" IsCheckable="True" IsChecked="{Binding PDAVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menu4Fallot" Header="_Tetralogy of Fallot" IsCheckable="True" IsChecked="{Binding FALVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuCOA" Header="_Coarctatio aortae" IsCheckable="True" IsChecked="{Binding COAVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuVSD2" Header="_Ventricular septal defect" IsCheckable="True" IsChecked="{Binding VSDVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuAOS" Header="_Aortic valve stenosis" IsCheckable="True" IsChecked="{Binding ASVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuMVS" Header="_Mitral valve stenosis" IsCheckable="True" IsChecked="{Binding MSVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuTVS" Header="_Tricuspid valve stenosis" IsCheckable="True" IsChecked="{Binding TSVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuTAPVC1" Header="_Total abnormal venous connection 1" IsCheckable="True" IsChecked="{Binding TAPVC1Visible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuTAPVC2" Header="_Total abnormal venous connection 2" IsCheckable="True" IsChecked="{Binding TAPVC2Visible, Mode=TwoWay}"/>
+                </MenuItem>
+
             </MenuItem>
 
         
         </Menu>
+        
         <StatusBar VerticalAlignment="Bottom" Height="25" Grid.ColumnSpan="3">
             <StatusBarItem>
                 <TextBlock Text="model name : "></TextBlock>
@@ -86,13 +103,14 @@
        
 
         </StatusBar>
+        
         <TextBlock Margin="0,25,0,0" Text="INTERVENTIONS AND PARAMETERS" TextAlignment="Center" Foreground="Black" FontWeight="DemiBold" FontSize="15" ></TextBlock>
         <ScrollViewer Grid.Column="0"  Margin="0,50,0,25" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="0,0,5,0">
                 
                 <Expander IsExpanded="true" Header="Interventions" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Opacity="1" Foreground="White" BorderThickness="0">
                     <StackPanel Margin="5,0,5,5" >
-                        <Expander IsExpanded="False" Header="hemodynamics" Background="DarkSlateGray" Margin="0,0,0,5" Padding="5,5,5,5"  Foreground="White" BorderThickness="0">
+                        <Expander IsExpanded="False" x:Name="expInterventions" Header="hemodynamics" Background="DarkSlateGray" Margin="0,0,0,5" Padding="5,5,5,5"  Foreground="White" BorderThickness="0">
                      
                             <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="Black" >
                                 <Grid x:Name="gridInterventions" Margin="10,5,10,10">
@@ -134,16 +152,16 @@
                                     <Label Grid.Column="2" Grid.Row="5"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
 
                                     <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="6" Margin="0,0,0,0" Text="foramen ovale size "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                                    <Slider Grid.Column="0" Grid.Row="7"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventions}" Margin="10,5,10,5"></Slider>
-                                    <Label Grid.Column="2" Grid.Row="7"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                                    <Slider x:Name="sliOFOSize" Grid.Column="0" Grid.Row="7"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="0" Maximum="20" Value="{Binding OFOSize,Mode=TwoWay}" Height="20" HorizontalAlignment="Center" Width="200" Margin="10,5,10,5"></Slider>
+                                    <TextBlock Grid.Column="2" Grid.Row="7"  Foreground="White" Background="Black" Text="{Binding ElementName=sliOFOSize, Path=Value, StringFormat=N1}" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="8" Margin="0,0,0,0" Text="ventricular septal defect size "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                                    <Slider Grid.Column="0" Grid.Row="9"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventions}" Margin="10,5,10,5"></Slider>
-                                    <Label Grid.Column="2" Grid.Row="9"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                                    <Slider x:Name="sliVSDSize" Grid.Column="0" Grid.Row="9"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="0" Maximum="20" Value="{Binding VSDSize,Mode=TwoWay}"  Height="20" HorizontalAlignment="Center" Width="200" Margin="10,5,10,5"></Slider>
+                                    <TextBlock Grid.Column="2" Grid.Row="9"  Foreground="White" Background="Black" Text="{Binding ElementName=sliVSDSize, Path=Value, StringFormat=N1}" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="10" Margin="0,0,0,0" Text="ductus arteriosus size "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                                    <Slider Grid.Column="0" Grid.Row="11"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventions}" Margin="10,5,10,5"></Slider>
-                                    <Label Grid.Column="2" Grid.Row="11"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                                    <Slider x:Name="sliPDASize" Grid.Column="0" Grid.Row="11"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="0" Maximum="20"  Value="{Binding PDASize,Mode=TwoWay}"  Height="20" HorizontalAlignment="Center" Width="200" Margin="10,5,10,5"></Slider>
+                                    <TextBlock Grid.Column="2" Grid.Row="11"  Foreground="White" Background="Black" Text="{Binding ElementName=sliPDASize, Path=Value, StringFormat=N1}" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
                                 </Grid>
 
@@ -2044,7 +2062,7 @@
                         <local:PatientMonitor x:Name="graphMonitor"  Height="175"></local:PatientMonitor>
                     </Border>
                 </Expander>
-                <Expander IsExpanded="True" Header="Vital parameters" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Foreground="White" BorderThickness="0">
+                <Expander IsExpanded="{Binding VitalsVisible, Mode=TwoWay}" Header="Vital parameters" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Foreground="White" BorderThickness="0">
                     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="Black" Margin="10,0,10,10">
                         <Grid Margin="5,5,5,5" Background="Black" >
                             <Grid.ColumnDefinitions>
@@ -2095,7 +2113,7 @@
                         </Grid>
                     </Border>
                 </Expander>
-                <Expander IsExpanded="True" Header="Blood gas" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10"  Foreground="White" BorderThickness="0">
+                <Expander IsExpanded="{Binding LabVisible, Mode=TwoWay}" Header="Laboratory results" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10"  Foreground="White" BorderThickness="0">
                     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="Black" Margin="10,0,10,10">
                         <Grid Margin="5,5,5,5" Background="Black" Opacity="1.0">
                                 <Grid.ColumnDefinitions>
@@ -2149,7 +2167,7 @@
                         </Border>
                
                 </Expander>
-                <Expander IsExpanded="False" Header="Additional parameters" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10"  Foreground="White" BorderThickness="0">
+                <Expander IsExpanded="{Binding AdditionalVisible, Mode=TwoWay}" Header="Additional parameters" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10"  Foreground="White" BorderThickness="0">
                     <StackPanel Margin="10,0,10,5" Background="Transparent" >
                         <Expander Header=" heart" IsExpanded="False" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
                             <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="Black" >
@@ -2392,8 +2410,7 @@
                         <local:LoopGraph x:Name="graphLoop" Margin="5,5,5,5"  Height="200"/>
                     </Border>
                 </Expander>
-                
-                <Expander IsExpanded="False" Header="Drugs" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10"  Foreground="White" BorderThickness="0">
+                <Expander IsExpanded="{Binding DrugVisible, Mode=TwoWay}" Header="Drugs" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10"  Foreground="White" BorderThickness="0">
                     <StackPanel Margin="10,0,10,5" Background="Transparent" >
                         <Expander Header=" drug concentrations" IsExpanded="False" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
                             <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="Black" >
@@ -2496,13 +2513,7 @@
             </StackPanel>
                 </ScrollViewer>
 
-
         <Button Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Command="{Binding StopCommand}" Foreground="{Binding StopButtonColor}"  Content="{Binding StopButtonText}" Width="40" Margin="0,0,0,3" FontSize="12"></Button>
-
-
-
-
-
 
     </Grid>
 </Window>
