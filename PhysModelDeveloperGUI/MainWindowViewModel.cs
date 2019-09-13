@@ -136,6 +136,51 @@ namespace PhysModelDeveloperGUI
         public RelayCommand RemoveBlood { get; set; }
         public RelayCommand AddDrugCommand { get; set; }
 
+        public RelayCommand ResetDisplayCommand { get; set; }
+
+        public RelayCommand IncreaseWidthCommand { get; set; }
+        public RelayCommand DecreaseWidthCommand { get; set; }
+
+        public void ResetDisplay(object p)
+        {
+            OFOVisible = false;
+            TGAVisible = false;
+            TAPVC1Visible = false;
+            TAPVC2Visible = false;
+            TRUNCUSVisible = false;
+            VSDVisible = false;
+            PDAVisible = false;
+            FetusVisible = false;
+
+        }
+        bool _fetusVisible = false;
+        public bool FetusVisible
+        {
+            get
+            {
+
+                return _fetusVisible;
+            }
+            set
+            {
+                _fetusVisible = value;
+                if (_fetusVisible)
+                {
+                    GraphModelDiagram.PulmonaryView(false);
+                    GraphModelDiagram.PlacentaView(true);
+                    OFOVisible = true;
+                    PDAVisible = true;
+                } else
+                {
+                    GraphModelDiagram.PulmonaryView(true);
+                    GraphModelDiagram.PlacentaView(false);
+                    OFOVisible = false;
+                    PDAVisible = false;
+                }
+              
+                OnPropertyChanged();
+            }
+        }
         bool _ofoVisible = false;
         public bool OFOVisible
         {
@@ -358,13 +403,46 @@ namespace PhysModelDeveloperGUI
             ChangeDrugCommand = new RelayCommand(ChangeSelectedDrug);
             ChangeDrugEffectCommand = new RelayCommand(ChangeSelectedDrugEffect);
             SwitchToFetusCommand = new RelayCommand(SwitchToFetus);
-
+            ResetDisplayCommand = new RelayCommand(ResetDisplay);
             StopCommand = new RelayCommand(StopSimulation);
-
+            IncreaseWidthCommand = new RelayCommand(IncreaseWidth);
+            DecreaseWidthCommand = new RelayCommand(DecreaseWidth);
 
         }
    
-
+        void IncreaseWidth(object p)
+        {
+            foreach(AnimatedBloodConnector c in GraphModelDiagram.animatedBloodConnectors)
+            {
+                c.Width += 5;
+            }
+            foreach (AnimatedShunt c in GraphModelDiagram.animatedShunts)
+            {
+                c.Width += 5;
+            }
+            foreach (AnimatedValve c in GraphModelDiagram.animatedValves)
+            {
+                c.Width += 5;
+            }
+        }
+        void DecreaseWidth(object p)
+        {
+            foreach (AnimatedBloodConnector c in GraphModelDiagram.animatedBloodConnectors)
+            {
+                c.Width -= 5;
+                if (c.Width < 3) c.Width = 2;
+            }
+            foreach (AnimatedShunt c in GraphModelDiagram.animatedShunts)
+            {
+                c.Width -= 5;
+                if (c.Width < 3) c.Width = 2;
+            }
+            foreach (AnimatedValve c in GraphModelDiagram.animatedValves)
+            {
+                c.Width -= 5;
+                if (c.Width < 3) c.Width = 2;
+            }
+        }
         void StopSimulation(object p)
         {
             if (PauseState)

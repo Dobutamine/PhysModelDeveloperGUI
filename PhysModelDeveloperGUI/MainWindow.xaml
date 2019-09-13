@@ -64,32 +64,29 @@
                 <MenuItem x:Name="menuAutoPulse" Header="_Auto pulse" IsCheckable="True" Command="{Binding ToggleAutoPulseCommand}" CommandParameter="{Binding ElementName=menuAutoPulse, Path=IsChecked}"/>
             </MenuItem>
             <MenuItem Header="_Views">
-                <MenuItem x:Name="menuFetus" Header="_Fetal circulation" IsCheckable="True" Command="{Binding SwitchToFetusCommand}" CommandParameter="{Binding ElementName=menuFetus, Path=IsChecked}"/>
+                <MenuItem x:Name="menuResetDisplay" Header="_Clear view" IsCheckable="False" Command="{Binding ResetDisplayCommand}"></MenuItem>
+                <MenuItem x:Name="menuFetus" Header="_Fetal circulation" IsChecked="{Binding FetusVisible}" IsCheckable="True"/>
                 <MenuItem Header="_Shunts">
                     <MenuItem x:Name="menuOFO" Header="_Foramen ovale" IsCheckable="True" IsChecked="{Binding OFOVisible, Mode=TwoWay}"/>
                     <MenuItem x:Name="menuVSD1" Header="_Ventricular septal defect" IsCheckable="True" IsChecked="{Binding VSDVisible, Mode=TwoWay}"/>
                     <MenuItem x:Name="menuPDA1" Header="_Ductus arteriosus" IsCheckable="True" IsChecked="{Binding PDAVisible, Mode=TwoWay}"/>
 
                 </MenuItem>
-                <MenuItem Header="_Cardiac defects">
-                    <MenuItem x:Name="menuHLHS" Header="_Hypoplastic left heart" IsCheckable="True" IsChecked="{Binding HLHSVisible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuTGA" Header="_Transposition of the great arteries" IsCheckable="True" IsChecked="{Binding TGAVisible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuPA" Header="_Pulmonary atresia" IsCheckable="True" IsChecked="{Binding PAVisible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuTRUNCUS" Header="_Truncus arteriosus" IsCheckable="True" IsChecked="{Binding TRUNCUSVisible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuPDA2" Header="_Ductus arteriosus" IsCheckable="True" IsChecked="{Binding PDAVisible, Mode=TwoWay}"/>
+                <MenuItem Header="_Cardiac views">
+                    <MenuItem x:Name="menuTAPVC1" Header="_TAPVC cardiac type" IsCheckable="True" IsChecked="{Binding TAPVC1Visible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuTAPVC2" Header="_TAPVC infracardiac type" IsCheckable="True" IsChecked="{Binding TAPVC2Visible, Mode=TwoWay}"/>
                     <MenuItem x:Name="menu4Fallot" Header="_Tetralogy of Fallot" IsCheckable="True" IsChecked="{Binding FALVisible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuCOA" Header="_Coarctatio aortae" IsCheckable="True" IsChecked="{Binding COAVisible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuVSD2" Header="_Ventricular septal defect" IsCheckable="True" IsChecked="{Binding VSDVisible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuAOS" Header="_Aortic valve stenosis" IsCheckable="True" IsChecked="{Binding ASVisible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuMVS" Header="_Mitral valve stenosis" IsCheckable="True" IsChecked="{Binding MSVisible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuTVS" Header="_Tricuspid valve stenosis" IsCheckable="True" IsChecked="{Binding TSVisible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuTAPVC1" Header="_Total abnormal venous connection 1" IsCheckable="True" IsChecked="{Binding TAPVC1Visible, Mode=TwoWay}"/>
-                    <MenuItem x:Name="menuTAPVC2" Header="_Total abnormal venous connection 2" IsCheckable="True" IsChecked="{Binding TAPVC2Visible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuTGA" Header="_Transposition of the great arteries" IsCheckable="True" IsChecked="{Binding TGAVisible, Mode=TwoWay}"/>
+                    <MenuItem x:Name="menuTRUNCUS" Header="_Truncus arteriosus" IsCheckable="True" IsChecked="{Binding TRUNCUSVisible, Mode=TwoWay}"/>
                 </MenuItem>
 
             </MenuItem>
+            <MenuItem Header="_Settings">
+                <MenuItem x:Name="menuIncrWidth" Header="_Increase width" IsCheckable="False" Command="{Binding IncreaseWidthCommand}"/>
+                <MenuItem x:Name="menuDecWidth" Header="_Decrease width" IsCheckable="False" Command="{Binding DecreaseWidthCommand}"/>
+            </MenuItem>
 
-        
+
         </Menu>
         
         <StatusBar VerticalAlignment="Bottom" Height="25" Grid.ColumnSpan="3">
@@ -140,16 +137,16 @@
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Margin="0,0,0,0" Text="systemic vascular resistance "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                                    <Slider Grid.Column="0" Grid.Row="1"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventions}" Margin="10,5,10,5"></Slider>
-                                    <Label Grid.Column="2" Grid.Row="1"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                                    <Slider x:Name="sliSVR" Grid.Column="0" Grid.Row="1"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-1000" Maximum="1000" Value="{Binding SystemicVascularResistanceChange,Mode=TwoWay}" Height="20" HorizontalAlignment="Center" Width="200" Margin="10,5,10,5"></Slider>
+                                    <TextBlock Grid.Column="2" Grid.Row="1"  Foreground="White" Background="Black" Text="{Binding ElementName=sliSVR, Path=Value, StringFormat=N1}" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Margin="0,0,0,0" Text="pulmonary vascular resistance "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                                    <Slider Grid.Column="0" Grid.Row="3"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventions}" Margin="10,5,10,5"></Slider>
-                                    <Label Grid.Column="2" Grid.Row="3"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                                    <Slider x:Name="sliPVR"  Grid.Column="0" Grid.Row="3"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-1000" Maximum="1000" Value="{Binding PulmonaryVascularResistanceChange,Mode=TwoWay}" Height="20" HorizontalAlignment="Center" Width="200" Margin="10,5,10,5"></Slider>
+                                    <TextBlock Grid.Column="2" Grid.Row="3"  Foreground="White" Background="Black" Text="{Binding ElementName=sliPVR, Path=Value, StringFormat=N1}" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Margin="0,0,0,0" Text="heart contractility "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                                    <Slider Grid.Column="0" Grid.Row="5"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-100" Maximum="100"  Height="20" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=gridInterventions}" Margin="10,5,10,5"></Slider>
-                                    <Label Grid.Column="2" Grid.Row="5"  Foreground="White" Background="Black" Content="10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                                    <Slider x:Name="sliCONT"  Grid.Column="0" Grid.Row="5"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="-1000" Maximum="1000" Value="{Binding HeartContractilityChange,Mode=TwoWay}"  Height="20" HorizontalAlignment="Center" Width="200" Margin="10,5,10,5"></Slider>
+                                    <TextBlock Grid.Column="2" Grid.Row="5"  Foreground="White" Background="Black" Text="{Binding ElementName=sliCONT, Path=Value, StringFormat=N1}" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="6" Margin="0,0,0,0" Text="foramen ovale size "  FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
                                     <Slider x:Name="sliOFOSize" Grid.Column="0" Grid.Row="7"  Grid.ColumnSpan="2" Foreground="White" Background="Black" Minimum="0" Maximum="20" Value="{Binding OFOSize,Mode=TwoWay}" Height="20" HorizontalAlignment="Center" Width="200" Margin="10,5,10,5"></Slider>

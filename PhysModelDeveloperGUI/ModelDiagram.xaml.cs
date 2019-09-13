@@ -584,7 +584,7 @@ namespace PhysModelDeveloperGUI
                 NoLoss = false,
                 StartAngle = 17,
                 EndAngle = 190,
-                Direction = 1,
+                Direction = -1,
                 Name = "TGA PA"
             };
             RVAA.AddConnector(currentModel.modelState.RV_AA);
