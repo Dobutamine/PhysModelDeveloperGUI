@@ -105,7 +105,7 @@
         <ScrollViewer Grid.Column="0"  Margin="0,50,0,25" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="0,0,5,0">
                 
-                <Expander IsExpanded="true" Header="Interventions" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Opacity="1" Foreground="White" BorderThickness="0">
+                <Expander IsExpanded="False" Header="Interventions" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Opacity="1" Foreground="White" BorderThickness="0">
                     <StackPanel Margin="5,0,5,5" >
                         <Expander IsExpanded="False" x:Name="expInterventions" Header="hemodynamics" Background="DarkSlateGray" Margin="0,0,0,5" Padding="5,5,5,5"  Foreground="White" BorderThickness="0">
                      
@@ -1022,13 +1022,14 @@
 
                                     <TextBlock Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="2" Text="> has fixed volume" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
                                     <CheckBox Grid.Column="2" Grid.Row="11" IsChecked="{Binding HasFixedVolumeBlood}" Margin="0,5,0,0" ></CheckBox>
-                                    
-                                    
 
-                                   </Grid>
+
+
+                                </Grid>
 
                             </Border>
                         </Expander>
+                        
                         <Expander IsExpanded="False" Header=" gas compartments" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
                             <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="Black">
                                 <Grid Margin="10,5,10,10">
@@ -1093,7 +1094,7 @@
                                     <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="> max vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Increment="0.01"  Value="{Binding ElK2Gas, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
                                     <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
-                                 
+
                                     <TextBlock Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Text="> is enabled" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
                                     <CheckBox Grid.Column="2" Grid.Row="8" IsChecked="{Binding IsEnabledGas}" Margin="0,5,0,0" ></CheckBox>
 
@@ -1148,11 +1149,11 @@
                                     <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="> forward resistance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Increment="0.1" Minimum="0.01"  Value="{Binding ResForward, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2">
                                     </ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Text="mmHg/sec/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Text="mmHg/sec/ml" FontSize="8" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="> backward resistance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Increment="0.1" Minimum="0.01" Value="{Binding ResBackward, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Text="mmHg/sec/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Text="mmHg/sec/ml" FontSize="8" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> resistance K1" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Increment="0.01" Value="{Binding ResK1, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"></ex:DoubleUpDown>
@@ -1224,19 +1225,19 @@
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> baseline elastance" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Increment="0.01" Value="{Binding ElBaselineCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
-                                    <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="mmHg/ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="mmHg/ml" FontSize="8" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="> min vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Increment="0.1" Value="{Binding ElKMinVolumeCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
-                                    <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="ml" FontSize="8" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Text="> min vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Column="2" Grid.Row="5" Increment="0.01" Value="{Binding ElK1Cont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
-                                    <TextBlock Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="2" Text="" FontSize="8" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Text="> max vol elast curve" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Increment="0.1" Value="{Binding ElKMaxVolumeCont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
-                                    <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="ml" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="ml" FontSize="8" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="> max vol elast curve K" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Increment="0.01" Value="{Binding ElK2Cont, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
@@ -1371,7 +1372,7 @@
                             </Border>
                         </Expander>
 
-                        
+
                         <Expander Header=" autonomic nervous system model" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
                             <StackPanel Margin="20,0,0,0">
                                 <Expander Header=" MAP baroreceptor activation curve" IsExpanded="False" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
@@ -1683,7 +1684,7 @@
                                     <ex:DoubleUpDown Grid.Row="9" Grid.Column="1" Increment="0.01" Minimum="0.21" Maximum="1" Value="{Binding FiO2,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="2" Grid.Row="9" Text="" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
-                                 
+
 
 
                                 </Grid>
@@ -1846,21 +1847,21 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="10" Text="oxygen use"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Row="0" Grid.Column="1" Value="{Binding VO2,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="ml O2/s" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="10" Text="ATP use"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Row="0" Grid.Column="1" Value="{Binding VATP,Mode=TwoWay}" Increment="0.01" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="mmol/s" FontSize="8" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="1" FontSize="10" Text="hemoglobin"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Hemoglobin,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="mmol/l" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="mmol/l" FontSize="8" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="2" FontSize="10" Text="2,3 DPG"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Row="2" Grid.Column="1" Value="{Binding DPG,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="2" Text="mmol/l" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="2" Text="mmol/l" FontSize="8" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" FontSize="10" Text="temperature"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Grid.Row="3" Grid.Column="1" Value="{Binding Temp,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="3" Text="deg C" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="3" Text="deg C" FontSize="8" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
 
                                 </Grid>
@@ -1945,101 +1946,98 @@
 
                     </StackPanel>
                 </Expander>
-                
                 <Expander IsExpanded="False" Header="Drugs" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Foreground="White" BorderThickness="0">
                     <StackPanel Margin="5,0,5,5">
 
-                            <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="Black">
-                                <Grid Margin="10,5,10,10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="25"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="25"/>
-                                        <RowDefinition Height="25"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
+                        <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="Black">
+                            <Grid Margin="10,5,10,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
 
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Margin="5,0,0,0" Text="selected drug " FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                                    <ComboBox x:Name="cmbAvailableDrugList" ItemsSource="{Binding availableDrugs}"  DisplayMemberPath="Name" Margin="0,0,5,0" FontSize="10" Height="20" Grid.ColumnSpan="2" Grid.Column="2" >
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="SelectionChanged">
-                                                <i:InvokeCommandAction Command="{Binding ChangeDrugCommand}" CommandParameter="{Binding ElementName=cmbAvailableDrugList, Path=SelectedItem}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </ComboBox>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Margin="5,0,0,0" Text="selected drug " FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                <ComboBox x:Name="cmbAvailableDrugList" ItemsSource="{Binding availableDrugs}"  DisplayMemberPath="Name" Margin="0,0,5,0" FontSize="10" Height="20" Grid.ColumnSpan="2" Grid.Column="2" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangeDrugCommand}" CommandParameter="{Binding ElementName=cmbAvailableDrugList, Path=SelectedItem}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="> dose" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Increment="0.01" Minimum="0"  Value="{Binding DrugDose, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
-                                    <TextBlock Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Text="mmol" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
-                                    
-                                    <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="> metabolic rate" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Increment="0.01" Minimum="0"  Value="{Binding DrugMetabolicRate, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
-                                    <TextBlock Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Text="mmol/s" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="> dose" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                <ex:DoubleUpDown Grid.Column="2" Grid.Row="1" Increment="0.01" Minimum="0"  Value="{Binding DrugDose, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                <TextBlock Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Text="mmol" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> hepatic clearance rate" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Increment="0.01" Minimum="0"  Value="{Binding DrugHepaticClearanceRate, Mode=TwoWay}" Margin="0,2,0,2" FontSize="10"/>
-                                    <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="mmol/s" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="> metabolic rate" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                <ex:DoubleUpDown Grid.Column="2" Grid.Row="2" Increment="0.01" Minimum="0"  Value="{Binding DrugMetabolicRate, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                <TextBlock Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Text="mmol/s" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="> renal clearance rate" FontSize="10" Margin="5,0,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Increment="0.1"  Value="{Binding DrugRenalClearanceRate, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
-                                    <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="mmol/s" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="> hepatic clearance rate" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                <ex:DoubleUpDown Grid.Column="2" Grid.Row="3" Increment="0.01" Minimum="0"  Value="{Binding DrugHepaticClearanceRate, Mode=TwoWay}" Margin="0,2,0,2" FontSize="10"/>
+                                <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Text="mmol/s" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
-                                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Margin="5,0,0,0" Text=" associated drug effects " FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                                    <ComboBox x:Name="cmbDrugEffects" ItemsSource="{Binding drugEffects}"  DisplayMemberPath="EffectSite" Margin="0,0,5,0" FontSize="10" Height="20" Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="2" >
+                                <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="> renal clearance rate" FontSize="10" Margin="5,0,0,5" VerticalAlignment="Center"></TextBlock>
+                                <ex:DoubleUpDown Grid.Column="2" Grid.Row="4" Increment="0.1"  Value="{Binding DrugRenalClearanceRate, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                <TextBlock Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Text="mmol/s" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+
+                                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Margin="5,0,0,0" Text=" associated drug effects " FontSize="10" TextAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                                <ComboBox x:Name="cmbDrugEffects" ItemsSource="{Binding drugEffects}"  DisplayMemberPath="EffectSite" Margin="0,0,5,0" FontSize="10" Height="20" Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="2" >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
                                             <i:InvokeCommandAction Command="{Binding ChangeDrugEffectCommand}" CommandParameter="{Binding ElementName=cmbDrugEffects, Path=SelectedItem}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                    </ComboBox>
-                                    
-                                    <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Text="> gain" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Increment="0.01" Minimum="0"  Value="{Binding DrugEffectGain, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
-                                    <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                </ComboBox>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="> time constant" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Increment="0.01" Minimum="0" Maximum="1"  Value="{Binding DrugEffectTimeConstant, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
-                                    <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" Text="sec" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Text="> gain" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                <ex:DoubleUpDown Grid.Column="2" Grid.Row="6" Increment="0.01" Minimum="0"  Value="{Binding DrugEffectGain, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Text="> conc. saturation" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="8" Increment="0.1"  Value="{Binding DrugEffectSaturation, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
-                                    <TextBlock Grid.Column="3" Grid.Row="8" Grid.ColumnSpan="2" Text="mmol/l" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Text="> time constant" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                <ex:DoubleUpDown Grid.Column="2" Grid.Row="7" Increment="0.01" Minimum="0" Maximum="1"  Value="{Binding DrugEffectTimeConstant, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" Text="sec" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Text="> conc. threshold" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Column="2" Grid.Row="9" Increment="0.01" Minimum="0"  Value="{Binding DrugEffectThreshold, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
-                                    <TextBlock Grid.Column="3" Grid.Row="9" Grid.ColumnSpan="2" Text="mmol/l" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
-          
-                                    <TextBlock Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="> dose dependent" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
-                                    <CheckBox Grid.Column="2" Grid.Row="10" IsChecked="{Binding DrugEffectDoseDependent}" Margin="0,5,0,0" ></CheckBox>
+                                <TextBlock Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Text="> conc. saturation" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                <ex:DoubleUpDown Grid.Column="2" Grid.Row="8" Increment="0.1"  Value="{Binding DrugEffectSaturation, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                <TextBlock Grid.Column="3" Grid.Row="8" Grid.ColumnSpan="2" Text="mmol/l" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+
+                                <TextBlock Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Text="> conc. threshold" FontSize="10" Margin="5,0,0,0" VerticalAlignment="Center"></TextBlock>
+                                <ex:DoubleUpDown Grid.Column="2" Grid.Row="9" Increment="0.01" Minimum="0"  Value="{Binding DrugEffectThreshold, Mode=TwoWay}" FontSize="10" Margin="0,2,0,2"/>
+                                <TextBlock Grid.Column="3" Grid.Row="9" Grid.ColumnSpan="2" Text="mmol/l" FontSize="10" Margin="5,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+
+                                <TextBlock Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="> dose dependent" FontSize="10" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
+                                <CheckBox Grid.Column="2" Grid.Row="10" IsChecked="{Binding DrugEffectDoseDependent}" Margin="0,5,0,0" ></CheckBox>
 
                                 <Button Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="11" Command="{Binding AddDrugCommand}" Content="administer" Margin="1,10,1,1"></Button>
 
 
-                                </Grid>
+                            </Grid>
 
-                            </Border>
+                        </Border>
 
                     </StackPanel>
                 </Expander>
-
-                
                 <Expander IsExpanded="False" Header="Model log" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Foreground="White" BorderThickness="0">
                     <Border BorderBrush="White"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="White" >
                         <ListBox x:Name="lstBox" Height="100" Margin="5,5,5,5" ItemsSource="{Binding Path=ModelLog, UpdateSourceTrigger=PropertyChanged}" Background="White" BorderBrush="White" FontSize="10" ScrollViewer.VerticalScrollBarVisibility="Auto" Foreground="Black" >
@@ -2151,13 +2149,13 @@
                                 <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding LactateAA}" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
                                 <TextBlock Grid.Column="1" Grid.Row="1" Text="mmol/l" TextAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,2" FontSize="8"></TextBlock>
 
-                            <TextBlock Grid.Column="2" Grid.Row="1" Text="Lactate (BRAIN)" TextAlignment="Left" VerticalAlignment="Top" FontSize="8" Margin="5,0,0,0"></TextBlock>
-                            <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding LactateBRAIN}" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
-                            <TextBlock Grid.Column="2" Grid.Row="1" Text="mmol/l" TextAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,2" FontSize="8"></TextBlock>
-                            
-                            <TextBlock Grid.Column="3" Grid.Row="1" Text="Lactate (LB)" TextAlignment="Left" VerticalAlignment="Top" FontSize="8" Margin="5,0,0,0"></TextBlock>
-                            <TextBlock Grid.Column="3" Grid.Row="1" Text="{Binding LactateLB}" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
-                            <TextBlock Grid.Column="3" Grid.Row="1" Text="mmol/l" TextAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,2" FontSize="8"></TextBlock>
+                            <TextBlock Visibility="Collapsed" Grid.Column="2" Grid.Row="1" Text="Lactate (BRAIN)" TextAlignment="Left" VerticalAlignment="Top" FontSize="8" Margin="5,0,0,0"></TextBlock>
+                            <TextBlock  Visibility="Collapsed" Grid.Column="2" Grid.Row="1" Text="{Binding LactateBRAIN}" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            <TextBlock  Visibility="Collapsed" Grid.Column="2" Grid.Row="1" Text="mmol/l" TextAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,2" FontSize="8"></TextBlock>
+
+                            <TextBlock  Visibility="Collapsed" Grid.Column="3" Grid.Row="1" Text="Lactate (LB)" TextAlignment="Left" VerticalAlignment="Top" FontSize="8" Margin="5,0,0,0"></TextBlock>
+                            <TextBlock  Visibility="Collapsed" Grid.Column="3" Grid.Row="1" Text="{Binding LactateLB}" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            <TextBlock  Visibility="Collapsed" Grid.Column="3" Grid.Row="1" Text="mmol/l" TextAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,2" FontSize="8"></TextBlock>
                             
 
                         </Grid>

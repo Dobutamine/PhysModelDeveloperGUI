@@ -49,7 +49,7 @@ namespace PhysModelDeveloperGUI
             IsAntialias = true,
             Color = SKColors.White,
             IsStroke = false,
-            TextSize = 22f
+            TextSize = 16f
         };
         SKPaint textPaint2 = new SKPaint
         {
@@ -59,7 +59,7 @@ namespace PhysModelDeveloperGUI
             IsAntialias = true,
             Color = SKColors.White,
             IsStroke = false,
-            TextSize = 18f
+            TextSize = 14f
         };
         public float OffsetXFactor = 2.5f;
         public SKPoint offset = new SKPoint

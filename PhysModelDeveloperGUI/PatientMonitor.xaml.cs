@@ -246,12 +246,12 @@ namespace PhysModelDeveloperGUI
             graph2.ParameterUnit = "%";
             graph2.GraphTitleColor = new SolidColorBrush(Colors.Fuchsia);
             graph2.GraphPaint1.Color = SKColors.Fuchsia;
-            graph2.AutoScale = true;
+            graph2.AutoScale = false;
 
             graph2.GridXEnabled = false;
             graph2.GridYEnabled = true;
-            graph2.GridYMin = 20;
-            graph2.GridYMax = 80;
+            graph2.GridYMin = 0;
+            graph2.GridYMax = 100;
             graph2.GridYStep = 20;
             graph2.xStepSize = 2;
             graph2.FontSizeValue = 14;

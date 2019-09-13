@@ -22,7 +22,7 @@ namespace PhysModelDeveloperGUI
             IsAntialias = true,
             Color = SKColors.White,
             IsStroke = false,
-            TextSize = 16f
+            TextSize = 12f
         };
 
         SKPoint offset = new SKPoint
@@ -76,7 +76,7 @@ namespace PhysModelDeveloperGUI
             IsAntialias = true,
             Color = SKColors.Black,
             IsStroke = false,
-            TextSize = 16f
+            TextSize = 12f
 
 
         };

@@ -100,9 +100,6 @@ namespace PhysModelDeveloperGUI
             set { additionalVisible = value; OnPropertyChanged(); }
         }
 
-
-
-
         PatientMonitor GraphPatientMonitor { get; set; }
         LoopGraph GraphPVLoop { get; set; }
         ModelDiagram GraphModelDiagram { get; set; }
@@ -384,7 +381,6 @@ namespace PhysModelDeveloperGUI
             currentModel.analyzer.SelectBloodCompartment(currentModel.modelState.LV);
 
         }
-
         void SetCommands()
         {
             ChangeBloodCompartmentCommand = new RelayCommand(ChangeSelectedBloodCompartment);
@@ -409,7 +405,6 @@ namespace PhysModelDeveloperGUI
             DecreaseWidthCommand = new RelayCommand(DecreaseWidth);
 
         }
-   
         void IncreaseWidth(object p)
         {
             foreach(AnimatedBloodConnector c in GraphModelDiagram.animatedBloodConnectors)
@@ -463,8 +458,6 @@ namespace PhysModelDeveloperGUI
 
             
         }
-
-
         void SwitchToFetus(object p)
         {
             bool state = (bool) p;
@@ -474,8 +467,6 @@ namespace PhysModelDeveloperGUI
             GraphModelDiagram.PulmonaryView(!state);
             GraphModelDiagram.PlacentaView(state);
         }
-
-
         void RemoveBloodVolume(object p)
         {
             
@@ -498,7 +489,6 @@ namespace PhysModelDeveloperGUI
 
             }
         }
-
         void ChangeSelectedDrugEffect(object p)
         {
             selectedDrugEffect = (DrugEffect)p;
@@ -586,8 +576,7 @@ namespace PhysModelDeveloperGUI
             rhythmTypes.Add("LONGQT");
             rhythmTypes.Add("WPW");
             rhythmTypes.Add("SVT");
-        }
-       
+        }   
         void ChangeRhythm(object p)
         {
             int selection = (int)p;
@@ -625,6 +614,8 @@ namespace PhysModelDeveloperGUI
             // Process open file dialog box results
             if (result == true)
             {
+                ResetDisplay(true);
+
                 selectedBloodCompartment = null;
                 selectedConnector = null;
                 selectedContainer = null;
@@ -642,6 +633,8 @@ namespace PhysModelDeveloperGUI
         }
         void NewModel(object p)
         {
+            ResetDisplay(true);
+
             selectedBloodCompartment = null;
             selectedConnector = null;
             selectedContainer = null;
@@ -765,6 +758,7 @@ namespace PhysModelDeveloperGUI
                 HeartLeftContractilityChange = currentModel.modelState.LeftContFactor;
                 HeartRightContractilityChange = currentModel.modelState.RightContFactor;
                 HeartContractilityChange = currentModel.modelState.HeartContFactor;
+                VATP = currentModel.modelState.VATP;
 
                 if (MonitorVisible)
                 {
@@ -783,7 +777,6 @@ namespace PhysModelDeveloperGUI
 
             slowUpdater += graphicsRefreshInterval;
         }
-
         private void ModelInterface_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "ModelUpdated")
@@ -1986,7 +1979,8 @@ namespace PhysModelDeveloperGUI
             {
                 if (currentModel != null)
                 {
-                    currentModel.modelState.VATPBaseline = value;
+                    if (value > 0.01) currentModel.modelInterface.AdjustVATP(value);
+
                     OnPropertyChanged();
                 }
             }
@@ -3179,20 +3173,20 @@ namespace PhysModelDeveloperGUI
         #region "bloodcompartment settings"
         void ChangeSelectedBloodCompartment(object p)
         {
-            
-            
+                       
             selectedBloodCompartment = (BloodCompartment)p;
-            currentModel.analyzer.SelectBloodCompartment(selectedBloodCompartment);
-
-            GraphPVLoop.GridYMax = (float)selectedBloodCompartment.dataCollector.PresMax + 0.25f * (float)selectedBloodCompartment.dataCollector.PresMax;
-            GraphPVLoop.GridYMin = (float)selectedBloodCompartment.dataCollector.PresMin - 0.25f * (float)selectedBloodCompartment.dataCollector.PresMin;
-            GraphPVLoop.GridXMax = (float)selectedBloodCompartment.dataCollector.VolMax + 0.25f * (float)selectedBloodCompartment.dataCollector.VolMax;
-            GraphPVLoop.GridXMin = (float)selectedBloodCompartment.dataCollector.VolMin - 0.25f * (float)selectedBloodCompartment.dataCollector.VolMin;
-            GraphPVLoop.refresh = true;
 
 
             if (selectedBloodCompartment != null)
             {
+                currentModel.analyzer.SelectBloodCompartment(selectedBloodCompartment);
+
+                GraphPVLoop.GridYMax = (float)selectedBloodCompartment.dataCollector.PresMax + 0.25f * (float)selectedBloodCompartment.dataCollector.PresMax;
+                GraphPVLoop.GridYMin = (float)selectedBloodCompartment.dataCollector.PresMin - 0.25f * (float)selectedBloodCompartment.dataCollector.PresMin;
+                GraphPVLoop.GridXMax = (float)selectedBloodCompartment.dataCollector.VolMax + 0.25f * (float)selectedBloodCompartment.dataCollector.VolMax;
+                GraphPVLoop.GridXMin = (float)selectedBloodCompartment.dataCollector.VolMin - 0.25f * (float)selectedBloodCompartment.dataCollector.VolMin;
+                GraphPVLoop.refresh = true;
+
                 UVolBlood = selectedBloodCompartment.VolUBaseline;
                 ElBaselineBlood = selectedBloodCompartment.elastanceModel.ElBaseline;
                 ElContractionBaselineBlood = selectedBloodCompartment.elastanceModel.ElContractionBaseline;
