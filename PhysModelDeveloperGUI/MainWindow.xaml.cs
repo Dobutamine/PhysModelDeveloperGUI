@@ -1,50 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PhysModelDeveloperGUI
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         MainWindowViewModel mainWindowViewModel;
+
 
         public MainWindow()
         {
             InitializeComponent();
 
-            mainWindowViewModel = new MainWindowViewModel();
+            // first find the properties of the current screen for adpative purposes
+            double screen_x = SystemParameters.PrimaryScreenWidth;
+            double screen_y = SystemParameters.PrimaryScreenHeight;
+            DpiScale dpi = VisualTreeHelper.GetDpi(this);
+            double dpi_scale = dpi.DpiScaleX;
+
+            // instatiate the mainwindow viewmodel
+            mainWindowViewModel = new MainWindowViewModel(screen_x, screen_y, dpi_scale);
+
+            // set the datacontext
             DataContext = mainWindowViewModel;
 
+            // pass the graphs to the mainviewmodel
             mainWindowViewModel.InitTrendGraph(graphTrends);
             mainWindowViewModel.InitBloodgasGraph(graphBloodgas);
             mainWindowViewModel.InitModelDiagram(graphDiagram);
             mainWindowViewModel.InitPatientMonitor(graphMonitor);
             mainWindowViewModel.InitPVLoop(graphLoop);
 
-            Console.WriteLine(System.Windows.SystemParameters.PrimaryScreenWidth);
-            Console.WriteLine(System.Windows.SystemParameters.PrimaryScreenHeight);
-
-            double factor = System.Windows.PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice.M11;
-
-            //Console.WriteLine(System.Windows.PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice.M11);
-
-
         }
-   
+
+
 
     }
 }

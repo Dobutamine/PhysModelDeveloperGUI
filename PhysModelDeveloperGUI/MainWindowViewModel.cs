@@ -359,7 +359,7 @@ namespace PhysModelDeveloperGUI
                 OnPropertyChanged();
             }
         }
-        public MainWindowViewModel()
+        public MainWindowViewModel(double screenx, double screeny, double dpi_scale)
         {      
             currentModel.Initialize();
             currentModel.modelInterface.PropertyChanged += ModelInterface_PropertyChanged;
