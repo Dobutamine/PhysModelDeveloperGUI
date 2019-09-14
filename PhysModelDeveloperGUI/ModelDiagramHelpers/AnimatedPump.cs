@@ -15,43 +15,13 @@ namespace PhysModelDeveloperGUI
         public List<BloodCompartment> compartments = new List<BloodCompartment>();
 
 
-        SKPaint circleOut = new SKPaint()
-        {
-            Style = SKPaintStyle.Stroke,
-            StrokeCap = SKStrokeCap.Round,
-            IsAntialias = true,
-            Color = SKColors.Orange,
-            StrokeWidth = 5,
-        };
+        SKPaint circleOut;
 
-        SKPaint paint = new SKPaint()
-        {
-            Style = SKPaintStyle.Fill,
-            IsAntialias = false,
-            Color = SKColors.Blue,
-            StrokeWidth = 10
-        };
+        SKPaint paint;
 
-        SKPaint textPaint = new SKPaint
-        {
-            Typeface = SKTypeface.FromFamilyName("Arial Bold"),
-            Style = SKPaintStyle.Fill,
-            FakeBoldText = true,
-            IsAntialias = true,
-            Color = SKColors.White,
-            IsStroke = false,
-            TextSize = 22f
-        };
-        SKPaint textPaint2 = new SKPaint
-        {
-            Typeface = SKTypeface.FromFamilyName("Arial Bold"),
-            Style = SKPaintStyle.Fill,
-            FakeBoldText = true,
-            IsAntialias = true,
-            Color = SKColors.White,
-            IsStroke = false,
-            TextSize = 18f
-        };
+        SKPaint textPaint;
+
+        SKPaint textPaint2;
         public float OffsetXFactor = 2.5f;
         public SKPoint offset = new SKPoint
         {
@@ -83,6 +53,51 @@ namespace PhysModelDeveloperGUI
         public float RadiusYOffset { get; set; } = 1;
         public string Name { get; set; } = "X";
 
+        float dpi = 1f;
+
+        public AnimatedPump(float _dpi)
+        {
+            dpi = _dpi;
+
+            circleOut = new SKPaint()
+            {
+                Style = SKPaintStyle.Stroke,
+                StrokeCap = SKStrokeCap.Round,
+                IsAntialias = true,
+                Color = SKColors.Orange,
+                StrokeWidth = 5,
+            };
+
+            paint = new SKPaint()
+            {
+                Style = SKPaintStyle.Fill,
+                IsAntialias = false,
+                Color = SKColors.Blue,
+                StrokeWidth = 10
+            };
+
+            textPaint = new SKPaint
+            {
+                Typeface = SKTypeface.FromFamilyName("Arial Bold"),
+                Style = SKPaintStyle.Fill,
+                FakeBoldText = true,
+                IsAntialias = true,
+                Color = SKColors.White,
+                IsStroke = false,
+                TextSize = 22f / dpi
+            };
+            textPaint2 = new SKPaint
+            {
+                Typeface = SKTypeface.FromFamilyName("Arial Bold"),
+                Style = SKPaintStyle.Fill,
+                FakeBoldText = true,
+                IsAntialias = true,
+                Color = SKColors.White,
+                IsStroke = false,
+                TextSize = 18f / dpi
+            };
+
+        }
         public void AddCompartment(BloodCompartment c)
         {
             compartments.Add(c);
@@ -95,12 +110,12 @@ namespace PhysModelDeveloperGUI
             float radius = 0;
 
 
-            scale = _radX * scaleRelative;
+            scale = _radX * scaleRelative * dpi;
             radius = _radX / 2.5f;
 
             if (_radX > _radY)
             {
-                scale = _radY * scaleRelative;
+                scale = _radY * scaleRelative * dpi;
                 radius = _radY / 2.5f;
             }
 

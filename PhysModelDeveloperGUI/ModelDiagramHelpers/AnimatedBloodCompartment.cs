@@ -92,6 +92,61 @@ namespace PhysModelDeveloperGUI
         public float RadiusYOffset { get; set; } = 1;
         public string Name { get; set; } = "X";
 
+        float dpi = 1;
+
+        public AnimatedBloodCompartment(float _dpi)
+        {
+            dpi = _dpi;
+
+            circleOut = new SKPaint()
+            {
+                Style = SKPaintStyle.Stroke,
+                StrokeCap = SKStrokeCap.Round,
+                IsAntialias = true,
+                Color = SKColors.Orange,
+                StrokeWidth = 5,
+            };
+
+            pumpColorStroke = new SKPaint()
+            {
+                Style = SKPaintStyle.Stroke,
+                IsAntialias = false,
+                Color = SKColors.White,
+                StrokeWidth = 5,
+            };
+
+
+            paint = new SKPaint()
+            {
+                Style = SKPaintStyle.Fill,
+                IsAntialias = false,
+                Color = SKColors.Blue,
+                StrokeWidth = 10
+            };
+
+            textPaint = new SKPaint
+            {
+                Typeface = SKTypeface.FromFamilyName("Arial Bold"),
+                Style = SKPaintStyle.Fill,
+                FakeBoldText = true,
+                IsAntialias = true,
+                Color = SKColors.White,
+                IsStroke = false,
+                TextSize = 20f / dpi
+            };
+            textPaint2 = new SKPaint
+            {
+                Typeface = SKTypeface.FromFamilyName("Arial Bold"),
+                Style = SKPaintStyle.Fill,
+                FakeBoldText = true,
+                IsAntialias = true,
+                Color = SKColors.White,
+                IsStroke = false,
+                TextSize = 18f / dpi
+            };
+
+            
+        }
         public void AddCompartment(BloodCompartment c)
         {
             compartments.Add(c);
@@ -103,13 +158,13 @@ namespace PhysModelDeveloperGUI
             float totalSpO2 = 0;
             float radius = 0;
 
-
-            scale = _radX * scaleRelative;
+            
+            scale = _radX * scaleRelative * dpi;
             radius = _radX / 2.5f;
 
             if (_radX > _radY)
             {
-                scale = _radY * scaleRelative;
+                scale = _radY * scaleRelative * dpi;
                 radius = _radY / 2.5f;
             }
 
@@ -122,8 +177,6 @@ namespace PhysModelDeveloperGUI
             }
 
             paint.Color = AnimatedElementHelper.CalculateBloodColor(totalSpO2 / compartments.Count);
-
-
 
             float twidth = textPaint.MeasureText(Name);
 

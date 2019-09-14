@@ -122,16 +122,19 @@ namespace PhysModelDeveloperGUI
         SKCanvas SkeletonCanvas;
 
         bool initialized = false;
+        float dpi = 1;
 
         public ModelDiagram()
         {
             InitializeComponent();
         }
 
-        public void InitModelDiagram(Model cm)
+        public void InitModelDiagram(Model cm, double _dpi)
         {
             currentModel = cm;
 
+            dpi = (float)_dpi;    
+            
             initialized = true;
         }
 
@@ -162,9 +165,9 @@ namespace PhysModelDeveloperGUI
 
      
 
-            pulmonaryValve = new AnimatedValve
+            pulmonaryValve = new AnimatedValve (dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 0,
                 NoLoss = false,
                 RadiusYOffset = 1f,
@@ -176,9 +179,9 @@ namespace PhysModelDeveloperGUI
             pulmonaryValve.AddConnector(currentModel.modelState.RV_PA);
             animatedValves.Add(pulmonaryValve);
 
-            pulmonaryArtery = new AnimatedBloodCompartment
+            pulmonaryArtery = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 IsVessel = true,
                 StartAngle = 220,
                 EndAngle = 230,
@@ -188,9 +191,9 @@ namespace PhysModelDeveloperGUI
             pulmonaryArtery.AddCompartment(currentModel.modelState.PA);
             animatedBloodCompartments.Add(pulmonaryArtery);
 
-            PALUNG = new AnimatedBloodConnector
+            PALUNG = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 NoLoss = true,
                 StartAngle = 230,
@@ -202,9 +205,9 @@ namespace PhysModelDeveloperGUI
             PALUNG.AddConnector(currentModel.modelState.PA_LR);
             animatedBloodConnectors.Add(PALUNG);
 
-            aorticValve = new AnimatedValve
+            aorticValve = new AnimatedValve(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 0,
                 NoLoss = false,
                 RadiusYOffset = 1f,
@@ -216,9 +219,9 @@ namespace PhysModelDeveloperGUI
             aorticValve.AddConnector(currentModel.modelState.LV_AA);
             animatedValves.Add(aorticValve);
 
-            ascendingAorta = new AnimatedBloodCompartment
+            ascendingAorta = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 IsVessel = true,
                 RadiusYOffset = 1f,
                 StartAngle = 25,
@@ -231,9 +234,9 @@ namespace PhysModelDeveloperGUI
             ascendingAorta.AddCompartment(currentModel.modelState.AA);
             animatedBloodCompartments.Add(ascendingAorta);
 
-            descendingAorta = new AnimatedBloodCompartment
+            descendingAorta = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 IsVessel = true,
                 RadiusYOffset = 1f,
                 StartAngle = 35,
@@ -245,9 +248,9 @@ namespace PhysModelDeveloperGUI
             descendingAorta.AddCompartment(currentModel.modelState.AD);
             animatedBloodCompartments.Add(descendingAorta);
 
-            aorta = new AnimatedBloodConnector
+            aorta = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 0,
                 NoLoss = true,
                 RadiusYOffset = 1f,
@@ -261,18 +264,18 @@ namespace PhysModelDeveloperGUI
             aorta.AddConnector(currentModel.modelState.AD_LIVER);
             animatedBloodConnectors.Add(aorta);
 
-            myocardium = new AnimatedBloodCompartment
+            myocardium = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 90,
                 RadiusYOffset = 0.725f,
                 Name = "MYO"
             };
             myocardium.AddCompartment(currentModel.modelState.MYO);
 
-            leftVentricle = new AnimatedBloodCompartment
+            leftVentricle = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 0,
 
                 Name = "LV"
@@ -282,18 +285,18 @@ namespace PhysModelDeveloperGUI
 
 
 
-            leftAtrium = new AnimatedBloodCompartment
+            leftAtrium = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 340,
                 Name = "LA"
             };
             leftAtrium.AddCompartment(currentModel.modelState.LA);
             animatedBloodCompartments.Add(leftAtrium);
 
-            mitralValve = new AnimatedValve
+            mitralValve = new AnimatedValve(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 0,
                 RadiusYOffset = 1f,
                 StartAngle = 340,
@@ -304,18 +307,18 @@ namespace PhysModelDeveloperGUI
             mitralValve.AddConnector(currentModel.modelState.LA_LV);
             animatedValves.Add(mitralValve);
 
-            rightVentricle = new AnimatedBloodCompartment
+            rightVentricle = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 190,
                 Name = "RV"
             };
             rightVentricle.AddCompartment(currentModel.modelState.RV);
             animatedBloodCompartments.Add(rightVentricle);
 
-            rightAtrium = new AnimatedBloodCompartment
+            rightAtrium = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 170,
                 Name = "RA"
             };
@@ -323,9 +326,9 @@ namespace PhysModelDeveloperGUI
             animatedBloodCompartments.Add(rightAtrium);
 
 
-            tricuspidValve = new AnimatedValve
+            tricuspidValve = new AnimatedValve(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 0,
                 RadiusYOffset = 1f,
                 StartAngle = 170,
@@ -338,9 +341,9 @@ namespace PhysModelDeveloperGUI
 
           
 
-            lowerBody = new AnimatedBloodCompartment
+            lowerBody = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 90,
                 Name = "LB"
             };
@@ -349,10 +352,10 @@ namespace PhysModelDeveloperGUI
             lowerBody.AddCompartment(currentModel.modelState.LB);
             animatedBloodCompartments.Add(lowerBody);
 
-            placenta = new AnimatedBloodCompartment
+            placenta = new AnimatedBloodCompartment(dpi)
             {
 
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 IsVessel = true,
                 RadiusYOffset = 1.15f,
                 StartAngle = 110,
@@ -365,9 +368,9 @@ namespace PhysModelDeveloperGUI
             //animatedBloodCompartments.Add(placenta);
 
 
-            lungs = new AnimatedBloodCompartment
+            lungs = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 270,
                 Name = "LUNG"
             };
@@ -375,9 +378,9 @@ namespace PhysModelDeveloperGUI
             lungs.AddCompartment(currentModel.modelState.LR);
             animatedBloodCompartments.Add(lungs);
 
-            upperBody = new AnimatedBloodCompartment
+            upperBody = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 90,
                 RadiusYOffset = 0.5f,
                 Name = "UB"
@@ -386,9 +389,9 @@ namespace PhysModelDeveloperGUI
             upperBody.AddCompartment(currentModel.modelState.UB);
             animatedBloodCompartments.Add(upperBody);
 
-            alveoli = new AnimatedGasComp
+            alveoli = new AnimatedGasComp(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.030f,
                 Degrees = 270,
                 RadiusYOffset = 1f,
                 Name = "ALV"
@@ -397,9 +400,9 @@ namespace PhysModelDeveloperGUI
             alveoli.AddCompartment(currentModel.modelState.ALR);
             animatedGasCompartments.Add(alveoli);
 
-            LBIVC = new AnimatedBloodConnector
+            LBIVC = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 0,
                 NoLoss = false,
                 RadiusYOffset = 1f,
@@ -413,9 +416,9 @@ namespace PhysModelDeveloperGUI
             LBIVC.AddConnector(currentModel.modelState.LIVER_IVC);
             animatedBloodConnectors.Add(LBIVC);
 
-            IVC = new AnimatedBloodCompartment
+            IVC = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 IsVessel = true,
                 StartAngle = 130,
                 EndAngle = 120,
@@ -427,9 +430,9 @@ namespace PhysModelDeveloperGUI
             IVC.AddCompartment(currentModel.modelState.IVC);
             animatedBloodCompartments.Add(IVC);
 
-            IVCRA = new AnimatedBloodConnector
+            IVCRA = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 NoLoss = true,
                 StartAngle = 130,
@@ -440,9 +443,9 @@ namespace PhysModelDeveloperGUI
             IVCRA.AddConnector(currentModel.modelState.IVC_RA);
             animatedBloodConnectors.Add(IVCRA);
 
-            UBSVC = new AnimatedBloodConnector
+            UBSVC = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 0,
                 NoLoss = false,
                 RadiusYOffset = 0.5f,
@@ -455,9 +458,9 @@ namespace PhysModelDeveloperGUI
             UBSVC.AddConnector(currentModel.modelState.BRAIN_SVC);
             animatedBloodConnectors.Add(UBSVC);
 
-            SVC = new AnimatedBloodCompartment
+            SVC = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 IsVessel = true,
                 RadiusYOffset = 0.5f,
                 StartAngle = 130,
@@ -470,9 +473,9 @@ namespace PhysModelDeveloperGUI
             SVC.AddCompartment(currentModel.modelState.SVC);
             animatedBloodCompartments.Add(SVC);
 
-            SVCRA = new AnimatedBloodConnector
+            SVCRA = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 0.5f,
                 RadiusXOffset = 1.05f,
                 NoLoss = true,
@@ -484,9 +487,9 @@ namespace PhysModelDeveloperGUI
             SVCRA.AddConnector(currentModel.modelState.SVC_RA);
             animatedBloodConnectors.Add(SVCRA);
 
-            PLACENTAIVC = new AnimatedBloodConnector
+            PLACENTAIVC = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1.15f,
                 RadiusXOffset = 0.85f,
                 NoLoss = true,
@@ -498,9 +501,9 @@ namespace PhysModelDeveloperGUI
             PLACENTAIVC.AddConnector(currentModel.modelState.PLACENTA_IVC);
             //animatedBloodConnectors.Add(PLACENTAIVC);
 
-            ADPLACENTA = new AnimatedBloodConnector
+            ADPLACENTA = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1.15f,
                 RadiusXOffset = 1f,
                 NoLoss = true,
@@ -512,9 +515,9 @@ namespace PhysModelDeveloperGUI
             ADPLACENTA.AddConnector(currentModel.modelState.AD_PLACENTA);
             //animatedBloodConnectors.Add(ADPLACENTA);
 
-            LUNGPV = new AnimatedBloodConnector
+            LUNGPV = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 NoLoss = false,
                 StartAngle = 270,
@@ -526,9 +529,9 @@ namespace PhysModelDeveloperGUI
             LUNGPV.AddConnector(currentModel.modelState.LR_PV);
             animatedBloodConnectors.Add(LUNGPV);
 
-            pulmonaryVeins = new AnimatedBloodCompartment
+            pulmonaryVeins = new AnimatedBloodCompartment(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 IsVessel = true,
                 StartAngle = 310,
                 EndAngle = 320,
@@ -538,9 +541,9 @@ namespace PhysModelDeveloperGUI
             pulmonaryVeins.AddCompartment(currentModel.modelState.PV);
             animatedBloodCompartments.Add(pulmonaryVeins);
 
-            PVLA = new AnimatedBloodConnector
+            PVLA = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 StartAngle = 320,
                 EndAngle = 340,
@@ -550,9 +553,9 @@ namespace PhysModelDeveloperGUI
             PVLA.AddConnector(currentModel.modelState.PV_LA);
             animatedBloodConnectors.Add(PVLA);
 
-            AAUB = new AnimatedBloodConnector
+            AAUB = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 0.5f,
                 RadiusXOffset = 1.3f,
                 NoLoss = true,
@@ -565,9 +568,9 @@ namespace PhysModelDeveloperGUI
             AAUB.AddConnector(currentModel.modelState.AA_BRAIN);
             animatedBloodConnectors.Add(AAUB);
 
-            LVPA = new AnimatedShunt
+            LVPA = new AnimatedShunt(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 NoLoss = false,
                 StartAngle = 0,
@@ -577,9 +580,9 @@ namespace PhysModelDeveloperGUI
             };
             LVPA.AddConnector(currentModel.modelState.LV_PA);
 
-            RVAA = new AnimatedShunt
+            RVAA = new AnimatedShunt(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 NoLoss = false,
                 StartAngle = 17,
@@ -589,7 +592,7 @@ namespace PhysModelDeveloperGUI
             };
             RVAA.AddConnector(currentModel.modelState.RV_AA);
 
-            SVCPA = new AnimatedShunt
+            SVCPA = new AnimatedShunt(dpi)
             {
                 YOffsetShape = -50,
                 RadiusYOffset = 0.7f,
@@ -603,10 +606,10 @@ namespace PhysModelDeveloperGUI
             };
             SVCPA.AddConnector(currentModel.modelState.SVC_PA);
 
-            IVCPA = new AnimatedShunt
+            IVCPA = new AnimatedShunt(dpi)
             {
                 YOffsetShape =0,
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 RadiusXOffset = 1.05f,
                 NoLoss = true,
@@ -619,9 +622,9 @@ namespace PhysModelDeveloperGUI
             IVCPA.AddConnector(currentModel.modelState.IVC_PA);
 
 
-            TAPVC = new AnimatedShunt
+            TAPVC = new AnimatedShunt(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 NoLoss = false,
                 StartAngle = 315,
@@ -631,9 +634,9 @@ namespace PhysModelDeveloperGUI
             };
             TAPVC.AddConnector(currentModel.modelState.PV_RA);
 
-            TAPVCIC = new AnimatedShunt
+            TAPVCIC = new AnimatedShunt(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 NoLoss = false,
                 StartAngle = 315,
@@ -643,9 +646,9 @@ namespace PhysModelDeveloperGUI
             };
             TAPVCIC.AddConnector(currentModel.modelState.PV_IVC);
 
-            PDA = new AnimatedShunt
+            PDA = new AnimatedShunt(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 NoLoss = false,
                 StartAngle = 25,
@@ -655,9 +658,9 @@ namespace PhysModelDeveloperGUI
             };
             PDA.AddConnector(currentModel.modelState.PDA);
 
-            APShunt = new AnimatedShunt
+            APShunt = new AnimatedShunt(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 NoLoss = false,
                 StartAngle = 25,
@@ -669,9 +672,9 @@ namespace PhysModelDeveloperGUI
 
 
 
-            VSD = new AnimatedShunt
+            VSD = new AnimatedShunt(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 NoLoss = false,
                 StartAngle = 0,
@@ -682,9 +685,9 @@ namespace PhysModelDeveloperGUI
             VSD.AddConnector(currentModel.modelState.LV_RV);
 
 
-            OFO = new AnimatedShunt
+            OFO = new AnimatedShunt(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 NoLoss = false,
                 StartAngle = 340,
@@ -695,9 +698,9 @@ namespace PhysModelDeveloperGUI
             OFO.AddConnector(currentModel.modelState.LA_RA);
 
 
-            LUNGSHUNT = new AnimatedShunt
+            LUNGSHUNT = new AnimatedShunt(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1f,
                 NoLoss = true,
                 StartAngle = 315,
@@ -708,9 +711,9 @@ namespace PhysModelDeveloperGUI
             LUNGSHUNT.AddConnector(currentModel.modelState.PA_PV);
 
 
-            OUTNCA = new AnimatedShuntGas
+            OUTNCA = new AnimatedShuntGas(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 RadiusYOffset = 1.45f,
                 RadiusXOffset = 0f,
                 NoLoss = true,
@@ -722,9 +725,9 @@ namespace PhysModelDeveloperGUI
             OUTNCA.AddConnector(currentModel.modelState.OUT_NCA);
             //animatedShuntsGas.Add(OUTNCA);
 
-            AAMYO = new AnimatedBloodConnector
+            AAMYO = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 0,
                 NoLoss = true,
                 RadiusYOffset = 0.725f,
@@ -735,9 +738,9 @@ namespace PhysModelDeveloperGUI
             };
             AAMYO.AddConnector(currentModel.modelState.AA_MYO);
 
-            MYORA = new AnimatedBloodConnector
+            MYORA = new AnimatedBloodConnector(dpi)
             {
-                scaleRelative = 0.035f,
+                scaleRelative = 0.023f,
                 Degrees = 0,
                 NoLoss = true,
                 RadiusYOffset = 0.725f,

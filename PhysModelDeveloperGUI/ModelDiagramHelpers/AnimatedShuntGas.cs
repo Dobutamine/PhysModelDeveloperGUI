@@ -108,6 +108,88 @@ namespace PhysModelDeveloperGUI
         public string Name { get; set; } = "";
         public string Title { get; set; } = "O2";
 
+        public float Width { get; set; } = 60;
+        float StrokeWidth = 15;
+
+        public float AverageFlow { get; set; } = 0;
+        int averageCounter = 0;
+        float tempAverageFlow = 0;
+
+        float currentStrokeWidth = 0;
+        float strokeStepsize = 0.1f;
+
+        float dpi = 1f;
+
+        public AnimatedShuntGas(float _dpi)
+        {
+            dpi = _dpi;
+
+            textPaint2 = new SKPaint
+            {
+                Typeface = SKTypeface.FromFamilyName("Arial Bold"),
+                Style = SKPaintStyle.Fill,
+                FakeBoldText = true,
+                IsAntialias = true,
+                Color = SKColors.White,
+                IsStroke = false,
+                TextSize = 16f / dpi 
+            };
+            offset = new SKPoint
+            {
+                X = 10,
+                Y = 6
+
+            };
+
+            circleOut = new SKPaint()
+            {
+                Style = SKPaintStyle.Stroke,
+                IsAntialias = true,
+                Color = SKColors.Orange,
+                StrokeWidth = 5,
+
+
+            };
+
+            circleOrigen = new SKPaint()
+            {
+                Style = SKPaintStyle.Stroke,
+                IsAntialias = true,
+                Color = SKColors.Green,
+                StrokeWidth = 5,
+            };
+
+            circleTarget = new SKPaint()
+            {
+                Style = SKPaintStyle.Stroke,
+                IsAntialias = true,
+                Color = SKColors.Orange,
+                StrokeWidth = 5,
+            };
+
+            paint = new SKPaint()
+            {
+                Style = SKPaintStyle.Fill,
+                Color = SKColors.AliceBlue,
+                StrokeWidth = 10
+            };
+
+            textPaint = new SKPaint
+            {
+                Typeface = SKTypeface.FromFamilyName("Arial Bold"),
+                FakeBoldText = true,
+                Style = SKPaintStyle.Fill,
+                IsAntialias = true,
+                Color = SKColors.White,
+                IsStroke = false,
+                TextSize = 16f / dpi
+
+
+            };
+
+            
+
+        }
 
         public void AddConnector(GasCompartmentConnector c)
         {
@@ -124,12 +206,12 @@ namespace PhysModelDeveloperGUI
             float currentVolume = 0;
             float radius = 0;
 
-            scale = _radX * scaleRelative;
+            scale = _radX * scaleRelative * dpi;
             radius = _radX / 2.5f;
 
             if (_radX > _radY)
             {
-                scale = _radY * scaleRelative;
+                scale = _radY * scaleRelative * dpi;
                 radius = _radY / 2.5f;
             }
 
@@ -178,6 +260,16 @@ namespace PhysModelDeveloperGUI
 
             }
 
+            tempAverageFlow += totalFlow;
+
+            if (averageCounter > 100)
+            {
+                AverageFlow = Math.Abs(tempAverageFlow) / averageCounter;
+                tempAverageFlow = 0;
+                averageCounter = 0;
+            }
+            averageCounter++;
+
             //paint.Color = CalculateColor(totalSpO2 / connectors.Count);
             colorTo = CalculateColor(totalSpO2To / connectors.Count);
             colorFrom = CalculateColor(totalSpO2From / connectors.Count);
@@ -210,7 +302,19 @@ namespace PhysModelDeveloperGUI
             }
             else
             {
-                circleOut.StrokeWidth = 40;
+                StrokeWidth = AverageFlow * Width;
+                if (StrokeWidth > 30) StrokeWidth = 30;
+                if (StrokeWidth < 2) StrokeWidth = 2;
+
+                strokeStepsize = (StrokeWidth - currentStrokeWidth) / 10;
+                currentStrokeWidth += strokeStepsize;
+                if (Math.Abs(currentStrokeWidth - StrokeWidth) < Math.Abs(strokeStepsize))
+                {
+                    strokeStepsize = 0;
+                    currentStrokeWidth = StrokeWidth;
+                }
+
+                circleOut.StrokeWidth = currentStrokeWidth;
             }
 
             SKRect mainRect = new SKRect(left, top, right, bottom);

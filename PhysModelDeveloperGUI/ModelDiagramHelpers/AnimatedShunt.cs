@@ -14,72 +14,22 @@ namespace PhysModelDeveloperGUI
         public List<BloodCompartmentConnector> connectors = new List<BloodCompartmentConnector>();
         public BloodCompartment sizeCompartment;
 
-        SKPaint textPaint2 = new SKPaint
-        {
-            Typeface = SKTypeface.FromFamilyName("Arial Bold"),
-            Style = SKPaintStyle.Fill,
-            FakeBoldText = true,
-            IsAntialias = true,
-            Color = SKColors.White,
-            IsStroke = false,
-            TextSize = 20f
-        };
+        SKPaint textPaint2;
 
-        SKPoint offset = new SKPoint
-        {
-            X = 80,
-            Y = 6
+        SKPoint offset;
 
-        };
+        SKPaint circleOut;
 
-        SKPaint circleOut = new SKPaint()
-        {
-            Style = SKPaintStyle.Stroke,
-            IsAntialias = true,
-            Color = SKColors.Orange,
-            StrokeWidth = 5,
+        SKPaint circleOrigen;
 
-
-        };
-
-        SKPaint circleOrigen = new SKPaint()
-        {
-            Style = SKPaintStyle.Stroke,
-            IsAntialias = true,
-            Color = SKColors.Green,
-            StrokeWidth = 5,
-        };
-
-        SKPaint circleTarget = new SKPaint()
-        {
-            Style = SKPaintStyle.Stroke,
-            IsAntialias = true,
-            Color = SKColors.Orange,
-            StrokeWidth = 5,
-        };
+        SKPaint circleTarget;
 
         SKColor colorFrom;
         SKColor colorTo;
 
-        SKPaint paint = new SKPaint()
-        {
-            Style = SKPaintStyle.Fill,
-            Color = SKColors.BlanchedAlmond,
-            StrokeWidth = 10
-        };
+        SKPaint paint;
+        SKPaint textPaint;
 
-        SKPaint textPaint = new SKPaint
-        {
-            Typeface = SKTypeface.FromFamilyName("Arial Bold"),
-            FakeBoldText = true,
-            Style = SKPaintStyle.Fill,
-            IsAntialias = true,
-            Color = SKColors.Black,
-            IsStroke = false,
-            TextSize = 12f
-
-
-        };
         public SKPoint locationOrigen = new SKPoint(0, 0);
         public SKPoint locationTarget = new SKPoint(0, 0);
         public SKPoint location1 = new SKPoint(0, 0);
@@ -119,7 +69,78 @@ namespace PhysModelDeveloperGUI
         float currentStrokeWidth = 0;
         float strokeStepsize = 0.1f;
 
+        float dpi = 1f;
 
+        public AnimatedShunt(float _dpi)
+        {
+            dpi = (float)_dpi;
+
+            textPaint2 = new SKPaint
+            {
+                Typeface = SKTypeface.FromFamilyName("Arial Bold"),
+                Style = SKPaintStyle.Fill,
+                FakeBoldText = true,
+                IsAntialias = true,
+                Color = SKColors.White,
+                IsStroke = false,
+                TextSize = 20f / dpi
+            };
+
+            offset = new SKPoint
+            {
+                X = 80,
+                Y = 6
+
+            };
+
+            circleOut = new SKPaint()
+            {
+                Style = SKPaintStyle.Stroke,
+                IsAntialias = true,
+                Color = SKColors.Orange,
+                StrokeWidth = 5,
+
+
+            };
+
+            circleOrigen = new SKPaint()
+            {
+                Style = SKPaintStyle.Stroke,
+                IsAntialias = true,
+                Color = SKColors.Green,
+                StrokeWidth = 5,
+            };
+
+            circleTarget = new SKPaint()
+            {
+                Style = SKPaintStyle.Stroke,
+                IsAntialias = true,
+                Color = SKColors.Orange,
+                StrokeWidth = 5,
+            };
+
+            paint = new SKPaint()
+            {
+                Style = SKPaintStyle.Fill,
+                Color = SKColors.BlanchedAlmond,
+                StrokeWidth = 10
+            };
+
+            textPaint = new SKPaint
+            {
+                Typeface = SKTypeface.FromFamilyName("Arial Bold"),
+                FakeBoldText = true,
+                Style = SKPaintStyle.Fill,
+                IsAntialias = true,
+                Color = SKColors.Black,
+                IsStroke = false,
+                TextSize = 12f / dpi
+
+
+            };
+
+            Width /= dpi * 1.5f;
+        }
         public void AddConnector(BloodCompartmentConnector c)
         {
             connectors.Add(c);
@@ -136,12 +157,12 @@ namespace PhysModelDeveloperGUI
             float radius = 0;
 
 
-            scale = _radX * scaleRelative;
+            scale = _radX * scaleRelative * dpi;
             radius = _radX / 2.5f;
 
             if (_radX > _radY)
             {
-                scale = _radY * scaleRelative;
+                scale = _radY * scaleRelative * dpi;
                 radius = _radY / 2.5f;
             }
 

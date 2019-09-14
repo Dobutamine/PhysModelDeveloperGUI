@@ -14,24 +14,9 @@ namespace PhysModelDeveloperGUI
         public List<GasCompartment> compartments = new List<GasCompartment>();
 
 
-        SKPaint paint = new SKPaint()
-        {
-            Style = SKPaintStyle.Fill,
-            IsAntialias = false,
-            Color = SKColors.Blue,
-            StrokeWidth = 10
-        };
+        SKPaint paint;
 
-        SKPaint textPaint = new SKPaint
-        {
-            Typeface = SKTypeface.FromFamilyName("Arial Bold"),
-            Style = SKPaintStyle.Fill,
-            FakeBoldText = true,
-            IsAntialias = true,
-            Color = SKColors.White,
-            IsStroke = false,
-            TextSize = 24f
-        };
+        SKPaint textPaint;
 
         public SKPoint location = new SKPoint(0, 0);
 
@@ -42,7 +27,32 @@ namespace PhysModelDeveloperGUI
         public float RadiusYOffset { get; set; } = 1;
         public string Name { get; set; } = "X";
         public bool IsVisible { get; set; } = true;
+        float dpi = 1f;
 
+        public AnimatedGasComp(float _dpi)
+        {
+            paint = new SKPaint()
+            {
+                Style = SKPaintStyle.Fill,
+                IsAntialias = false,
+                Color = SKColors.Blue,
+                StrokeWidth = 10
+            };
+
+            textPaint = new SKPaint
+            {
+                Typeface = SKTypeface.FromFamilyName("Arial Bold"),
+                Style = SKPaintStyle.Fill,
+                FakeBoldText = true,
+                IsAntialias = true,
+                Color = SKColors.White,
+                IsStroke = false,
+                TextSize = 24f / dpi
+            };
+
+            
+
+        }
         public void AddCompartment(GasCompartment c)
         {
             compartments.Add(c);
@@ -81,12 +91,12 @@ namespace PhysModelDeveloperGUI
             float radius = 0;
 
 
-            scale = _radX * scaleRelative;
+            scale = _radX * scaleRelative * dpi;
             radius = _radX / 2.5f;
 
             if (_radX > _radY)
             {
-                scale = _radY * scaleRelative;
+                scale = _radY * scaleRelative * dpi;
                 radius = _radY / 2.5f;
             }
 

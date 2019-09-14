@@ -321,6 +321,10 @@ namespace PhysModelDeveloperGUI
             }
         }
 
+        double screenx = 1280;
+        double screeny = 800;
+        double dpi = 1.5;
+
         DrugEffect selectedDrugEffect { get; set; }
         Drug selectedDrug { get; set; }
         BloodCompartment selectedBloodCompartment { get; set; }
@@ -359,8 +363,12 @@ namespace PhysModelDeveloperGUI
                 OnPropertyChanged();
             }
         }
-        public MainWindowViewModel(double screenx, double screeny, double dpi_scale)
-        {      
+        public MainWindowViewModel(double _screenx, double _screeny, double _dpi_scale)
+        {
+            screenx = _screenx;
+            screeny = _screeny;
+            dpi = _dpi_scale;
+
             currentModel.Initialize();
             currentModel.modelInterface.PropertyChanged += ModelInterface_PropertyChanged;
             currentModel.Start();
@@ -398,43 +406,9 @@ namespace PhysModelDeveloperGUI
             SwitchToFetusCommand = new RelayCommand(SwitchToFetus);
             ResetDisplayCommand = new RelayCommand(ResetDisplay);
             StopCommand = new RelayCommand(StopSimulation);
-            IncreaseWidthCommand = new RelayCommand(IncreaseWidth);
-            DecreaseWidthCommand = new RelayCommand(DecreaseWidth);
 
         }
-        void IncreaseWidth(object p)
-        {
-            foreach(AnimatedBloodConnector c in GraphModelDiagram.animatedBloodConnectors)
-            {
-                c.Width += 5;
-            }
-            foreach (AnimatedShunt c in GraphModelDiagram.animatedShunts)
-            {
-                c.Width += 5;
-            }
-            foreach (AnimatedValve c in GraphModelDiagram.animatedValves)
-            {
-                c.Width += 5;
-            }
-        }
-        void DecreaseWidth(object p)
-        {
-            foreach (AnimatedBloodConnector c in GraphModelDiagram.animatedBloodConnectors)
-            {
-                c.Width -= 5;
-                if (c.Width < 3) c.Width = 2;
-            }
-            foreach (AnimatedShunt c in GraphModelDiagram.animatedShunts)
-            {
-                c.Width -= 5;
-                if (c.Width < 3) c.Width = 2;
-            }
-            foreach (AnimatedValve c in GraphModelDiagram.animatedValves)
-            {
-                c.Width -= 5;
-                if (c.Width < 3) c.Width = 2;
-            }
-        }
+
         void StopSimulation(object p)
         {
             if (PauseState)
@@ -3099,7 +3073,7 @@ namespace PhysModelDeveloperGUI
         }
         void BuildModelDiagram()
         {
-            GraphModelDiagram.InitModelDiagram(currentModel);
+            GraphModelDiagram.InitModelDiagram(currentModel, dpi);
             GraphModelDiagram.BuildDiagram();
             GraphModelDiagram.UpdateSkeleton();
             GraphModelDiagram.UpdatedMainDiagram();
