@@ -127,14 +127,10 @@ namespace PhysModelDeveloperGUI
         public RelayCommand ListBoxUpdatedCommand { get; set; }
         public RelayCommand ExitCommand { get; set; }
         public RelayCommand SwitchToFetusCommand { get; set; }
-
         public RelayCommand StopCommand { get; set; }
-
         public RelayCommand RemoveBlood { get; set; }
         public RelayCommand AddDrugCommand { get; set; }
-
         public RelayCommand ResetDisplayCommand { get; set; }
-
         public RelayCommand IncreaseWidthCommand { get; set; }
         public RelayCommand DecreaseWidthCommand { get; set; }
 
@@ -379,6 +375,8 @@ namespace PhysModelDeveloperGUI
 
             currentModel.analyzer.SelectBloodCompartment(currentModel.modelState.LV);
 
+
+           
         }
         void SetCommands()
         {

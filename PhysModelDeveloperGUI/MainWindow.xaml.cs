@@ -35,7 +35,16 @@ namespace PhysModelDeveloperGUI
             mainWindowViewModel.InitPatientMonitor(graphMonitor);
             mainWindowViewModel.InitPVLoop(graphLoop);
 
+            Console.WriteLine(System.Windows.SystemParameters.PrimaryScreenWidth);
+            Console.WriteLine(System.Windows.SystemParameters.PrimaryScreenHeight);
+
+            double factor = System.Windows.PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice.M11;
+
+            //Console.WriteLine(System.Windows.PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice.M11);
+
 
         }
+   
+
     }
 }
