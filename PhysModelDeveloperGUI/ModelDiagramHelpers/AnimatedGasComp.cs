@@ -47,7 +47,7 @@ namespace PhysModelDeveloperGUI
                 IsAntialias = true,
                 Color = SKColors.White,
                 IsStroke = false,
-                TextSize = 24f / dpi
+                TextSize = 14f / dpi
             };
 
             

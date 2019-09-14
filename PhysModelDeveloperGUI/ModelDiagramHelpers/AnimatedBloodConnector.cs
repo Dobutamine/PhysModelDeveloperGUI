@@ -51,7 +51,7 @@ namespace PhysModelDeveloperGUI
         public string Name { get; set; } = "";
         public bool IsVisible = true;
 
-        public float Width { get; set; } = 60;
+        public float Width { get; set; } = 30;
         float StrokeWidth = 15;
 
         public float AverageFlow { get; set; } = 0;
@@ -91,7 +91,7 @@ namespace PhysModelDeveloperGUI
                 IsAntialias = true,
                 Color = SKColors.White,
                 IsStroke = false,
-                TextSize = 20f / dpi
+                TextSize = 14f / dpi
 
 
             };

@@ -84,7 +84,7 @@ namespace PhysModelDeveloperGUI
                 IsAntialias = true,
                 Color = SKColors.White,
                 IsStroke = false,
-                TextSize = 22f / dpi
+                TextSize = 14f / dpi
             };
             textPaint2 = new SKPaint
             {
@@ -94,7 +94,7 @@ namespace PhysModelDeveloperGUI
                 IsAntialias = true,
                 Color = SKColors.White,
                 IsStroke = false,
-                TextSize = 18f / dpi
+                TextSize = 12f / dpi
             };
 
         }

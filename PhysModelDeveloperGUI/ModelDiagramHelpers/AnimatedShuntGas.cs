@@ -108,7 +108,7 @@ namespace PhysModelDeveloperGUI
         public string Name { get; set; } = "";
         public string Title { get; set; } = "O2";
 
-        public float Width { get; set; } = 60;
+        public float Width { get; set; } = 30;
         float StrokeWidth = 15;
 
         public float AverageFlow { get; set; } = 0;
@@ -132,7 +132,7 @@ namespace PhysModelDeveloperGUI
                 IsAntialias = true,
                 Color = SKColors.White,
                 IsStroke = false,
-                TextSize = 16f / dpi 
+                TextSize = 10f / dpi 
             };
             offset = new SKPoint
             {
@@ -182,7 +182,7 @@ namespace PhysModelDeveloperGUI
                 IsAntialias = true,
                 Color = SKColors.White,
                 IsStroke = false,
-                TextSize = 16f / dpi
+                TextSize = 10f / dpi
 
 
             };
