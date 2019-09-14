@@ -132,7 +132,7 @@ namespace PhysModelDeveloperGUI
                 IsAntialias = true,
                 Color = SKColors.White,
                 IsStroke = false,
-                TextSize = 10f / dpi 
+                TextSize = 10f * dpi 
             };
             offset = new SKPoint
             {
@@ -182,7 +182,7 @@ namespace PhysModelDeveloperGUI
                 IsAntialias = true,
                 Color = SKColors.White,
                 IsStroke = false,
-                TextSize = 10f / dpi
+                TextSize = 10f * dpi
 
 
             };
@@ -206,12 +206,12 @@ namespace PhysModelDeveloperGUI
             float currentVolume = 0;
             float radius = 0;
 
-            scale = _radX * scaleRelative / dpi;
+            scale = _radX * scaleRelative * dpi;
             radius = _radX / 2.5f;
 
             if (_radX > _radY)
             {
-                scale = _radY * scaleRelative / dpi;
+                scale = _radY * scaleRelative * dpi;
                 radius = _radY / 2.5f;
             }
 

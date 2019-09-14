@@ -91,7 +91,7 @@ namespace PhysModelDeveloperGUI
                 IsAntialias = true,
                 Color = SKColors.White,
                 IsStroke = false,
-                TextSize = 14f / dpi
+                TextSize = 14f * dpi
 
 
             };
@@ -113,12 +113,12 @@ namespace PhysModelDeveloperGUI
             float currentVolume = 0;
             float radius = 0;
 
-            scale = _radX * scaleRelative / dpi;
+            scale = _radX * scaleRelative * dpi;
             radius = _radX / 2.5f;
 
             if (_radX > _radY)
             {
-                scale = _radY * scaleRelative / dpi;
+                scale = _radY * scaleRelative * dpi;
                 radius = _radY / 2.5f;
             }
 
