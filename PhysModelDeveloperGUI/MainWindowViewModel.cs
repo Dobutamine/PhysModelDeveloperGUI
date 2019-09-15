@@ -130,6 +130,8 @@ namespace PhysModelDeveloperGUI
         public RelayCommand ResetDisplayCommand { get; set; }
         public RelayCommand IncreaseWidthCommand { get; set; }
         public RelayCommand DecreaseWidthCommand { get; set; }
+        public RelayCommand AddDrugEffectCommand { get; set; }
+        
 
         public void ResetDisplay(object p)
         {
@@ -320,6 +322,13 @@ namespace PhysModelDeveloperGUI
             }
         }
 
+        private bool newDrugEffectVisible = false;
+        public bool NewDrugEffectVisible
+        {
+            get { return newDrugEffectVisible; }
+            set { newDrugEffectVisible = value; OnPropertyChanged(); }
+        }
+
         double screenx = 1280;
         double screeny = 800;
         double dpi = 1.5;
@@ -404,7 +413,18 @@ namespace PhysModelDeveloperGUI
             SwitchToFetusCommand = new RelayCommand(SwitchToFetus);
             ResetDisplayCommand = new RelayCommand(ResetDisplay);
             StopCommand = new RelayCommand(StopSimulation);
+            AddDrugEffectCommand = new RelayCommand(AddDrugEffect);
 
+        }
+
+        void AddDrugEffect(object p)
+        {
+            // add drug effect to the current selected drug
+            if (selectedDrug != null && p != null)
+            {
+                selectedDrug.DrugEffects.Add((DrugEffect)p);
+                ChangeSelectedDrug(selectedDrug);
+            }
         }
         void StopSimulation(object p)
         {
@@ -501,6 +521,10 @@ namespace PhysModelDeveloperGUI
                 availableDrugs.Add(d);
             }
 
+            foreach(DrugEffect d in currentModel.drugModel.availableDrugEffects)
+            {
+                availableDrugEffects.Add(d);
+            }
             foreach (BloodCompartment c in currentModel.modelState.bloodCompartments)
             {
                 bloodcompartments.Add(c);
@@ -3007,6 +3031,9 @@ namespace PhysModelDeveloperGUI
 
         public ObservableCollection<DrugEffect> drugEffects { get; set; } = new ObservableCollection<DrugEffect>();
         public ObservableCollection<Drug> availableDrugs { get; set; } = new ObservableCollection<Drug>();
+
+        public ObservableCollection<DrugEffect> availableDrugEffects { get; set; } = new ObservableCollection<DrugEffect>();
+
         public ObservableCollection<Compartment> bloodcompartments { get; set; } = new ObservableCollection<Compartment>();
         public ObservableCollection<Compartment> gascompartments { get; set; } = new ObservableCollection<Compartment>();
         public ObservableCollection<Connector> connectors { get; set; } = new ObservableCollection<Connector>();
