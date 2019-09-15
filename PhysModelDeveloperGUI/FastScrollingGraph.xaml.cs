@@ -45,6 +45,17 @@ namespace PhysModelDeveloperGUI
             set { parameterValue = value; OnPropertyChanged(); }
         }
 
+        private int graphWidth = 1;
+
+        public int GraphWidth
+        {
+            get { return graphWidth; }
+            set {
+                graphWidth = value;
+
+            }
+        }
+
         private string parameterUnit = "/min";
 
         public string ParameterUnit
@@ -98,8 +109,8 @@ namespace PhysModelDeveloperGUI
         SKPoint[] displayArray1 = new SKPoint[1000];
 
 
-        SKPointMode PointMode1 { get; set; } = SKPointMode.Polygon;
-        SKPointMode PointMode2 { get; set; } = SKPointMode.Lines;
+        public SKPointMode PointMode1 { get; set; } = SKPointMode.Polygon;
+        public SKPointMode PointMode2 { get; set; } = SKPointMode.Lines;
 
         public bool AutoScale { get; set; } = false;
         public int AutoScaleSamples { get; set; } = 300;
@@ -121,6 +132,7 @@ namespace PhysModelDeveloperGUI
         public float GridYMax { get; set; } = 100;
         public float GridYStep { get; set; } = 10;
 
+        int arrayPosition = 0;
         public SKPaint GraphPaint1 { get; set; }
 
         SKPaint GridPaint1 { get; set; }
@@ -285,21 +297,32 @@ namespace PhysModelDeveloperGUI
             }
         }
 
-   
+        public void WriteArrayToBuffer(double[] d1)
+        {
+            lock (DataBuffer1)
+            {
+                for (int i = 0; i < d1.Length - 1; i++)
+                {
+                    DataBuffer1.Add(d1[i]);
+                    if (DataBuffer1.Count > MaxBufferSize)
+                    {
+                        DataBuffer1.RemoveAt(0);
+                    }
+                }
+             
+            }
+
+        }
+
         public void WriteBuffer(double d1)
         {
             lock (DataBuffer1)
             {
-           
-
                 DataBuffer1.Add(d1);
-
                 if (DataBuffer1.Count > MaxBufferSize)
                 {
                     DataBuffer1.RemoveAt(0);
-                }
-
-               
+                }          
             }
 
         }

@@ -45,6 +45,15 @@ namespace PhysModelDeveloperGUI
             set { monitorVisible = value; OnPropertyChanged(); }
         }
 
+        private bool flowGraphVisible;
+
+        public bool FlowGraphVisible
+        {
+            get { return flowGraphVisible; }
+            set { flowGraphVisible = value; OnPropertyChanged(); }
+        }
+
+
         private bool trendVitalsVisible;
 
         public bool TrendVitalsVisible
@@ -100,11 +109,8 @@ namespace PhysModelDeveloperGUI
         PatientMonitor GraphPatientMonitor { get; set; }
         LoopGraph GraphPVLoop { get; set; }
         ModelDiagram GraphModelDiagram { get; set; }
-        FastScrollingGraph GraphECG { get; set; }
-        FastScrollingGraph GraphABP { get; set; }
-        FastScrollingGraph GraphSPO2 { get; set; }
-        FastScrollingGraph GraphETCO2 { get; set; }
-        FastScrollingGraph GraphRESP { get; set; }
+        FastScrollingGraph FlowGraph { get; set; }
+
 
         TimeBasedGraph TrendGraph { get; set; }
         TimeBasedGraph BloodgasGraph { get; set; }
@@ -143,6 +149,7 @@ namespace PhysModelDeveloperGUI
             VSDVisible = false;
             PDAVisible = false;
             FetusVisible = false;
+            MyoVisible = false;
 
         }
         bool _fetusVisible = false;
@@ -174,6 +181,23 @@ namespace PhysModelDeveloperGUI
                 OnPropertyChanged();
             }
         }
+
+        private bool myoVisible;
+
+        public bool MyoVisible
+        {
+            get { return myoVisible; }
+            set { myoVisible = value;
+                if (myoVisible)
+                {
+                    GraphModelDiagram.MYOView(true);
+                } else
+                {
+                    GraphModelDiagram.MYOView(false);
+                }
+                OnPropertyChanged(); }
+        }
+
         bool _ofoVisible = false;
         public bool OFOVisible
         {
@@ -652,6 +676,7 @@ namespace PhysModelDeveloperGUI
             if (DiagramVisible) GraphModelDiagram.UpdatedMainDiagram();
             if (TrendVitalsVisible) TrendGraph.DrawData();
             if (trendBloodgasVisible) BloodgasGraph.DrawData();
+            if (FlowGraphVisible) FlowGraph.Draw();
 
             if (slowUpdater > 1000)
             {
@@ -778,8 +803,7 @@ namespace PhysModelDeveloperGUI
             {
                 UpdatePatientMonitor();
                 UpdatePVLoopGraph();
-
-
+                UpdateFlowGraph();
             }
             if (e.PropertyName == "StatusMessage")
             {
@@ -3070,12 +3094,39 @@ namespace PhysModelDeveloperGUI
             }
 
         }
+        void UpdateFlowGraph()
+        {
+            if (FlowGraphVisible && FlowGraph != null && selectedConnector != null)
+            {
+                //FlowGraph.WriteBuffer(selectedConnector.CurrentFlow);
+                FlowGraph.WriteArrayToBuffer(currentModel.analyzer.flows);
+            }
+        }
+        public void InitFlowGraph(FastScrollingGraph p)
+        {
+            FlowGraph = p;
+
+            FlowGraph.GraphTitle = "ecg";
+            FlowGraph.GraphWidth = 2;
+            FlowGraph.ParameterTitle = "";
+            FlowGraph.ParameterUnit = "";
+            FlowGraph.PointMode1 = SKPointMode.Points;
+            FlowGraph.GraphTitleColor = new SolidColorBrush(Colors.White);
+            FlowGraph.GraphPaint1.StrokeWidth = 1;
+            FlowGraph.GraphPaint1.Color = SKColors.White;
+            FlowGraph.xStepSize = 0.1f;
+            FlowGraph.AutoScale = true;
+            FlowGraph.FontSizeValue = 14;
+            FlowGraph.FontSizeTitle = 10;
+
+        }
         public void InitPVLoop(LoopGraph p)
         {
             GraphPVLoop = p;
             GraphPVLoop.GraphTitle = "pv loop";
-            GraphPVLoop.GraphTitleColor = new SolidColorBrush(Colors.LimeGreen);
-            GraphPVLoop.GraphPaint1.Color = SKColors.LimeGreen;
+            GraphPVLoop.GraphTitleColor = new SolidColorBrush(Colors.White);
+            GraphPVLoop.GraphPaint1.StrokeWidth = 3;
+            GraphPVLoop.GraphPaint1.Color = SKColors.White;
             GraphPVLoop.GridYMax = 100;
             GraphPVLoop.GridYStep = 10;
             GraphPVLoop.GridXStep = 5;
@@ -3176,6 +3227,7 @@ namespace PhysModelDeveloperGUI
                 GraphPVLoop.GridYMin = (float)selectedBloodCompartment.dataCollector.PresMin - 0.25f * (float)selectedBloodCompartment.dataCollector.PresMin;
                 GraphPVLoop.GridXMax = (float)selectedBloodCompartment.dataCollector.VolMax + 0.25f * (float)selectedBloodCompartment.dataCollector.VolMax;
                 GraphPVLoop.GridXMin = (float)selectedBloodCompartment.dataCollector.VolMin - 0.25f * (float)selectedBloodCompartment.dataCollector.VolMin;
+                GraphPVLoop.GraphTitle = selectedBloodCompartment.Description;
                 GraphPVLoop.refresh = true;
 
                 UVolBlood = selectedBloodCompartment.VolUBaseline;
@@ -3674,6 +3726,9 @@ namespace PhysModelDeveloperGUI
             selectedConnector = (Connector)p;
             if (selectedConnector != null)
             {
+               
+                currentModel.analyzer.SelectConnector(selectedConnector);
+
                 ResForward = selectedConnector.resistance.RForwardBaseline;
                 ResBackward = selectedConnector.resistance.RBackwardBaseline;
                 ResK1 = selectedConnector.resistance.RK1;
@@ -3681,6 +3736,8 @@ namespace PhysModelDeveloperGUI
                 IsCoupledRes = selectedConnector.resistance.ResCoupled;
                 NoBackFlowRes = selectedConnector.NoBackFlow;
                 IsEnabledRes = selectedConnector.IsEnabled;
+
+                FlowGraph.GraphTitle = selectedConnector.Description;
             }
 
 

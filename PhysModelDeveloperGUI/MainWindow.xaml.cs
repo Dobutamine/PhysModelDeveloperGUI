@@ -31,6 +31,7 @@ namespace PhysModelDeveloperGUI
             mainWindowViewModel.InitModelDiagram(graphDiagram);
             mainWindowViewModel.InitPatientMonitor(graphMonitor);
             mainWindowViewModel.InitPVLoop(graphLoop);
+            mainWindowViewModel.InitFlowGraph(graphFlow);
 
         }
 

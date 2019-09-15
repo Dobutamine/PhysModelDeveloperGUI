@@ -66,6 +66,7 @@
             <MenuItem Header="_Views">
                 <MenuItem x:Name="menuResetDisplay" Header="_Clear view" IsCheckable="False" Command="{Binding ResetDisplayCommand}"></MenuItem>
                 <MenuItem x:Name="menuFetus" Header="_Fetal circulation" IsChecked="{Binding FetusVisible}" IsCheckable="True"/>
+                <MenuItem x:Name="menuMyo" Header="_Myocardium" IsChecked="{Binding MyoVisible}" IsCheckable="True"/>
                 <MenuItem Header="_Shunts">
                     <MenuItem x:Name="menuOFO" Header="_Foramen ovale" IsCheckable="True" IsChecked="{Binding OFOVisible, Mode=TwoWay}"/>
                     <MenuItem x:Name="menuVSD1" Header="_Ventricular septal defect" IsCheckable="True" IsChecked="{Binding VSDVisible, Mode=TwoWay}"/>
@@ -2423,6 +2424,11 @@
                         <local:LoopGraph x:Name="graphLoop" Margin="5,5,5,5"  Height="200"/>
                     </Border>
                 </Expander>
+                <Expander IsExpanded="{Binding FlowGraphVisible, Mode=TwoWay}"  Margin="10,0,0,10"  Header="Flow probe" Background="DarkSlateGray" Padding="5,5,5,5" Foreground="White" BorderThickness="0">
+                    <Border BorderBrush="Black"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="Black" >
+                        <local:FastScrollingGraph x:Name="graphFlow" Margin="5,5,5,5"  Height="100"/>
+                    </Border>
+                </Expander>
                 <Expander IsExpanded="{Binding DrugVisible, Mode=TwoWay}" Header="Drugs" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10"  Foreground="White" BorderThickness="0">
                     <StackPanel Margin="10,0,10,5" Background="Transparent" >
                         <Expander Header=" drug concentrations" IsExpanded="False" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
@@ -2502,8 +2508,6 @@
                         <local:ModelDiagram x:Name="graphDiagram" Margin="10,10,10,10"  Height="500"></local:ModelDiagram>
                     </Border>
                 </Expander>
-                
-                
 
                 <Expander IsExpanded="{Binding TrendVitalsVisible, Mode=TwoWay}" Margin="0,0,0,10"  Header="Vital trends" Background="DarkSlateGray" Padding="5,5,5,5" Foreground="White" BorderThickness="0">
                     <Border BorderBrush="White"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="Black" >
