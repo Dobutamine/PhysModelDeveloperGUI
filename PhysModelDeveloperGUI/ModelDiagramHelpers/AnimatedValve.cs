@@ -114,7 +114,7 @@ namespace PhysModelDeveloperGUI
 
             };
 
-            Width /= dpi * 1.5f;
+            Width = 30 * dpi;
         }
 
         public void AddConnector(ValveConnector c)
@@ -132,12 +132,12 @@ namespace PhysModelDeveloperGUI
             float currentVolume = 0;
             float radius = 0;
 
-            scale = _radX * scaleRelative * dpi;
+            scale = _radX * scaleRelative ;
             radius = _radX / 2.5f;
 
             if (_radX > _radY)
             {
-                scale = _radY * scaleRelative * dpi;
+                scale = _radY * scaleRelative ;
                 radius = _radY / 2.5f;
             }
 

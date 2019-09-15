@@ -250,7 +250,7 @@ namespace PhysModelDeveloperGUI
 
             graph2.GridXEnabled = false;
             graph2.GridYEnabled = true;
-            graph2.GridYMin = 0;
+            graph2.GridYMin = -10;
             graph2.GridYMax = 100;
             graph2.GridYStep = 20;
             graph2.xStepSize = 2;

@@ -5,13 +5,10 @@ using PhysModelLibrary.Connectors;
 using PhysModelLibrary.Models;
 using SkiaSharp;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -163,14 +160,15 @@ namespace PhysModelDeveloperGUI
                     GraphModelDiagram.PlacentaView(true);
                     OFOVisible = true;
                     PDAVisible = true;
-                } else
+                }
+                else
                 {
                     GraphModelDiagram.PulmonaryView(true);
                     GraphModelDiagram.PlacentaView(false);
                     OFOVisible = false;
                     PDAVisible = false;
                 }
-              
+
                 OnPropertyChanged();
             }
         }
@@ -187,7 +185,8 @@ namespace PhysModelDeveloperGUI
                 if (_ofoVisible)
                 {
                     GraphModelDiagram.OFOView(true);
-                } else
+                }
+                else
                 {
                     GraphModelDiagram.OFOView(false);
                 }
@@ -331,7 +330,6 @@ namespace PhysModelDeveloperGUI
         GasCompartment selectedGasCompartment { get; set; }
         Connector selectedConnector { get; set; }
         GasExchangeBlock selectedGex { get; set; }
-
         DiffusionBlock selectedDif { get; set; }
         ContainerCompartment selectedContainer { get; set; }
 
@@ -372,7 +370,7 @@ namespace PhysModelDeveloperGUI
             currentModel.Initialize();
             currentModel.modelInterface.PropertyChanged += ModelInterface_PropertyChanged;
             currentModel.Start();
-            
+
 
             updateTimer.Tick += UpdateTimer_Tick; ; ;
             updateTimer.Interval = new TimeSpan(0, 0, 0, 0, graphicsRefreshInterval);
@@ -384,7 +382,7 @@ namespace PhysModelDeveloperGUI
             currentModel.analyzer.SelectBloodCompartment(currentModel.modelState.LV);
 
 
-           
+
         }
         void SetCommands()
         {
@@ -408,7 +406,6 @@ namespace PhysModelDeveloperGUI
             StopCommand = new RelayCommand(StopSimulation);
 
         }
-
         void StopSimulation(object p)
         {
             if (PauseState)
@@ -418,7 +415,8 @@ namespace PhysModelDeveloperGUI
                 StopButtonText = " > ";
                 StopButtonColor = new SolidColorBrush(Colors.Black);
                 if (!updateTimer.IsEnabled) updateTimer.IsEnabled = true;
-            } else
+            }
+            else
             {
                 PauseState = true;
                 currentModel.Stop();
@@ -427,11 +425,11 @@ namespace PhysModelDeveloperGUI
                 if (updateTimer.IsEnabled) updateTimer.IsEnabled = false;
             }
 
-            
+
         }
         void SwitchToFetus(object p)
         {
-            bool state = (bool) p;
+            bool state = (bool)p;
 
             OFOVisible = state;
             PDAVisible = state;
@@ -440,7 +438,7 @@ namespace PhysModelDeveloperGUI
         }
         void RemoveBloodVolume(object p)
         {
-            
+
         }
         void ChangeSelectedDrug(object p)
         {
@@ -452,11 +450,11 @@ namespace PhysModelDeveloperGUI
                 DrugRenalClearanceRate = selectedDrug.RenalClearanceRate;
                 DrugHepaticClearanceRate = selectedDrug.HepaticClearanceRate;
                 drugEffects.Clear();
-                foreach(DrugEffect d in selectedDrug.DrugEffects)
+                foreach (DrugEffect d in selectedDrug.DrugEffects)
                 {
                     drugEffects.Add(d);
                 }
-         
+
 
             }
         }
@@ -477,7 +475,7 @@ namespace PhysModelDeveloperGUI
         void AddDrug(object p)
         {
 
-        if (selectedDrug != null)
+            if (selectedDrug != null)
             {
                 currentModel.drugModel.AddNewActiveDrug(selectedDrug);
             }
@@ -496,16 +494,18 @@ namespace PhysModelDeveloperGUI
             gasexchangeUnits.Clear();
             diffusionUnits.Clear();
             containers.Clear();
-            
+
 
             foreach (Drug d in currentModel.modelState.AvailableDrugs)
             {
                 availableDrugs.Add(d);
             }
+
             foreach (BloodCompartment c in currentModel.modelState.bloodCompartments)
             {
                 bloodcompartments.Add(c);
             }
+      
             foreach (GasCompartment c in currentModel.modelState.gasCompartments)
             {
                 gascompartments.Add(c);
@@ -522,7 +522,7 @@ namespace PhysModelDeveloperGUI
             {
                 connectors.Add(c);
             }
-            foreach(GasExchangeBlock c in currentModel.modelState.gasExchangeBlocks)
+            foreach (GasExchangeBlock c in currentModel.modelState.gasExchangeBlocks)
             {
                 gasexchangeUnits.Add(c);
             }
@@ -547,7 +547,7 @@ namespace PhysModelDeveloperGUI
             rhythmTypes.Add("LONGQT");
             rhythmTypes.Add("WPW");
             rhythmTypes.Add("SVT");
-        }   
+        }
         void ChangeRhythm(object p)
         {
             int selection = (int)p;
@@ -575,8 +575,8 @@ namespace PhysModelDeveloperGUI
         void LoadModelState(object p)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.FileName = ""; 
-            dlg.DefaultExt = ".xml"; 
+            dlg.FileName = "";
+            dlg.DefaultExt = ".xml";
             dlg.Filter = "XML files (.xml)|*.xml";
 
             // Show open file dialog box
@@ -620,12 +620,12 @@ namespace PhysModelDeveloperGUI
 
             ModelName = currentModel.modelState.Name;
 
-           
+
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
-            if (DiagramVisible) GraphModelDiagram.UpdatedMainDiagram();               
+            if (DiagramVisible) GraphModelDiagram.UpdatedMainDiagram();
             if (TrendVitalsVisible) TrendGraph.DrawData();
             if (trendBloodgasVisible) BloodgasGraph.DrawData();
 
@@ -691,7 +691,7 @@ namespace PhysModelDeveloperGUI
                     Po2alv = currentModel.modelInterface.AlveolarPO2;
                     Pco2alv = currentModel.modelInterface.AlveolarPCO2;
                 }
-          
+
                 if (LabVisible)
                 {
                     Ph = currentModel.modelInterface.ArterialPH.ToString();
@@ -733,7 +733,7 @@ namespace PhysModelDeveloperGUI
 
                 if (MonitorVisible)
                 {
-                    GraphPatientMonitor.UpdateParameters(currentModel.modelInterface.HeartRate.ToString(),                                                       
+                    GraphPatientMonitor.UpdateParameters(currentModel.modelInterface.HeartRate.ToString(),
                                                          currentModel.modelInterface.PulseOximeterOutput.ToString(),
                                                          currentModel.modelInterface.ArterialBloodPressure,
                                                          currentModel.modelInterface.EndTidalCO2.ToString(),
@@ -755,9 +755,9 @@ namespace PhysModelDeveloperGUI
                 UpdatePatientMonitor();
                 UpdatePVLoopGraph();
 
-                
+
             }
-            if (e.PropertyName ==  "StatusMessage")
+            if (e.PropertyName == "StatusMessage")
             {
                 ModelLog.Add(DateTime.Now + currentModel.modelInterface.StatusMessage);
             }
@@ -870,7 +870,7 @@ namespace PhysModelDeveloperGUI
         string _placflow = "-";
         public string Placentalflow { get { return _placflow; } set { _placflow = value; OnPropertyChanged(); } }
 
-    
+
         string _lbflow = "-";
         public string Lbflow { get { return _lbflow; } set { _lbflow = value; OnPropertyChanged(); } }
 
@@ -2276,7 +2276,7 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
-        
+
         double _upperAirwayResistanceChange = 0;
         public double UpperAirwayResistanceChange
         {
@@ -2427,8 +2427,8 @@ namespace PhysModelDeveloperGUI
 
                     _svrChange = value;
 
-                    currentModel.modelInterface.AdjustSystemicVascularResistance (value);
-                   
+                    currentModel.modelInterface.AdjustSystemicVascularResistance(value);
+
                     OnPropertyChanged();
                 }
                 else
@@ -3018,9 +3018,9 @@ namespace PhysModelDeveloperGUI
         #endregion
 
         #region "other couplings"
-            ObservableCollection<string> _modelLog = new ObservableCollection<string>();
+        ObservableCollection<string> _modelLog = new ObservableCollection<string>();
 
-            public ObservableCollection<string> ModelLog { get { return _modelLog; } set { _modelLog = value; OnPropertyChanged(); } }
+        public ObservableCollection<string> ModelLog { get { return _modelLog; } set { _modelLog = value; OnPropertyChanged(); } }
         #endregion
 
         #region "graphs"
@@ -3041,7 +3041,7 @@ namespace PhysModelDeveloperGUI
             {
                 GraphPVLoop.WriteListToBuffer(currentModel.analyzer.pressuresBloodCompartment, currentModel.analyzer.volumesBloodCompartment);
             }
-        
+
         }
         public void InitPVLoop(LoopGraph p)
         {
@@ -3068,7 +3068,7 @@ namespace PhysModelDeveloperGUI
         public void InitModelDiagram(ModelDiagram p)
         {
             GraphModelDiagram = p;
-            BuildModelDiagram();    
+            BuildModelDiagram();
 
         }
         void BuildModelDiagram()
@@ -3094,7 +3094,7 @@ namespace PhysModelDeveloperGUI
             TrendGraph.Data3Enabled = true;
             TrendGraph.Data4Enabled = true;
             TrendGraph.Data5Enabled = true;
-          
+
         }
         public void InitBloodgasGraph(TimeBasedGraph p)
         {
@@ -3137,7 +3137,7 @@ namespace PhysModelDeveloperGUI
         #region "bloodcompartment settings"
         void ChangeSelectedBloodCompartment(object p)
         {
-                       
+
             selectedBloodCompartment = (BloodCompartment)p;
 
 
@@ -3162,7 +3162,7 @@ namespace PhysModelDeveloperGUI
                 IsEnabledBlood = selectedBloodCompartment.IsEnabled;
                 HasFixedVolumeBlood = selectedBloodCompartment.HasFixedVolume;
             }
-           
+
 
         }
         public double UVolBlood
@@ -3487,7 +3487,7 @@ namespace PhysModelDeveloperGUI
                 HasFixedVolumeGas = selectedGasCompartment.HasFixedVolume;
                 HasFixedCompositionGas = selectedGasCompartment.FixedGasComposition;
             }
-   
+
         }
         public double UVolGas
         {
@@ -3655,7 +3655,7 @@ namespace PhysModelDeveloperGUI
                 NoBackFlowRes = selectedConnector.NoBackFlow;
                 IsEnabledRes = selectedConnector.IsEnabled;
             }
-        
+
 
         }
         public double ResForward
@@ -3788,7 +3788,7 @@ namespace PhysModelDeveloperGUI
                     containedCompartments.Add(c);
                 }
             }
-           
+
 
         }
         public double UVolCont
