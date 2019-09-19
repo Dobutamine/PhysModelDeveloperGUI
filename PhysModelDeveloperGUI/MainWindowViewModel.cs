@@ -1059,6 +1059,36 @@ namespace PhysModelDeveloperGUI
 
         #region "independent model parameters setters"
         // autonomic nervous system model
+        public double HrRef
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.HrRef : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.HrRef = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double VeRef
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.VERef : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.VERef = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public double ThMAP
         {
             get
@@ -3050,6 +3080,27 @@ namespace PhysModelDeveloperGUI
                 else
                 {
                     _fiO2 = 0.21;
+                }
+            }
+        }
+        private double _weight = 3.3;
+        public double Weight
+        {
+            get { return _weight; }
+            set
+            {
+                if (currentModel.modelInterface != null && !double.IsNaN(value))
+                {
+
+                    _weight = value;
+
+                    currentModel.modelInterface.AdjustWeight(value);
+
+                    OnPropertyChanged();
+                }
+                else
+                {
+                    _weight = 3.3;
                 }
             }
         }
