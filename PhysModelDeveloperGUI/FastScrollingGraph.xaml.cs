@@ -29,7 +29,9 @@ namespace PhysModelDeveloperGUI
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private string parameterTitle = "heartrate";
+        public float AutoScalingGridLines { get; set; } = 3f;
+
+        private string parameterTitle = "";
 
         public string ParameterTitle
         {
@@ -56,7 +58,7 @@ namespace PhysModelDeveloperGUI
             }
         }
 
-        private string parameterUnit = "/min";
+        private string parameterUnit = "";
 
         public string ParameterUnit
         {
@@ -64,7 +66,7 @@ namespace PhysModelDeveloperGUI
             set { parameterUnit = value; OnPropertyChanged(); }
         }
 
-        private string graphTitle = "ecg";
+        private string graphTitle = "";
         public string GraphTitle
         {
             get { return graphTitle; }
@@ -132,7 +134,6 @@ namespace PhysModelDeveloperGUI
         public float GridYMax { get; set; } = 100;
         public float GridYStep { get; set; } = 10;
 
-        int arrayPosition = 0;
         public SKPaint GraphPaint1 { get; set; }
 
         SKPaint GridPaint1 { get; set; }
@@ -190,12 +191,14 @@ namespace PhysModelDeveloperGUI
             GridSurface = e.Surface;
             GridCanvas = GridSurface.Canvas;
 
+            GridCanvas.Clear(SKColors.Black);
+
             if (GridYEnabled)
             {
                 // draw y grid lines
                 pixelsPerUnitY = graphGrid.CanvasSize.Height / (GridYMax - GridYMin);
                 float stepSizeY = GridYStep;
-
+        
                 for (float y = 0; y <= graphGrid.CanvasSize.Height; y += (stepSizeY * pixelsPerUnitY))
                 {
                     GridCanvas.DrawLine(0, y, graphGrid.CanvasSize.Width, y, GridPaint1);
@@ -216,7 +219,7 @@ namespace PhysModelDeveloperGUI
                 
             }
 
-            refresh = true;
+            if (!AutoScale) refresh = true;
 
 
         }
@@ -291,6 +294,10 @@ namespace PhysModelDeveloperGUI
                     maxSample = -100000000;
                     minSample = 100000000;
                     sampleCounter = 0;
+
+                    GridYStep = (GridYMax - GridYMin) / AutoScalingGridLines;
+
+                    DrawGrid();
 
                 }
                 sampleCounter++;

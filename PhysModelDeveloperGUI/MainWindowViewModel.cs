@@ -152,6 +152,7 @@ namespace PhysModelDeveloperGUI
             MyoVisible = false;
 
         }
+
         bool _fetusVisible = false;
         public bool FetusVisible
         {
@@ -3098,26 +3099,28 @@ namespace PhysModelDeveloperGUI
         {
             if (FlowGraphVisible && FlowGraph != null && selectedConnector != null)
             {
-                //FlowGraph.WriteBuffer(selectedConnector.CurrentFlow);
-                FlowGraph.WriteArrayToBuffer(currentModel.analyzer.flows);
+                FlowGraph.WriteBuffer(selectedConnector.RealFlow);
+                //FlowGraph.WriteArrayToBuffer(currentModel.analyzer.flows);
             }
         }
         public void InitFlowGraph(FastScrollingGraph p)
         {
             FlowGraph = p;
 
-            FlowGraph.GraphTitle = "ecg";
+            FlowGraph.GraphTitle = "none selected";
             FlowGraph.GraphWidth = 2;
             FlowGraph.ParameterTitle = "";
             FlowGraph.ParameterUnit = "";
-            FlowGraph.PointMode1 = SKPointMode.Points;
+            FlowGraph.PointMode1 = SKPointMode.Polygon;
             FlowGraph.GraphTitleColor = new SolidColorBrush(Colors.White);
-            FlowGraph.GraphPaint1.StrokeWidth = 1;
+            FlowGraph.GraphPaint1.StrokeWidth = 2;
             FlowGraph.GraphPaint1.Color = SKColors.White;
-            FlowGraph.xStepSize = 0.1f;
+            FlowGraph.xStepSize = 2f;
             FlowGraph.AutoScale = true;
             FlowGraph.FontSizeValue = 14;
             FlowGraph.FontSizeTitle = 10;
+            FlowGraph.GridXEnabled = false;
+            FlowGraph.GridYEnabled = true;
 
         }
         public void InitPVLoop(LoopGraph p)
