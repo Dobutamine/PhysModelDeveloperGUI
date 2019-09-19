@@ -137,6 +137,9 @@ namespace PhysModelDeveloperGUI
         public RelayCommand IncreaseWidthCommand { get; set; }
         public RelayCommand DecreaseWidthCommand { get; set; }
         public RelayCommand AddDrugEffectCommand { get; set; }
+
+        public RelayCommand SwitchToPaulCommand { get; set; }
+
         
 
         public void ResetDisplay(object p)
@@ -401,7 +404,7 @@ namespace PhysModelDeveloperGUI
             screeny = _screeny;
             dpi = _dpi_scale;
 
-            currentModel.Initialize();
+            currentModel.InitializePaul();
             currentModel.modelInterface.PropertyChanged += ModelInterface_PropertyChanged;
             currentModel.Start();
 
@@ -439,9 +442,28 @@ namespace PhysModelDeveloperGUI
             ResetDisplayCommand = new RelayCommand(ResetDisplay);
             StopCommand = new RelayCommand(StopSimulation);
             AddDrugEffectCommand = new RelayCommand(AddDrugEffect);
+            SwitchToPaulCommand = new RelayCommand(SwitchToPaul);
 
         }
+        void SwitchToPaul(object p)
+        {
+            ResetDisplay(true);
 
+            selectedBloodCompartment = null;
+            selectedConnector = null;
+            selectedContainer = null;
+            selectedGasCompartment = null;
+            selectedGex = null;
+
+            currentModel.Stop();
+            // Open document
+            currentModel.InitializePaul();
+            currentModel.Start();
+            ConstructComponentLists();
+            BuildModelDiagram();
+
+            ModelName = currentModel.modelState.Name;
+        }
         void AddDrugEffect(object p)
         {
             // add drug effect to the current selected drug
