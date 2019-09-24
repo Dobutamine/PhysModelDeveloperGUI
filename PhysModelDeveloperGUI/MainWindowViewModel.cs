@@ -367,7 +367,7 @@ namespace PhysModelDeveloperGUI
         GasCompartment selectedGasCompartment { get; set; }
         Connector selectedConnector { get; set; }
         GasExchangeBlock selectedGex { get; set; }
-        DiffusionBlock selectedDif { get; set; }
+        DiffusionBlockBlood selectedDif { get; set; }
         ContainerCompartment selectedContainer { get; set; }
 
         bool PauseState = false;
@@ -404,7 +404,7 @@ namespace PhysModelDeveloperGUI
             screeny = _screeny;
             dpi = _dpi_scale;
 
-            currentModel.InitializePaul();
+            currentModel.Initialize();
             currentModel.modelInterface.PropertyChanged += ModelInterface_PropertyChanged;
             currentModel.Start();
 
@@ -427,7 +427,7 @@ namespace PhysModelDeveloperGUI
             ChangeGasCompartmentCommand = new RelayCommand(ChangeSelectedGasCompartment);
             ChangeConnectorCommand = new RelayCommand(ChangeSelectedConnector);
             ChangeGexUnitCommand = new RelayCommand(ChangeSelectedGex);
-            ChangeDifUnitCommand = new RelayCommand(ChangeSelectedDif);
+            ChangeDifUnitCommand = new RelayCommand(ChangeSelectedDifBlood);
             ChangeContainerCommand = new RelayCommand(ChangeSelectedContainer);
             SaveModelStateCommand = new RelayCommand(SaveModelState);
             LoadModelStateCommand = new RelayCommand(LoadModelState);
@@ -597,7 +597,7 @@ namespace PhysModelDeveloperGUI
             {
                 gasexchangeUnits.Add(c);
             }
-            foreach (DiffusionBlock c in currentModel.modelState.diffusionBlocks)
+            foreach (DiffusionBlockBlood c in currentModel.modelState.diffusionBlocksBlood)
             {
                 diffusionUnits.Add(c);
             }
@@ -700,6 +700,9 @@ namespace PhysModelDeveloperGUI
             if (TrendVitalsVisible) TrendGraph.DrawData();
             if (trendBloodgasVisible) BloodgasGraph.DrawData();
             if (FlowGraphVisible) FlowGraph.Draw();
+
+
+            
 
             if (slowUpdater > 1000)
             {
@@ -816,8 +819,65 @@ namespace PhysModelDeveloperGUI
                 UpdateBloodgasGraph();
 
                 if (PVLoopVisible) GraphPVLoop.Draw();
+
+                Console.WriteLine(currentModel.modelState.MYO.Lact);
+
             }
 
+            //string report = "";
+
+            //report += "glucose        : " + currentModel.modelState.LB.glucose + Environment.NewLine;
+            //report += "o2             : " + currentModel.modelState.LB.o2 + Environment.NewLine;      
+            //report += "pyruvate       : " + currentModel.modelState.LB.pyruvate + Environment.NewLine;
+            //report += "lactate        : " + currentModel.modelState.LB.lactate + Environment.NewLine;
+            //report += "acetylCoA      : " + currentModel.modelState.LB.acetylCoA +  Environment.NewLine;
+            //report += "oxaloacetic    : " + currentModel.modelState.LB.oxaloacetic + Environment.NewLine;
+            //report += "citricAcid     : " + currentModel.modelState.LB.citricAcid + Environment.NewLine;
+            //report += "isocitrate     : " + currentModel.modelState.LB.isocitrate + Environment.NewLine;
+            //report += "ketoglutarate  : " + currentModel.modelState.LB.ketoglutarate + Environment.NewLine;
+            //report += "succinylCoA    : " + currentModel.modelState.LB.succinylCoA + Environment.NewLine;
+            //report += "succinate      : " + currentModel.modelState.LB.succinate + Environment.NewLine;
+            //report += "fumarate       : " + currentModel.modelState.LB.fumarate + Environment.NewLine;
+            //report += "malate         : " + currentModel.modelState.LB.malate + Environment.NewLine;        
+            //report += "nad            : " + currentModel.modelState.LB.NAD_plus + Environment.NewLine;
+            //report += "nadh           : " + currentModel.modelState.LB.NADH + Environment.NewLine;
+            //report += "adp            : " + currentModel.modelState.LB.ADP_Exp + Environment.NewLine;
+            //report += "atp            : " + currentModel.modelState.LB.ATP + Environment.NewLine;
+            //report += "atp_by_o2       : " + currentModel.modelState.LB.ATP_produced_by_O2 + Environment.NewLine;
+            //report += "atp_by_glyco   : " + currentModel.modelState.LB.ATP_produced_glyco + Environment.NewLine;
+            //report += "fad            : " + currentModel.modelState.LB.FAD_Exp + Environment.NewLine;
+            //report += "fadh2          : " + currentModel.modelState.LB.FADH2 + Environment.NewLine;
+
+            //string report2 = "";
+            //report2 += "A    : " + currentModel.modelState.LB.AZ + Environment.NewLine;
+            //report2 += "B    : " + currentModel.modelState.LB.BZ + Environment.NewLine;
+            //report2 += "C    : " + currentModel.modelState.LB.CZ + Environment.NewLine;
+            //report2 += "D    : " + currentModel.modelState.LB.DZ + Environment.NewLine;
+            //double total = (currentModel.modelState.LB.AZ + currentModel.modelState.LB.BZ + currentModel.modelState.LB.CZ + currentModel.modelState.LB.DZ);
+            //report2 += "Total: " + total + Environment.NewLine;
+
+            string report3 = "";
+            report3 += "adp                 : " + currentModel.modelState.LB.ADP_exp + Environment.NewLine;
+            report3 += "atp                 : " + currentModel.modelState.LB.ATP_exp + Environment.NewLine;
+            report3 += "nad                 : " + currentModel.modelState.LB.NAD_exp + Environment.NewLine;
+            report3 += "nadh                : " + currentModel.modelState.LB.NADH_exp + Environment.NewLine;
+            report3 += "fad                 : " + currentModel.modelState.LB.FAD_exp + Environment.NewLine;
+            report3 += "fadh2               : " + currentModel.modelState.LB.FADH2_exp + Environment.NewLine;
+            report3 += "glucose             : " + currentModel.modelState.LB.glucose + Environment.NewLine;
+            report3 += "pyruvate            : " + currentModel.modelState.LB.pyruvate + Environment.NewLine;
+            report3 += "lactate             : " + currentModel.modelState.LB.lactate + Environment.NewLine;
+            report3 += "acetylCoa           : " + currentModel.modelState.LB.acetylCoA + Environment.NewLine;
+            report3 += "citrate             : " + currentModel.modelState.LB.citricAcid + Environment.NewLine;
+            report3 += "isocitrate          : " + currentModel.modelState.LB.isocitrate + Environment.NewLine;
+            report3 += "ketoglutarate       : " + currentModel.modelState.LB.ketoglutarate + Environment.NewLine;
+            report3 += "succinylCoA         : " + currentModel.modelState.LB.succinylCoA + Environment.NewLine;
+            report3 += "succinate           : " + currentModel.modelState.LB.succinate + Environment.NewLine;
+            report3 += "fumarate            : " + currentModel.modelState.LB.fumarate + Environment.NewLine;
+            report3 += "malate              : " + currentModel.modelState.LB.malate + Environment.NewLine;
+            report3 += "oxaloacetic         : " + currentModel.modelState.LB.oxaloacetic + Environment.NewLine;
+            Console.WriteLine(report3);
+            Console.WriteLine("");
+           
             slowUpdater += graphicsRefreshInterval;
         }
         private void ModelInterface_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -3138,7 +3198,7 @@ namespace PhysModelDeveloperGUI
         public ObservableCollection<ContainerCompartment> containers { get; set; } = new ObservableCollection<ContainerCompartment>();
         public ObservableCollection<Compartment> containedCompartments { get; set; } = new ObservableCollection<Compartment>();
         public ObservableCollection<GasExchangeBlock> gasexchangeUnits { get; set; } = new ObservableCollection<GasExchangeBlock>();
-        public ObservableCollection<DiffusionBlock> diffusionUnits { get; set; } = new ObservableCollection<DiffusionBlock>();
+        public ObservableCollection<DiffusionBlockBlood> diffusionUnits { get; set; } = new ObservableCollection<DiffusionBlockBlood>();
         public ObservableCollection<string> rhythmTypes { get; set; } = new ObservableCollection<string>();
         #endregion
 
@@ -3256,8 +3316,16 @@ namespace PhysModelDeveloperGUI
 
             BloodgasGraph.InitGraph(300, 400);
             BloodgasGraph.GridXStep = 60;
-            BloodgasGraph.GridYStep = 1;
-            BloodgasGraph.MaxY = 15;
+            BloodgasGraph.GridYStep = 2;
+            BloodgasGraph.MaxY = 20;
+            BloodgasGraph.MinY = -10;
+            BloodgasGraph.Series1Legend = "pH";
+            BloodgasGraph.Series2Legend = "pCO2";
+            BloodgasGraph.Series3Legend = "pO2";
+            BloodgasGraph.Series4Legend = "BE";
+            BloodgasGraph.Series4Color = new SolidColorBrush(Colors.Blue);
+            BloodgasGraph.Series5Legend = "Lactate";
+
             BloodgasGraph.ShowXLabels = true;
             BloodgasGraph.ShowYLabels = true;
 
@@ -4074,9 +4142,9 @@ namespace PhysModelDeveloperGUI
                 IsEnabledGex = selectedGex.IsEnabled;
             }
         }
-        void ChangeSelectedDif(object p)
+        void ChangeSelectedDifBlood(object p)
         {
-            selectedDif = (DiffusionBlock)p;
+            selectedDif = (DiffusionBlockBlood)p;
             if (selectedDif != null)
             {
                 CompBlood1Dif = selectedDif.CompBlood1.Description;
