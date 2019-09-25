@@ -820,60 +820,22 @@ namespace PhysModelDeveloperGUI
 
                 if (PVLoopVisible) GraphPVLoop.Draw();
 
-                Console.WriteLine(currentModel.modelState.MYO.Lact);
-
             }
 
-            //string report = "";
-
-            //report += "glucose        : " + currentModel.modelState.LB.glucose + Environment.NewLine;
-            //report += "o2             : " + currentModel.modelState.LB.o2 + Environment.NewLine;      
-            //report += "pyruvate       : " + currentModel.modelState.LB.pyruvate + Environment.NewLine;
-            //report += "lactate        : " + currentModel.modelState.LB.lactate + Environment.NewLine;
-            //report += "acetylCoA      : " + currentModel.modelState.LB.acetylCoA +  Environment.NewLine;
-            //report += "oxaloacetic    : " + currentModel.modelState.LB.oxaloacetic + Environment.NewLine;
-            //report += "citricAcid     : " + currentModel.modelState.LB.citricAcid + Environment.NewLine;
-            //report += "isocitrate     : " + currentModel.modelState.LB.isocitrate + Environment.NewLine;
-            //report += "ketoglutarate  : " + currentModel.modelState.LB.ketoglutarate + Environment.NewLine;
-            //report += "succinylCoA    : " + currentModel.modelState.LB.succinylCoA + Environment.NewLine;
-            //report += "succinate      : " + currentModel.modelState.LB.succinate + Environment.NewLine;
-            //report += "fumarate       : " + currentModel.modelState.LB.fumarate + Environment.NewLine;
-            //report += "malate         : " + currentModel.modelState.LB.malate + Environment.NewLine;        
-            //report += "nad            : " + currentModel.modelState.LB.NAD_plus + Environment.NewLine;
-            //report += "nadh           : " + currentModel.modelState.LB.NADH + Environment.NewLine;
-            //report += "adp            : " + currentModel.modelState.LB.ADP_Exp + Environment.NewLine;
-            //report += "atp            : " + currentModel.modelState.LB.ATP + Environment.NewLine;
-            //report += "atp_by_o2       : " + currentModel.modelState.LB.ATP_produced_by_O2 + Environment.NewLine;
-            //report += "atp_by_glyco   : " + currentModel.modelState.LB.ATP_produced_glyco + Environment.NewLine;
-            //report += "fad            : " + currentModel.modelState.LB.FAD_Exp + Environment.NewLine;
-            //report += "fadh2          : " + currentModel.modelState.LB.FADH2 + Environment.NewLine;
-
-            //string report2 = "";
-            //report2 += "A    : " + currentModel.modelState.LB.AZ + Environment.NewLine;
-            //report2 += "B    : " + currentModel.modelState.LB.BZ + Environment.NewLine;
-            //report2 += "C    : " + currentModel.modelState.LB.CZ + Environment.NewLine;
-            //report2 += "D    : " + currentModel.modelState.LB.DZ + Environment.NewLine;
-            //double total = (currentModel.modelState.LB.AZ + currentModel.modelState.LB.BZ + currentModel.modelState.LB.CZ + currentModel.modelState.LB.DZ);
-            //report2 += "Total: " + total + Environment.NewLine;
-
             string report3 = "";
+            report3 += "atp demand          : " + currentModel.modelState.LB.ATP_demand + Environment.NewLine;
+            report3 += "o2 available        : " + currentModel.modelState.LB.O2_available + Environment.NewLine;
             report3 += "adp                 : " + currentModel.modelState.LB.ADP_energy + Environment.NewLine;
             report3 += "atp                 : " + currentModel.modelState.LB.ATP_energy + Environment.NewLine;
             report3 += "nad                 : " + currentModel.modelState.LB.NAD_exp + Environment.NewLine;
             report3 += "nadh                : " + currentModel.modelState.LB.NADH_exp + Environment.NewLine;
             report3 += "fad                 : " + currentModel.modelState.LB.FAD_exp + Environment.NewLine;
             report3 += "fadh2               : " + currentModel.modelState.LB.FADH2_exp + Environment.NewLine;
+            report3 += "o2                  : " + currentModel.modelState.LB.o2 + Environment.NewLine;
             report3 += "glucose             : " + currentModel.modelState.LB.glucose + Environment.NewLine;
             report3 += "pyruvate            : " + currentModel.modelState.LB.pyruvate + Environment.NewLine;
             report3 += "lactate             : " + currentModel.modelState.LB.lactate + Environment.NewLine;
             report3 += "acetylCoa           : " + currentModel.modelState.LB.acetylCoA + Environment.NewLine;
-            report3 += "citrate             : " + currentModel.modelState.LB.citricAcid + Environment.NewLine;
-            report3 += "isocitrate          : " + currentModel.modelState.LB.isocitrate + Environment.NewLine;
-            report3 += "ketoglutarate       : " + currentModel.modelState.LB.ketoglutarate + Environment.NewLine;
-            report3 += "succinylCoA         : " + currentModel.modelState.LB.succinylCoA + Environment.NewLine;
-            report3 += "succinate           : " + currentModel.modelState.LB.succinate + Environment.NewLine;
-            report3 += "fumarate            : " + currentModel.modelState.LB.fumarate + Environment.NewLine;
-            report3 += "malate              : " + currentModel.modelState.LB.malate + Environment.NewLine;
             report3 += "oxaloacetic         : " + currentModel.modelState.LB.oxaloacetic + Environment.NewLine;
 
             double mass_balance =   currentModel.modelState.LB.citricAcid + currentModel.modelState.LB.isocitrate +
