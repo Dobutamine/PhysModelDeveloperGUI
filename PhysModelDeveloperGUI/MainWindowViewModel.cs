@@ -857,8 +857,8 @@ namespace PhysModelDeveloperGUI
             //report2 += "Total: " + total + Environment.NewLine;
 
             string report3 = "";
-            report3 += "adp                 : " + currentModel.modelState.LB.ADP_exp + Environment.NewLine;
-            report3 += "atp                 : " + currentModel.modelState.LB.ATP_exp + Environment.NewLine;
+            report3 += "adp                 : " + currentModel.modelState.LB.ADP_energy + Environment.NewLine;
+            report3 += "atp                 : " + currentModel.modelState.LB.ATP_energy + Environment.NewLine;
             report3 += "nad                 : " + currentModel.modelState.LB.NAD_exp + Environment.NewLine;
             report3 += "nadh                : " + currentModel.modelState.LB.NADH_exp + Environment.NewLine;
             report3 += "fad                 : " + currentModel.modelState.LB.FAD_exp + Environment.NewLine;
@@ -875,6 +875,12 @@ namespace PhysModelDeveloperGUI
             report3 += "fumarate            : " + currentModel.modelState.LB.fumarate + Environment.NewLine;
             report3 += "malate              : " + currentModel.modelState.LB.malate + Environment.NewLine;
             report3 += "oxaloacetic         : " + currentModel.modelState.LB.oxaloacetic + Environment.NewLine;
+
+            double mass_balance =   currentModel.modelState.LB.citricAcid + currentModel.modelState.LB.isocitrate +
+                                    currentModel.modelState.LB.ketoglutarate + currentModel.modelState.LB.succinylCoA + currentModel.modelState.LB.succinate +
+                                    currentModel.modelState.LB.fumarate + currentModel.modelState.LB.malate + currentModel.modelState.LB.oxaloacetic;
+            report3 += "mass balance        : " + mass_balance + Environment.NewLine;
+
             Console.WriteLine(report3);
             Console.WriteLine("");
            
