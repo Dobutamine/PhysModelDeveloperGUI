@@ -3285,14 +3285,14 @@ namespace PhysModelDeveloperGUI
             BloodgasGraph.InitGraph(300, 400);
             BloodgasGraph.GridXStep = 60;
             BloodgasGraph.GridYStep = 2;
-            BloodgasGraph.MaxY = 20;
-            BloodgasGraph.MinY = -10;
-            BloodgasGraph.Series1Legend = "pH";
-            BloodgasGraph.Series2Legend = "pCO2";
-            BloodgasGraph.Series3Legend = "pO2";
-            BloodgasGraph.Series4Legend = "BE";
+            BloodgasGraph.MaxY = 35;
+            BloodgasGraph.MinY = 0;
+            BloodgasGraph.Series1Legend = "ATP";
+            BloodgasGraph.Series2Legend = "ADP";
+            BloodgasGraph.Series3Legend = "NADH";
+            BloodgasGraph.Series4Legend = "NAD";
             BloodgasGraph.Series4Color = new SolidColorBrush(Colors.Blue);
-            BloodgasGraph.Series5Legend = "Lactate";
+            BloodgasGraph.Series5Legend = "Gluc";
 
             BloodgasGraph.ShowXLabels = true;
             BloodgasGraph.ShowYLabels = true;
@@ -3317,7 +3317,7 @@ namespace PhysModelDeveloperGUI
             if (BloodgasGraph != null)
             {
 
-                BloodgasGraph.UpdateData(currentModel.modelInterface.ArterialPH, currentModel.modelInterface.ArterialPCO2, currentModel.modelInterface.ArterialPO2, currentModel.modelInterface.ArterialBE, currentModel.modelInterface.ArterialLactate);
+                BloodgasGraph.UpdateData(currentModel.modelState.LB.ATP_energy, currentModel.modelState.LB.ADP_energy, currentModel.modelState.LB.NADH_exp, currentModel.modelState.LB.NAD_exp, currentModel.modelState.LB.glucose);
 
             }
         }
