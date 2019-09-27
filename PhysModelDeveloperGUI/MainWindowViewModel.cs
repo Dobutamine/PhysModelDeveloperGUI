@@ -115,6 +115,7 @@ namespace PhysModelDeveloperGUI
         TimeBasedGraph TrendGraph { get; set; }
         TimeBasedGraph BloodgasGraph { get; set; }
 
+        public RelayCommand ToggleAutoPulseCommand { get; set; }
         public RelayCommand ChangeDrugEffectCommand { get; set; }
         public RelayCommand ChangeDrugCommand { get; set; }
         public RelayCommand ChangeBloodCompartmentCommand { get; set; }
@@ -138,6 +139,7 @@ namespace PhysModelDeveloperGUI
         public RelayCommand DecreaseWidthCommand { get; set; }
         public RelayCommand AddDrugEffectCommand { get; set; }
 
+        public RelayCommand StopCardiacOutputCommand { get; set; }
         public RelayCommand SwitchToPaulCommand { get; set; }
 
         
@@ -443,7 +445,32 @@ namespace PhysModelDeveloperGUI
             StopCommand = new RelayCommand(StopSimulation);
             AddDrugEffectCommand = new RelayCommand(AddDrugEffect);
             SwitchToPaulCommand = new RelayCommand(SwitchToPaul);
+            StopCardiacOutputCommand = new RelayCommand(StopCardiacOutput);
+            ToggleAutoPulseCommand = new RelayCommand(AutoPulse);
 
+        }
+        void AutoPulse(object p)
+        {
+            if ((bool)p)
+            {
+                currentModel.modelInterface.StartAutoPulse(120);
+
+            }
+            else
+            {
+                currentModel.modelInterface.StopAutoPulse();
+            }
+        }
+        void StopCardiacOutput(object p)
+        {
+            if ((bool) p)
+            {
+                currentModel.modelInterface.StopHeartOutput();
+
+            } else
+            {
+                currentModel.modelInterface.RestartHeartOutput();
+            }
         }
         void SwitchToPaul(object p)
         {
