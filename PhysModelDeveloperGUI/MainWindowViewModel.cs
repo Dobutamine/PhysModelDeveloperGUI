@@ -29,7 +29,7 @@ namespace PhysModelDeveloperGUI
         int slowUpdater = 0;
         int graphicsRefreshInterval = 15;
 
-        private bool diagramVisible = true;
+        private bool diagramVisible = false;
 
         public bool DiagramVisible
         {
@@ -62,7 +62,7 @@ namespace PhysModelDeveloperGUI
             set { trendVitalsVisible = value; OnPropertyChanged(); }
         }
 
-        private bool trendBloodgasVisible;
+        private bool trendBloodgasVisible = true;
 
         public bool TrendBloodgasVisible
         {
@@ -851,13 +851,16 @@ namespace PhysModelDeveloperGUI
 
             string report3 = "";
             report3 += "atp demand          : " + currentModel.modelState.LB.ATP_demand + Environment.NewLine;
-            report3 += "o2 available        : " + currentModel.modelState.LB.O2_available + Environment.NewLine;
-            report3 += "adp                 : " + currentModel.modelState.LB.ADP_energy + Environment.NewLine;
-            report3 += "atp                 : " + currentModel.modelState.LB.ATP_energy + Environment.NewLine;
-            report3 += "nad                 : " + currentModel.modelState.LB.NAD_exp + Environment.NewLine;
-            report3 += "nadh                : " + currentModel.modelState.LB.NADH_exp + Environment.NewLine;
-            report3 += "fad                 : " + currentModel.modelState.LB.FAD_exp + Environment.NewLine;
-            report3 += "fadh2               : " + currentModel.modelState.LB.FADH2_exp + Environment.NewLine;
+            report3 += "atp production      : " + currentModel.modelState.LB.ATP_production + Environment.NewLine;
+            report3 += "atp concentration   : " + currentModel.modelState.LB.ATP_concentration + Environment.NewLine;      
+            report3 += "atp glyco           : " + currentModel.modelState.LB.ATP_generated_glyco + Environment.NewLine;
+            report3 += "atp krebs           : " + currentModel.modelState.LB.ATP_generated_krebs + Environment.NewLine;
+            report3 += "atp oxy             : " + currentModel.modelState.LB.ATP_generated_oxy + Environment.NewLine;
+            report3 += "nadh concentration  : " + currentModel.modelState.LB.NADH_concentration + Environment.NewLine;
+            report3 += "nadh production     : " + currentModel.modelState.LB.NADH_production + Environment.NewLine;
+            report3 += "nadh glyco          : " + currentModel.modelState.LB.NADH_generated_glyco + Environment.NewLine;
+            report3 += "nadh krebs          : " + currentModel.modelState.LB.NADH_generated_krebs + Environment.NewLine;
+            report3 += "nadh oxy            : " + currentModel.modelState.LB.NADH_generated_oxy + Environment.NewLine;
             report3 += "o2                  : " + currentModel.modelState.LB.o2 + Environment.NewLine;
             report3 += "glucose             : " + currentModel.modelState.LB.glucose + Environment.NewLine;
             report3 += "pyruvate            : " + currentModel.modelState.LB.pyruvate + Environment.NewLine;
@@ -3312,14 +3315,15 @@ namespace PhysModelDeveloperGUI
             BloodgasGraph.InitGraph(300, 400);
             BloodgasGraph.GridXStep = 60;
             BloodgasGraph.GridYStep = 2;
-            BloodgasGraph.MaxY = 35;
+            BloodgasGraph.MaxY = 40;
             BloodgasGraph.MinY = 0;
             BloodgasGraph.Series1Legend = "ATP";
-            BloodgasGraph.Series2Legend = "ADP";
-            BloodgasGraph.Series3Legend = "NADH";
-            BloodgasGraph.Series4Legend = "NAD";
+            BloodgasGraph.Series2Legend = "NADH";
+            BloodgasGraph.Series3Legend = "Gluc";
+            BloodgasGraph.Series4Legend = "o2";
             BloodgasGraph.Series4Color = new SolidColorBrush(Colors.Blue);
-            BloodgasGraph.Series5Legend = "Gluc";
+            BloodgasGraph.Series5Legend = "Lactate";
+
 
             BloodgasGraph.ShowXLabels = true;
             BloodgasGraph.ShowYLabels = true;
@@ -3344,7 +3348,7 @@ namespace PhysModelDeveloperGUI
             if (BloodgasGraph != null)
             {
 
-                BloodgasGraph.UpdateData(currentModel.modelState.LB.ATP_energy, currentModel.modelState.LB.ADP_energy, currentModel.modelState.LB.NADH_exp, currentModel.modelState.LB.NAD_exp, currentModel.modelState.LB.glucose);
+                BloodgasGraph.UpdateData(currentModel.modelState.LB.ATP_concentration, currentModel.modelState.LB.NADH_concentration, currentModel.modelState.LB.glucose, currentModel.modelState.LB.o2, currentModel.modelState.LB.lactate);
 
             }
         }
