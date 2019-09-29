@@ -861,7 +861,9 @@ namespace PhysModelDeveloperGUI
             report3 += "nadh glyco          : " + currentModel.modelState.LB.NADH_generated_glyco + Environment.NewLine;
             report3 += "nadh krebs          : " + currentModel.modelState.LB.NADH_generated_krebs + Environment.NewLine;
             report3 += "nadh oxy            : " + currentModel.modelState.LB.NADH_generated_oxy + Environment.NewLine;
-            report3 += "o2                  : " + currentModel.modelState.LB.o2 + Environment.NewLine;
+            report3 += "o2 concentration    : " + currentModel.modelState.LB.o2_concentration + Environment.NewLine;
+            report3 += "o2 LB use           : " + currentModel.modelState.LB.o2_use + Environment.NewLine;
+            report3 += "o2 BRAIN use        : " + currentModel.modelState.BRAIN.o2_use + Environment.NewLine;
             report3 += "glucose             : " + currentModel.modelState.LB.glucose + Environment.NewLine;
             report3 += "pyruvate            : " + currentModel.modelState.LB.pyruvate + Environment.NewLine;
             report3 += "lactate             : " + currentModel.modelState.LB.lactate + Environment.NewLine;
@@ -3348,7 +3350,7 @@ namespace PhysModelDeveloperGUI
             if (BloodgasGraph != null)
             {
 
-                BloodgasGraph.UpdateData(currentModel.modelState.LB.ATP_concentration, currentModel.modelState.LB.NADH_concentration, currentModel.modelState.LB.glucose, currentModel.modelState.LB.o2, currentModel.modelState.LB.lactate);
+                BloodgasGraph.UpdateData(currentModel.modelState.LB.ATP_concentration, currentModel.modelState.LB.NADH_concentration, currentModel.modelState.LB.glucose, currentModel.modelState.LB.o2_concentration, currentModel.modelState.LB.lactate);
 
             }
         }
