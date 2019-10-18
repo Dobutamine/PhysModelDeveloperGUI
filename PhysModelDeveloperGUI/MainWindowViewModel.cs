@@ -733,6 +733,8 @@ namespace PhysModelDeveloperGUI
 
             if (slowUpdater > 1000)
             {
+                Console.WriteLine(currentModel.modelState.AD.TCO2);
+
                 slowUpdater = 0;
                 if (currentModel.modelState.Name != ModelName) ModelName = currentModel.modelState.Name;
 
@@ -848,35 +850,6 @@ namespace PhysModelDeveloperGUI
                 if (PVLoopVisible) GraphPVLoop.Draw();
 
             }
-
-            string report3 = "";
-            report3 += "atp demand          : " + currentModel.modelState.LB.ATP_demand + Environment.NewLine;
-            report3 += "atp production      : " + currentModel.modelState.LB.ATP_production + Environment.NewLine;
-            report3 += "atp concentration   : " + currentModel.modelState.LB.ATP_concentration + Environment.NewLine;      
-            report3 += "atp glyco           : " + currentModel.modelState.LB.ATP_generated_glyco + Environment.NewLine;
-            report3 += "atp krebs           : " + currentModel.modelState.LB.ATP_generated_krebs + Environment.NewLine;
-            report3 += "atp oxy             : " + currentModel.modelState.LB.ATP_generated_oxy + Environment.NewLine;
-            report3 += "nadh concentration  : " + currentModel.modelState.LB.NADH_concentration + Environment.NewLine;
-            report3 += "nadh production     : " + currentModel.modelState.LB.NADH_production + Environment.NewLine;
-            report3 += "nadh glyco          : " + currentModel.modelState.LB.NADH_generated_glyco + Environment.NewLine;
-            report3 += "nadh krebs          : " + currentModel.modelState.LB.NADH_generated_krebs + Environment.NewLine;
-            report3 += "nadh oxy            : " + currentModel.modelState.LB.NADH_generated_oxy + Environment.NewLine;
-            report3 += "o2 concentration    : " + currentModel.modelState.LB.o2_concentration + Environment.NewLine;
-            report3 += "o2 LB use           : " + currentModel.modelState.LB.o2_use + Environment.NewLine;
-            report3 += "o2 BRAIN use        : " + currentModel.modelState.BRAIN.o2_use + Environment.NewLine;
-            report3 += "glucose             : " + currentModel.modelState.LB.glucose + Environment.NewLine;
-            report3 += "pyruvate            : " + currentModel.modelState.LB.pyruvate + Environment.NewLine;
-            report3 += "lactate             : " + currentModel.modelState.LB.lactate + Environment.NewLine;
-            report3 += "acetylCoa           : " + currentModel.modelState.LB.acetylCoA + Environment.NewLine;
-            report3 += "oxaloacetic         : " + currentModel.modelState.LB.oxaloacetic + Environment.NewLine;
-
-            double mass_balance =   currentModel.modelState.LB.citricAcid + currentModel.modelState.LB.isocitrate +
-                                    currentModel.modelState.LB.ketoglutarate + currentModel.modelState.LB.succinylCoA + currentModel.modelState.LB.succinate +
-                                    currentModel.modelState.LB.fumarate + currentModel.modelState.LB.malate + currentModel.modelState.LB.oxaloacetic;
-            report3 += "mass balance        : " + mass_balance + Environment.NewLine;
-
-            Console.WriteLine(report3);
-            Console.WriteLine("");
            
             slowUpdater += graphicsRefreshInterval;
         }
