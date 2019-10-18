@@ -62,7 +62,7 @@ namespace PhysModelDeveloperGUI
             set { trendVitalsVisible = value; OnPropertyChanged(); }
         }
 
-        private bool trendBloodgasVisible = true;
+        private bool trendBloodgasVisible = false;
 
         public bool TrendBloodgasVisible
         {
@@ -406,7 +406,7 @@ namespace PhysModelDeveloperGUI
             screeny = _screeny;
             dpi = _dpi_scale;
 
-            currentModel.Initialize();
+            currentModel.InitializePaul();
             currentModel.modelInterface.PropertyChanged += ModelInterface_PropertyChanged;
             currentModel.Start();
 
@@ -728,12 +728,9 @@ namespace PhysModelDeveloperGUI
             if (trendBloodgasVisible) BloodgasGraph.DrawData();
             if (FlowGraphVisible) FlowGraph.Draw();
 
-
-            
-
             if (slowUpdater > 1000)
             {
-                Console.WriteLine(currentModel.modelState.AD.TCO2);
+              
 
                 slowUpdater = 0;
                 if (currentModel.modelState.Name != ModelName) ModelName = currentModel.modelState.Name;
