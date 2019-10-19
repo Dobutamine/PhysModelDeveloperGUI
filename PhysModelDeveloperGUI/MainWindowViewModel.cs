@@ -579,6 +579,7 @@ namespace PhysModelDeveloperGUI
         {
             App.Current.Shutdown();
         }
+
         void ConstructComponentLists()
         {
             // first clear the lists
