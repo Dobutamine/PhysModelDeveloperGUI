@@ -750,6 +750,7 @@ namespace PhysModelDeveloperGUI
 
                 if (AdditionalVisible)
                 {
+                    Resprate = currentModel.modelInterface.RespiratoryRate.ToString();
                     Lvo = currentModel.modelInterface.LeftVentricularOutput.ToString();
                     Rvo = currentModel.modelInterface.RightVentricularOutput.ToString();
                     Ivcflow = currentModel.modelInterface.InferiorVenaCavaFlow.ToString();
