@@ -54,7 +54,7 @@ namespace PhysModelDeveloperGUI
         }
 
 
-        private bool trendVitalsVisible;
+        private bool trendVitalsVisible = true;
 
         public bool TrendVitalsVisible
         {
@@ -793,6 +793,7 @@ namespace PhysModelDeveloperGUI
                     VenousSpo2 = currentModel.modelInterface.VenousSO2.ToString();
                     Po2alv = currentModel.modelInterface.AlveolarPO2;
                     Pco2alv = currentModel.modelInterface.AlveolarPCO2;
+                    WorkOfBreathing = currentModel.modelInterface.WorkOfBreathing.ToString();
                 }
 
                 if (LabVisible)
@@ -1037,6 +1038,8 @@ namespace PhysModelDeveloperGUI
         public string Po2alv { get { return _po2alv; } set { _po2alv = value; OnPropertyChanged(); } }
         string _pco2alv = "-";
         public string Pco2alv { get { return _pco2alv; } set { _pco2alv = value; OnPropertyChanged(); } }
+        string _workOfBreathing = "-";
+        public string WorkOfBreathing { get { return _workOfBreathing; } set { _workOfBreathing = value; OnPropertyChanged(); } }
 
         private string lactateAA;
 
@@ -1327,6 +1330,53 @@ namespace PhysModelDeveloperGUI
             }
         }
 
+        public double ThLungVolHp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.ThLungVolHp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.ThLungVolHp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double OpLungVolHp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.OpLungVolHp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.OpLungVolHp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double SaLungVolHp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.SaLungVolHp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.SaLungVolHp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
         public double GPHVE
         {
             get
@@ -1357,6 +1407,21 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
+        public double GLungVolHp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.GLungVolHp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.GLungVolHp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public double TcPHVE
         {
             get
@@ -1368,6 +1433,21 @@ namespace PhysModelDeveloperGUI
                 if (currentModel != null)
                 {
                     currentModel.modelState.TcPHVe = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double TcLungVolHp
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.TcLungVolHp : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.TcLungVolHp = value;
                     OnPropertyChanged();
                 }
             }
