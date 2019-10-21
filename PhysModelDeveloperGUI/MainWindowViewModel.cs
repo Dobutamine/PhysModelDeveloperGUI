@@ -29,6 +29,7 @@ namespace PhysModelDeveloperGUI
         int slowUpdater = 0;
         int graphicsRefreshInterval = 15;
 
+        #region "PANEL VISIBILITIES"
         private bool diagramVisible = false;
 
         public bool DiagramVisible
@@ -52,7 +53,6 @@ namespace PhysModelDeveloperGUI
             get { return flowGraphVisible; }
             set { flowGraphVisible = value; OnPropertyChanged(); }
         }
-
 
         private bool trendVitalsVisible = true;
 
@@ -105,16 +105,16 @@ namespace PhysModelDeveloperGUI
             get { return additionalVisible; }
             set { additionalVisible = value; OnPropertyChanged(); }
         }
+        #endregion
 
         PatientMonitor GraphPatientMonitor { get; set; }
         LoopGraph GraphPVLoop { get; set; }
         ModelDiagram GraphModelDiagram { get; set; }
         FastScrollingGraph FlowGraph { get; set; }
-
-
         TimeBasedGraph TrendGraph { get; set; }
         TimeBasedGraph BloodgasGraph { get; set; }
 
+        #region "COMMANDS"
         public RelayCommand ToggleAutoPulseCommand { get; set; }
         public RelayCommand ChangeDrugEffectCommand { get; set; }
         public RelayCommand ChangeDrugCommand { get; set; }
@@ -138,12 +138,11 @@ namespace PhysModelDeveloperGUI
         public RelayCommand IncreaseWidthCommand { get; set; }
         public RelayCommand DecreaseWidthCommand { get; set; }
         public RelayCommand AddDrugEffectCommand { get; set; }
-
         public RelayCommand StopCardiacOutputCommand { get; set; }
         public RelayCommand SwitchToPaulCommand { get; set; }
+        #endregion
 
-        
-
+        #region "DIAGRAM VISIBILITIES"
         public void ResetDisplay(object p)
         {
             OFOVisible = false;
@@ -189,7 +188,6 @@ namespace PhysModelDeveloperGUI
         }
 
         private bool myoVisible;
-
         public bool MyoVisible
         {
             get { return myoVisible; }
@@ -351,6 +349,7 @@ namespace PhysModelDeveloperGUI
                 OnPropertyChanged();
             }
         }
+        #endregion 
 
         private bool newDrugEffectVisible = false;
         public bool NewDrugEffectVisible
@@ -437,7 +436,6 @@ namespace PhysModelDeveloperGUI
             ExitCommand = new RelayCommand(ExitProgram);
             ChangeRhythmCommand = new RelayCommand(ChangeRhythm);
             AddDrugCommand = new RelayCommand(AddDrug);
-            RemoveBlood = new RelayCommand(RemoveBloodVolume);
             ChangeDrugCommand = new RelayCommand(ChangeSelectedDrug);
             ChangeDrugEffectCommand = new RelayCommand(ChangeSelectedDrugEffect);
             SwitchToFetusCommand = new RelayCommand(SwitchToFetus);
@@ -530,10 +528,6 @@ namespace PhysModelDeveloperGUI
             GraphModelDiagram.PulmonaryView(!state);
             GraphModelDiagram.PlacentaView(state);
         }
-        void RemoveBloodVolume(object p)
-        {
-
-        }
         void ChangeSelectedDrug(object p)
         {
             selectedDrug = (Drug)p;
@@ -579,7 +573,6 @@ namespace PhysModelDeveloperGUI
         {
             App.Current.Shutdown();
         }
-
         void ConstructComponentLists()
         {
             // first clear the lists
@@ -824,9 +817,7 @@ namespace PhysModelDeveloperGUI
                     Drug10Concentration = currentModel.modelInterface.Drug10Concentration;
                 }
 
-          
-                VATP = currentModel.modelState.VATP;
-
+         
                 if (MonitorVisible)
                 {
                     GraphPatientMonitor.UpdateParameters(currentModel.modelInterface.HeartRate.ToString(),
@@ -1106,6 +1097,8 @@ namespace PhysModelDeveloperGUI
 
         #endregion
 
+
+
         #region "independent model parameters setters"
         // autonomic nervous system model
         public double HrRef
@@ -1118,7 +1111,7 @@ namespace PhysModelDeveloperGUI
             {
                 if (currentModel != null)
                 {
-                    currentModel.modelState.HrRef = value;
+                    currentModel.modelInterface.AdjustReferenceHeartrate(value);
                     OnPropertyChanged();
                 }
             }
@@ -1133,7 +1126,7 @@ namespace PhysModelDeveloperGUI
             {
                 if (currentModel != null)
                 {
-                    currentModel.modelState.VERef = value;
+                    currentModel.modelInterface.AdjustReferenceVE(value);
                     OnPropertyChanged();
                 }
             }
@@ -1183,7 +1176,6 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
-
         public double ThPO2
         {
             get
@@ -1229,7 +1221,6 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
-
         public double ThPH
         {
             get
@@ -1275,7 +1266,6 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
-
         public double ThPCO2
         {
             get
@@ -1321,7 +1311,6 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
-
         public double ThLungVolHp
         {
             get
@@ -1367,8 +1356,6 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
-
-
         public double GPHVE
         {
             get
@@ -1459,7 +1446,6 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
-
         public double GPO2VE
         {
             get
@@ -1701,8 +1687,6 @@ namespace PhysModelDeveloperGUI
             }
         }
 
-
-
         // Breathing model
         public bool SpontaneousBreathing
         {
@@ -1729,7 +1713,7 @@ namespace PhysModelDeveloperGUI
             {
                 if (currentModel != null)
                 {
-                    currentModel.modelState.VERef = value;
+                    currentModel.modelInterface.AdjustReferenceVE(value);
                     OnPropertyChanged();
                 }
             }
@@ -2145,6 +2129,20 @@ namespace PhysModelDeveloperGUI
             }
         }
 
+        public double VATPChange
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.VATPChange : 0;
+            }
+            set
+            {
+                    currentModel.modelInterface.AdjustVATPChange(value);
+
+                    OnPropertyChanged();
+            }
+        }
+
         public double VATP
         {
             get
@@ -2153,12 +2151,9 @@ namespace PhysModelDeveloperGUI
             }
             set
             {
-                if (currentModel != null)
-                {
-                    //if (value > 0.01) currentModel.modelInterface.AdjustVATP(value);
+                currentModel.modelInterface.AdjustVATP(value);
 
-                    OnPropertyChanged();
-                }
+                OnPropertyChanged();
             }
         }
 
@@ -2351,13 +2346,13 @@ namespace PhysModelDeveloperGUI
         {
             get
             {
-                return currentModel != null ? currentModel.modelState.LactateClearanceRate / currentModel.modelState.ModelingStepsize : 0;
+                return currentModel != null ? currentModel.modelState.LactateClearanceRate : 0;
             }
             set
             {
                 if (currentModel.modelInterface != null)
                 {
-                    currentModel.modelState.LactateClearanceRate = value * currentModel.modelState.ModelingStepsize;
+                    currentModel.modelInterface.AdjustLactateClearanceRate(value);
                     OnPropertyChanged();
                 }
             }
@@ -2459,732 +2454,494 @@ namespace PhysModelDeveloperGUI
             }
         }
 
-        double _lungComplianceChange = 0;
+        //    AdjustBaroreflexSensitivity
+        public double BaroreflexSensitivity
+        {
+            get
+            {
+                return currentModel.modelState.BaroreflexGainFactorDrugs;
+            }
+            set
+            {
+                currentModel.modelInterface.AdjustBaroreflexSensitivity(value);
+
+                OnPropertyChanged();
+
+            }
+        }
+        public double RespiratoryMuscleForce
+        {
+            get
+            {
+                return currentModel.modelState.RespMuscleRelaxantFactor;
+            }
+            set
+            {
+                currentModel.modelInterface.AdjustRespiratoryMuscleForce(value);
+
+                OnPropertyChanged();
+
+            }
+        }
+        public double RespiratoryDrive
+        {
+            get
+            {
+                return currentModel.modelState.RespRateDepressionFactor;
+            }
+            set
+            {
+                currentModel.modelInterface.AdjustRespiratoryDrive(value);
+
+                OnPropertyChanged();
+
+            }
+        }
+        public double MyocardialPerfusionChange
+        {
+            get
+            {
+                return currentModel.modelState.MyocardialPerfusionFactor;
+            }
+            set
+            {
+                currentModel.modelInterface.AdjustMyocardialPerfusion(value);
+
+                OnPropertyChanged();
+
+            }
+        }
         public double LungComplianceChange
         {
             get
             {
-                return _lungComplianceChange;
+                return currentModel.modelState.LungComplianceFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-                    _lungComplianceChange = value;
+
                     currentModel.modelInterface.AdjustLungCompliance(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _lungComplianceChange = 0;
-                }
+
             }
         }
-
-        double _upperAirwayResistanceChange = 0;
         public double UpperAirwayResistanceChange
         {
             get
             {
-                return _upperAirwayResistanceChange;
+                return currentModel.modelState.UARFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-                    _upperAirwayResistanceChange = value;
                     currentModel.modelInterface.AdjustUpperAirwayResistance(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _upperAirwayResistanceChange = 0;
-                }
+
             }
         }
-        double _etTubeResistanceChange = 0;
         public double EtTubeResistanceChange
         {
             get
             {
-                return _etTubeResistanceChange;
+                return currentModel.modelState.ETRFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-                    _etTubeResistanceChange = value;
+
                     currentModel.modelInterface.AdjustETTubeResistance(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _etTubeResistanceChange = 0;
-                }
+
             }
         }
-
-        double _lowerAirwayResistanceChange = 0;
         public double LowerAirwayResistanceChange
         {
             get
             {
-                return _lowerAirwayResistanceChange;
+                return currentModel.modelState.LARFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-                    _lowerAirwayResistanceChange = value;
+
                     currentModel.modelInterface.AdjustLowerAirwayResistance(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _lowerAirwayResistanceChange = 0;
-                }
+
             }
         }
-
-        double _airwayComplianceChange = 0;
         public double AirwayComplianceChange
         {
             get
             {
-                return _airwayComplianceChange;
+                return currentModel.modelState.AirwayComplianceFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-                    _airwayComplianceChange = value;
+
                     currentModel.modelInterface.AdjustAirwayCompliance(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _airwayComplianceChange = 0;
-                }
+
             }
         }
-        double _chestwallComplianceChange = 0;
         public double ChestwallComplianceChange
         {
             get
             {
-                return _chestwallComplianceChange;
+                return currentModel.modelState.ChestwallComplianceFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-                    _chestwallComplianceChange = value;
+
                     currentModel.modelInterface.AdjustChestwallCompliance(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _chestwallComplianceChange = 0;
-                }
+
             }
         }
-
-        double _lungDiffCapacityChange = 0;
         public double LungDiffusionCapacityChange
         {
             get
             {
-                return _lungDiffCapacityChange;
+                return currentModel.modelState.DiffusionCapacityFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-                    _lungDiffCapacityChange = value;
+
                     currentModel.modelInterface.AdjustLungDiffusionCapacity(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _lungDiffCapacityChange = 0;
-                }
+
             }
         }
-
-        double _svrChange = 0;
         public double SystemicVascularResistanceChange
         {
             get
             {
-                return _svrChange;
+                return currentModel.modelState.SVRFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _svrChange = value;
 
                     currentModel.modelInterface.AdjustSystemicVascularResistance(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _svrChange = 0;
-                }
             }
         }
-
-        double _pvrChange = 0;
         public double PulmonaryVascularResistanceChange
         {
             get
             {
-                return _pvrChange;
+                return currentModel.modelState.PVRFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _pvrChange = value;
-
                     currentModel.modelInterface.AdjustPulmonaryVascularResistance(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _pvrChange = 0;
-                }
+
             }
         }
-
-        double _venPoolChange = 0;
         public double VenousPoolChange
         {
             get
             {
-                return _venPoolChange;
+                return currentModel.modelState.VenPoolFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _venPoolChange = value;
-
                     currentModel.modelInterface.AdjustVenousPool(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _venPoolChange = 0;
-                }
+
             }
         }
-
-        double _heartDiastFunction = 0;
         public double HeartDiastolicFunctionChange
         {
             get
             {
-                return _heartDiastFunction;
+                return currentModel.modelState.HeartDiastolicFunctionFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _heartDiastFunction = value;
-
                     currentModel.modelInterface.AdjustHeartDiastolicFunction(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _heartDiastFunction = 0;
-                }
+
             }
         }
-
-        double _heartLeftDiastFunction = 0;
         public double HeartLeftDiastolicFunctionChange
         {
             get
             {
-                return _heartLeftDiastFunction;
+                return currentModel.modelState.LeftHeartDiastolicFunctionFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _heartLeftDiastFunction = value;
 
                     currentModel.modelInterface.AdjustHeartLeftDiastolicFunction(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _heartLeftDiastFunction = 0;
-                }
+   
             }
         }
-        double _heartRightDiastFunction = 0;
         public double HeartRightDiastolicFunctionChange
         {
             get
             {
-                return _heartRightDiastFunction;
+                return currentModel.modelState.RightHeartDiastolicFunctionFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
 
-                    _heartRightDiastFunction = value;
 
                     currentModel.modelInterface.AdjustHeartRightDiastolicFunction(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _heartRightDiastFunction = 0;
-                }
+
             }
         }
-
-        double _heartCont = 0;
         public double HeartContractilityChange
         {
             get
             {
-                return _heartCont;
+                return currentModel.modelState.HeartContractilityFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
+                currentModel.modelInterface.AdjustHeartContractility(value);
 
-                    _heartCont = value;
-
-                    currentModel.modelInterface.AdjustHeartContractility(value);
-
-                    OnPropertyChanged();
-                }
-                else
-                {
-                    _heartCont = 0;
-                }
+                OnPropertyChanged();
             }
         }
-
-        double _heartLeftCont = 0;
         public double HeartLeftContractilityChange
         {
             get
             {
-                return _heartLeftCont;
+                return currentModel.modelState.LeftHeartContractilityFactor; 
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _heartLeftCont = value;
-
                     currentModel.modelInterface.AdjustLeftHeartContractility(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _heartLeftCont = 0;
-                }
             }
         }
-        double _heartRightCont = 0;
         public double HeartRightContractilityChange
         {
             get
             {
-                return _heartRightCont;
+                return currentModel.modelState.RightHeartContractilityFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _heartRightCont = value;
-
                     currentModel.modelInterface.AdjustRightHeartContractility(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _heartRightCont = 0;
-                }
             }
         }
-
-        double _avValveStenosisChange = 0;
         public double AVStenosisChange
         {
             get
             {
-                return _avValveStenosisChange;
+                return currentModel.modelState.AVValveStenosisFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
+               currentModel.modelInterface.AdjustAVValveStenosis(value);
 
-                    _avValveStenosisChange = value;
-
-                    currentModel.modelInterface.AdjustAVValveStenosis(value);
-
-                    OnPropertyChanged();
-                }
-                else
-                {
-                    _avValveStenosisChange = 0;
-                }
+               OnPropertyChanged();
             }
         }
-
-        double _avValveRegurgitationChange = 0;
         public double AVRegurgitationChange
         {
             get
             {
-                return _avValveRegurgitationChange;
+                return currentModel.modelState.AVValveRegurgitationFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _avValveRegurgitationChange = value;
-
-                    currentModel.modelInterface.AdjustAVValveRegurgitation(value);
+                  currentModel.modelInterface.AdjustAVValveRegurgitation(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _avValveRegurgitationChange = 0;
-                }
             }
         }
-
-        double _pvValveStenosisChange = 0;
         public double PVStenosisChange
         {
             get
             {
-                return _pvValveStenosisChange;
+                return currentModel.modelState.PVValveStenosisFactor; ;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _pvValveStenosisChange = value;
-
                     currentModel.modelInterface.AdjustPVValveStenosis(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _pvValveStenosisChange = 0;
-                }
+
             }
         }
-
-        double _pvValveRegurgitationChange = 0;
         public double PVRegurgitationChange
         {
             get
             {
-                return _pvValveRegurgitationChange;
+                return currentModel.modelState.PVValveRegurgitationFactor; ;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _pvValveRegurgitationChange = value;
 
                     currentModel.modelInterface.AdjustPVValveRegurgitation(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _pvValveRegurgitationChange = 0;
-                }
+
             }
         }
-
-        double _mvValveStenosisChange = 0;
         public double MVStenosisChange
         {
             get
             {
-                return _mvValveStenosisChange;
+                return currentModel.modelState.MVValveStenosisFactor; ;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _mvValveStenosisChange = value;
-
                     currentModel.modelInterface.AdjustMVValveStenosis(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _mvValveStenosisChange = 0;
-                }
+
             }
         }
-
-        double _mvValveRegurgitationChange = 0;
         public double MVRegurgitationChange
         {
             get
             {
-                return _mvValveRegurgitationChange;
+                return currentModel.modelState.MVValveRegurgitationFactor; ;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _mvValveRegurgitationChange = value;
 
                     currentModel.modelInterface.AdjustMVValveRegurgitation(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _mvValveRegurgitationChange = 0;
-                }
+
             }
         }
-
-        double _tvValveStenosisChange = 0;
         public double TVStenosisChange
         {
             get
             {
-                return _tvValveStenosisChange;
+                return currentModel.modelState.TVValveStenosisFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _tvValveStenosisChange = value;
 
                     currentModel.modelInterface.AdjustTVValveStenosis(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _tvValveStenosisChange = 0;
-                }
+
             }
         }
-
-        double _tvValveRegurgitationChange = 0;
         public double TVRegurgitationChange
         {
             get
             {
-                return _tvValveRegurgitationChange;
+                return currentModel.modelState.TVValveRegurgitationFactor; ;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _tvValveRegurgitationChange = value;
 
                     currentModel.modelInterface.AdjustTVValveRegurgitation(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _tvValveRegurgitationChange = 0;
-                }
+
             }
         }
-
-        double _pericardiumComplianceChange = 0;
         public double PericardiumComplianceChange
         {
             get
             {
-                return _pericardiumComplianceChange;
+                return currentModel.modelState.PericardComplianceFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-                    _pericardiumComplianceChange = value;
+
                     currentModel.modelInterface.AdjustPericardialCompliance(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _pericardiumComplianceChange = 0;
-                }
+
             }
         }
-
-        double _bloodVolumeChange = 0;
         public double BloodVolumeChange
         {
             get
             {
-                return _bloodVolumeChange;
+                return currentModel.modelState.BloodVolumeFactor;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _bloodVolumeChange = value;
-
                     currentModel.modelInterface.AdjustBloodVolume(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _bloodVolumeChange = 0;
-                }
+
             }
         }
-
-        double _pdaSize = 0;
         public double PDASize
         {
             get
             {
-                return _pdaSize;
+                return currentModel.modelState.PDASize; 
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _pdaSize = value;
 
                     currentModel.modelInterface.AdjustPDASize(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _pdaSize = 0;
-                }
+
             }
         }
-
-        double _ofoSize = 0;
         public double OFOSize
         {
             get
             {
-                return _ofoSize;
+                return currentModel.modelState.OFOSize; 
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _ofoSize = value;
 
                     currentModel.modelInterface.AdjustOFOSize(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _ofoSize = 0;
-                }
+
             }
         }
-        double _vsdSize = 0;
         public double VSDSize
         {
             get
             {
-                return _vsdSize;
+                return currentModel.modelState.VSDSize; 
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _vsdSize = value;
 
                     currentModel.modelInterface.AdjustVSDSize(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _vsdSize = 0;
-                }
+
             }
         }
-
-        double _lungShuntSize = 0;
         public double LUNGShuntSize
         {
             get
             {
-                return _lungShuntSize;
+                return currentModel.modelState.LungShuntSize;
             }
             set
             {
-                if (currentModel.modelInterface != null && !double.IsNaN(value))
-                {
-
-                    _lungShuntSize = value;
 
                     currentModel.modelInterface.AdjustLungShuntSize(value);
 
                     OnPropertyChanged();
-                }
-                else
-                {
-                    _lungShuntSize = 0;
-                }
+
             }
         }
 
@@ -3233,9 +2990,7 @@ namespace PhysModelDeveloperGUI
 
         public ObservableCollection<DrugEffect> drugEffects { get; set; } = new ObservableCollection<DrugEffect>();
         public ObservableCollection<Drug> availableDrugs { get; set; } = new ObservableCollection<Drug>();
-
         public ObservableCollection<DrugEffect> availableDrugEffects { get; set; } = new ObservableCollection<DrugEffect>();
-
         public ObservableCollection<Compartment> bloodcompartments { get; set; } = new ObservableCollection<Compartment>();
         public ObservableCollection<Compartment> gascompartments { get; set; } = new ObservableCollection<Compartment>();
         public ObservableCollection<Connector> connectors { get; set; } = new ObservableCollection<Connector>();

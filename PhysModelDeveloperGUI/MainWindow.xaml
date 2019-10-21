@@ -30,7 +30,17 @@
         <Style x:Key="DoubleUpDownChange" TargetType="{x:Type ex:DoubleUpDown}">
             <Setter Property="Increment">
                 <Setter.Value>
-                    5
+                    0.1
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Increment">
+                <Setter.Value>
+                    0.01
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Value">
+                <Setter.Value>
+                    1.0
                 </Setter.Value>
             </Setter>
         </Style>
@@ -228,7 +238,7 @@
                                 <Grid Margin="10,5,10,10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="5*"/>
-                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2.5*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
@@ -290,12 +300,13 @@
                             </Border>
 
                         </Expander>
+                        
                         <Expander Header=" heart" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
                             <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="Black">
                                 <Grid Margin="10,5,10,10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="5*"/>
-                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2.5*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
@@ -316,67 +327,67 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="10" Text=" whole heart contractility"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="0" Grid.Column="1" Increment="5" Value="{Binding HeartContractilityChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="10" Text=" whole heart contractility factor"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="0" Grid.Column="1" Value="{Binding HeartContractilityChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="1" FontSize="10" Text=" > left heart contractility"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="1" Grid.Column="1" Value="{Binding HeartLeftContractilityChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
 
                                     <TextBlock Grid.Column="0" Grid.Row="2" FontSize="10" Text=" > right heart contractility"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="2" Grid.Column="1" Value="{Binding HeartRightContractilityChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="2" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="2" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" FontSize="10" Text=" whole heart diastolic function"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="3" Grid.Column="1" Value="{Binding HeartDiastolicFunctionChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="3" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="3" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="4" FontSize="10" Text=" > left diastolic function"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="4" Grid.Column="1" Value="{Binding HeartLeftDiastolicFunctionChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="4" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="4" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
 
                                     <TextBlock Grid.Column="0" Grid.Row="5" FontSize="10" Text=" > right diastolic function"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="5" Grid.Column="1" Value="{Binding HeartRightDiastolicFunctionChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="5" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="5" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="6" FontSize="10" Text=" aortic valve stenosis"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="6" Grid.Column="1" Value="{Binding AVStenosisChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="6" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="6" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="7" FontSize="10" Text=" aortic valve regurgitation"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="7" Grid.Column="1" Maximum="100" Value="{Binding AVRegurgitationChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="7" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="7" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="8" FontSize="10" Text=" pulmonary valve stenosis"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="8" Grid.Column="1" Value="{Binding PVStenosisChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="8" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="8" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="9" FontSize="10" Text=" pulmonary valve regurgitation"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="9" Grid.Column="1" Maximum="100" Value="{Binding PVRegurgitationChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="9" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="9" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="10" FontSize="10" Text=" mitral valve stenosis"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="10" Grid.Column="1" Value="{Binding MVStenosisChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="10" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="10" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="11" FontSize="10" Text=" mitral valve regurgitation"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="11" Grid.Column="1" Maximum="100" Value="{Binding MVRegurgitationChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="11" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="11" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="12" FontSize="10" Text=" tricuspid valve stenosis"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="12" Grid.Column="1"  Value="{Binding TVStenosisChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="12" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="12" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="13" FontSize="10" Text=" tricuspid valve regurgitation"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="13" Grid.Column="1" Maximum="100"  Value="{Binding TVRegurgitationChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="13" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="13" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="14" FontSize="10" Text=" pericardial compliance"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="14" Grid.Column="1" Maximum="100"  Value="{Binding PericardiumComplianceChange,Mode=TwoWay}" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="14" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="14" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
 
 
@@ -389,7 +400,7 @@
                                 <Grid Margin="10,5,10,10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="5*"/>
-                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2.5*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
@@ -405,19 +416,23 @@
 
                                     <TextBlock Grid.Column="0" Grid.Row="0" FontSize="10" Text=" change syst vasc resistance"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="0" Grid.Column="1" Value="{Binding SystemicVascularResistanceChange,Mode=TwoWay}"  Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="1" FontSize="10" Text=" change pulm vasc resistance"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="1" Grid.Column="1" Value="{Binding PulmonaryVascularResistanceChange,Mode=TwoWay}"  Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="2" FontSize="10" Text=" change venous pool volume"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="2" Grid.Column="1" Value="{Binding VenousPoolChange,Mode=TwoWay}"  Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="2" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="2" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="3" FontSize="10" Text=" change blood volume"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
                                     <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="3" Grid.Column="1" Value="{Binding BloodVolumeChange,Mode=TwoWay}"  Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="3" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="2" Grid.Row="3" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    
+                                    <TextBlock Grid.Column="0" Grid.Row="4" FontSize="10" Text=" myocardial vasoconstriction"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="4" Grid.Column="1" Value="{Binding MyocardialPerfusionChange,Mode=TwoWay}"  Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="4" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                 </Grid>
                             </Border>
@@ -428,7 +443,7 @@
                                 <Grid Margin="10,5,10,10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="5*"/>
-                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2.5*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
@@ -462,6 +477,108 @@
                                 </Grid>
                             </Border>
                         </Expander>
+                        
+                        <Expander Header=" lung and chestwall" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
+                            <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="Black">
+                                <Grid Margin="10,5,10,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="2.5*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="10" Text=" lung compliance "  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="0" Grid.Column="1" Value="{Binding LungComplianceChange,Mode=TwoWay}"  Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="1" FontSize="10" Text=" airway compliance"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="1" Grid.Column="1" Value="{Binding AirwayComplianceChange,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="2" FontSize="10" Text=" chestwall compliance "  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="2" Grid.Column="1" Value="{Binding ChestwallComplianceChange,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="2" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="3" FontSize="10" Text=" upper airway resistance "  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="3" Grid.Column="1" Value="{Binding UpperAirwayResistanceChange,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="3" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="4" FontSize="10" Text=" lower airway resistance "  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="4" Grid.Column="1" Value="{Binding LowerAirwayResistanceChange,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="4" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="5" FontSize="10" Text=" et tube resistance "  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="5" Grid.Column="1" Value="{Binding LowerAirwayResistanceChange,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="5" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                              
+                                    <TextBlock Grid.Column="0" Grid.Row="6" FontSize="10" Text=" lung diffusion capacity"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="6" Grid.Column="1" Value="{Binding LungDiffusionCapacityChange,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="6" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+
+                                </Grid>
+                            </Border>
+                        </Expander>
+
+                        <Expander Header=" metabolic" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
+                            <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="Black">
+                                <Grid Margin="10,5,10,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="2.5*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="10" Text="vatp change"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="0" Grid.Column="1" Value="{Binding VATPChange,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="1" FontSize="10" Text="hemoglobin"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Hemoglobin,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="mmol/l" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="2" FontSize="10" Text="2,3 DPG"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Row="2" Grid.Column="1" Value="{Binding DPG,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="2" Text="mmol/l" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="3" FontSize="10" Text="temperature"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Row="3" Grid.Column="1" Value="{Binding Temp,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="3" Text="deg C" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="4" FontSize="10" Text="respiratory quotient"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Row="4" Grid.Column="1" Value="{Binding RespQ,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="4" Text="mmol/l" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="5" FontSize="10" Text="lactate clearance rate"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Row="5" Grid.Column="1" Value="{Binding LactateClearanceRate,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="5" Text="mmol/s" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                </Grid>
+                            </Border>
+                        </Expander>
 
                         <Expander Header=" breathing" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
                             <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="Black">
@@ -472,6 +589,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
@@ -520,13 +638,23 @@
                                     <ex:DoubleUpDown Grid.Row="8" Grid.Column="1" Value="{Binding ApnoeDurationRand,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="2" Grid.Row="8" Text="ml/min" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="9" FontSize="10" Text="inspired oxygen concentration"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Row="9" Grid.Column="1" Increment="0.01" Minimum="0.21" Maximum="1" Value="{Binding FiO2,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="9" Text="" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="9" FontSize="10" Text="respiratory drive"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="9" Grid.Column="1" Value="{Binding RespiratoryDrive,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="9" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="10" FontSize="10" Text="respiration muscle force"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="10" Grid.Column="1" Value="{Binding RespiratoryMuscleForce,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="10" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+
+                                    <TextBlock Grid.Column="0" Grid.Row="11" FontSize="10" Text="inspired oxygen concentration"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                    <ex:DoubleUpDown Grid.Row="11" Grid.Column="1" Increment="0.01" Minimum="0.21" Maximum="1" Value="{Binding FiO2,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <TextBlock Grid.Column="2" Grid.Row="11" Text="" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                 </Grid>
                             </Border>
                         </Expander>
+                        
                         <Expander Header=" mechanical ventilation" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
                             <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="Black">
                                 <Grid Margin="10,5,10,10">
@@ -595,102 +723,8 @@
                                 </Grid>
                             </Border>
                         </Expander>
-                        <Expander Header=" lung and chestwall" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
-                            <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="Black">
-                                <Grid Margin="10,5,10,10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="5*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="10" Text=" lung compliance "  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="0" Grid.Column="1" Value="{Binding LungComplianceChange,Mode=TwoWay}"  Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="1" FontSize="10" Text=" airway compliance"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="1" Grid.Column="1" Value="{Binding AirwayComplianceChange,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="2" FontSize="10" Text=" chestwall compliance "  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="2" Grid.Column="1" Value="{Binding ChestwallComplianceChange,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="2" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="3" FontSize="10" Text=" upper airway resistance "  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="3" Grid.Column="1" Value="{Binding UpperAirwayResistanceChange,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="3" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="4" FontSize="10" Text=" lower airway resistance "  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="4" Grid.Column="1" Value="{Binding LowerAirwayResistanceChange,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="4" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="5" FontSize="10" Text=" lung diffusion capacity"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Style="{StaticResource DoubleUpDownChange}" Grid.Row="5" Grid.Column="1" Value="{Binding LungDiffusionCapacityChange,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="5" Text="%" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
-
-
-                                </Grid>
-                            </Border>
-                        </Expander>
-
-                        <Expander Header=" metabolic" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
-                            <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="Black">
-                                <Grid Margin="10,5,10,10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="4*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="10" Text="oxygen use"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Row="0" Grid.Column="1" Value="{Binding VO2,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="ml O2/s" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="1" FontSize="10" Text="hemoglobin"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Hemoglobin,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="mmol/l" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="2" FontSize="10" Text="2,3 DPG"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Row="2" Grid.Column="1" Value="{Binding DPG,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="2" Text="mmol/l" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="3" FontSize="10" Text="temperature"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Row="3" Grid.Column="1" Value="{Binding Temp,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="3" Text="deg C" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="4" FontSize="10" Text="respiratory quotient"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Row="4" Grid.Column="1" Value="{Binding RespQ,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="4" Text="mmol/l" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="5" FontSize="10" Text="lactate clearance rate"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Row="5" Grid.Column="1" Value="{Binding LactateClearanceRate,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
-                                    <TextBlock Grid.Column="2" Grid.Row="5" Text="mmol/s" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
-
-                                </Grid>
-                            </Border>
-                        </Expander>
+                        
+       
 
                         <Expander Header=" autonomic nervous system model" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
                             <StackPanel Margin="20,0,0,0">
@@ -764,6 +798,11 @@
                                             <ex:DoubleUpDown Grid.Row="10" Grid.Column="1" Value="{Binding TcMAPVen,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
                                             <TextBlock Grid.Column="2" Grid.Row="10" Text="mmHg" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
+                                            <TextBlock Grid.Column="0" Grid.Row="11" FontSize="10" Text="baroreflex inhibition"   Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
+                                            <ex:DoubleUpDown Style ="{StaticResource DoubleUpDownChange}" Grid.Row="11" Grid.Column="1" Value="{Binding BaroreflexSensitivity,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                            <TextBlock Grid.Column="2" Grid.Row="11" Text="x" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+
+                                            
                                         </Grid>
                                     </Border>
                                 </Expander>
@@ -943,6 +982,8 @@
                         </Expander>
                     </StackPanel>
                 </Expander>
+                
+                
                 <Expander IsExpanded="False" Header="Specific model settings" Background="DarkSlateGray" Padding="5,5,5,5" Margin="10,0,0,10" Foreground="White" BorderThickness="0">
                     <StackPanel Margin="5,0,5,5">
                         <Expander Header=" reference values" IsExpanded="False" Foreground="White" Padding="2,2,2,2" Margin="0,0,0,5">
@@ -976,7 +1017,7 @@
 
 
                                     <TextBlock Grid.Column="0" Grid.Row="1" FontSize="10" Text="heartrate ref"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
-                                    <ex:DoubleUpDown Grid.Row="1" Grid.Column="1" Value="{Binding HrRef,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
+                                    <ex:DoubleUpDown Grid.Row="1" Grid.Column="1" Minimum="1" Maximum="300" Increment="5" Value="{Binding HrRef,Mode=TwoWay}" FontSize="10" Margin="0,2,5,2" ></ex:DoubleUpDown>
                                     <TextBlock Grid.Column="2" Grid.Row="1" Text="/min" FontSize="8" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5"></TextBlock>
 
                                     <TextBlock Grid.Column="0" Grid.Row="2" FontSize="10" Text="minute volume ref"  Margin="0,5,0,5" VerticalAlignment="Center"></TextBlock>
