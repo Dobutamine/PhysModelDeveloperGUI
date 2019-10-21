@@ -824,15 +824,7 @@ namespace PhysModelDeveloperGUI
                     Drug10Concentration = currentModel.modelInterface.Drug10Concentration;
                 }
 
-                SystemicVascularResistanceChange = currentModel.modelState.SVRFactor;
-                PulmonaryVascularResistanceChange = currentModel.modelState.PVRFactor;
-                VenousPoolChange = currentModel.modelState.VenousPoolFactor;
-                PDASize = currentModel.modelState.PDASize;
-                OFOSize = currentModel.modelState.OFOSize;
-                VSDSize = currentModel.modelState.VSDSize;
-                HeartLeftContractilityChange = currentModel.modelState.LeftContFactor;
-                HeartRightContractilityChange = currentModel.modelState.RightContFactor;
-                HeartContractilityChange = currentModel.modelState.HeartContFactor;
+          
                 VATP = currentModel.modelState.VATP;
 
                 if (MonitorVisible)
@@ -2163,7 +2155,7 @@ namespace PhysModelDeveloperGUI
             {
                 if (currentModel != null)
                 {
-                    if (value > 0.01) currentModel.modelInterface.AdjustVATP(value);
+                    //if (value > 0.01) currentModel.modelInterface.AdjustVATP(value);
 
                     OnPropertyChanged();
                 }
