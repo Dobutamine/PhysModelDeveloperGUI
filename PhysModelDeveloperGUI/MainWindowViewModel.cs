@@ -3399,6 +3399,38 @@ namespace PhysModelDeveloperGUI
                 }
             }
         }
+        public double DrugVolume
+        {
+            get
+            {
+                return selectedDrug != null ? selectedDrug.Volume : 0;
+            }
+            set
+            {
+                if (selectedDrug != null)
+                {
+                    selectedDrug.Volume = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double AdministrationTime
+        {
+            get
+            {
+                return selectedDrug != null ? selectedDrug.AdministrationTime : 1;
+            }
+            set
+            {
+                if (selectedDrug != null)
+                {
+                    selectedDrug.AdministrationTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string DrugEffectSite
         {
             get
