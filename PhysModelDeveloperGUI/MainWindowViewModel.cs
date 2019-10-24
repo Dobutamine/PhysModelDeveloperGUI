@@ -140,6 +140,11 @@ namespace PhysModelDeveloperGUI
         public RelayCommand AddDrugEffectCommand { get; set; }
         public RelayCommand StopCardiacOutputCommand { get; set; }
         public RelayCommand SwitchToPaulCommand { get; set; }
+        public RelayCommand IRDSCommand { get; set; }
+        public RelayCommand DrugNormalSalineCommand { get; set; }
+        public RelayCommand SepsisCommand { get; set; }
+        public RelayCommand DrugSurfactantCommand { get; set; }
+
         #endregion
 
         #region "DIAGRAM VISIBILITIES"
@@ -445,8 +450,30 @@ namespace PhysModelDeveloperGUI
             SwitchToPaulCommand = new RelayCommand(SwitchToPaul);
             StopCardiacOutputCommand = new RelayCommand(StopCardiacOutput);
             ToggleAutoPulseCommand = new RelayCommand(AutoPulse);
+            IRDSCommand = new RelayCommand(IRDS);
+            SepsisCommand = new RelayCommand(Sepsis);
+            DrugSurfactantCommand = new RelayCommand(DrugSurfactant);
+            DrugNormalSalineCommand = new RelayCommand(DrugNormalSaline);
+
 
         }
+        void IRDS(object p)
+        {
+            currentModel.modelInterface.PaulIRDS();
+        }
+        void Sepsis(object p)
+        {
+            currentModel.modelInterface.PaulSepsis();
+        }
+        void DrugSurfactant(object p)
+        {
+            currentModel.modelInterface.AdministerSurfactant();
+        }
+        void DrugNormalSaline(object p)
+        {
+            currentModel.modelInterface.AdministerFluidBolus();
+        }
+
         void AutoPulse(object p)
         {
             if ((bool)p)
@@ -534,9 +561,7 @@ namespace PhysModelDeveloperGUI
             if (selectedDrug != null)
             {
                 DrugDose = selectedDrug.Dose;
-                DrugMetabolicRate = selectedDrug.MetabolicRate;
-                DrugRenalClearanceRate = selectedDrug.RenalClearanceRate;
-                DrugHepaticClearanceRate = selectedDrug.HepaticClearanceRate;
+                DrugMetabolicRate = selectedDrug.ClearanceRate;
                 drugEffects.Clear();
                 foreach (DrugEffect d in selectedDrug.DrugEffects)
                 {
@@ -2487,7 +2512,7 @@ namespace PhysModelDeveloperGUI
         {
             get
             {
-                return currentModel.modelState.RespRateDepressionFactor;
+                return currentModel.modelState.RespiratoryDriveFactor;
             }
             set
             {
@@ -3343,13 +3368,13 @@ namespace PhysModelDeveloperGUI
         {
             get
             {
-                return selectedDrug != null ? selectedDrug.HepaticClearanceRate : 0;
+                return selectedDrug != null ? selectedDrug.ClearanceRate : 0;
             }
             set
             {
                 if (selectedDrug != null)
                 {
-                    selectedDrug.HepaticClearanceRate = value;
+                    selectedDrug.ClearanceRate = value;
                     OnPropertyChanged();
                 }
             }
@@ -3358,13 +3383,13 @@ namespace PhysModelDeveloperGUI
         {
             get
             {
-                return selectedDrug != null ? selectedDrug.RenalClearanceRate : 0;
+                return selectedDrug != null ? selectedDrug.ClearanceRate : 0;
             }
             set
             {
                 if (selectedDrug != null)
                 {
-                    selectedDrug.RenalClearanceRate = value;
+                    selectedDrug.ClearanceRate = value;
                     OnPropertyChanged();
                 }
             }
@@ -3373,13 +3398,13 @@ namespace PhysModelDeveloperGUI
         {
             get
             {
-                return selectedDrug != null ? selectedDrug.MetabolicRate : 0;
+                return selectedDrug != null ? selectedDrug.ClearanceRate : 0;
             }
             set
             {
                 if (selectedDrug != null)
                 {
-                    selectedDrug.MetabolicRate = value;
+                    selectedDrug.ClearanceRate = value;
                     OnPropertyChanged();
                 }
             }

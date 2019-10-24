@@ -65,13 +65,18 @@
             </MenuItem>
 
             <MenuItem Header="_Events">
-                <MenuItem x:Name="menuPaul" Header="_Switch to Paul" IsCheckable="True" Command="{Binding SwitchToPaulCommand}"/>
+                <MenuItem x:Name="menuIRDS" Header="_Severe IRDS" IsCheckable="False" Command="{Binding IRDSCommand}"/>
+                
+                <MenuItem x:Name="menuSepsis" Header="_Sepsis" IsCheckable="False" Command="{Binding SepsisCommand}"/>
 
-
+                <MenuItem Header="_Drugs">
+                    <MenuItem x:Name="menuDrugSurfactant" Header="_Surfactant" IsCheckable="False" Command="{Binding DrugSurfactantCommand}"/>
+                    <MenuItem x:Name="menuDrugSepsis" Header="_Normal saline" IsCheckable="False" Command="{Binding DrugNormalSalineCommand}"/>
+                </MenuItem>
                 <MenuItem x:Name="menuArrest" Header="_Cardiac arrest" IsCheckable="True" Command="{Binding StopCardiacOutputCommand}" CommandParameter="{Binding ElementName=menuArrest, Path=IsChecked}"/>
-
-
                 <MenuItem x:Name="menuAutoPulse" Header="_Auto pulse" IsCheckable="True" Command="{Binding ToggleAutoPulseCommand}" CommandParameter="{Binding ElementName=menuAutoPulse, Path=IsChecked}"/>
+            
+                
             </MenuItem>
             <MenuItem Header="_Views">
                 <MenuItem x:Name="menuResetDisplay" Header="_Clear view" IsCheckable="False" Command="{Binding ResetDisplayCommand}"></MenuItem>
