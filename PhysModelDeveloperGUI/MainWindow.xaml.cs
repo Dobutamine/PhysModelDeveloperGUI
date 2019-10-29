@@ -26,8 +26,8 @@ namespace PhysModelDeveloperGUI
             DataContext = mainWindowViewModel;
 
             // pass the graphs to the mainviewmodel
-            mainWindowViewModel.InitTrendGraph(graphTrends);
-            mainWindowViewModel.InitBloodgasGraph(graphBloodgas);
+            mainWindowViewModel.InitTrendGraph(graphVitalsTrend);
+            mainWindowViewModel.InitBloodgasGraph(graphBloodgasTrend);
             mainWindowViewModel.InitModelDiagram(graphDiagram);
             mainWindowViewModel.InitPatientMonitor(graphMonitor);
             mainWindowViewModel.InitPVLoop(graphLoop);

@@ -114,22 +114,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Telerik.Windows.Controls, Version=2019.2.618.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for WPF R2 2019\Binaries\WPF45\Telerik.Windows.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Controls.Chart, Version=2019.2.618.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for WPF R2 2019\Binaries\WPF45\Telerik.Windows.Controls.Chart.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Controls.Chart.Direct2D, Version=2019.2.618.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for WPF R2 2019\Binaries\WPF45\Telerik.Windows.Controls.Chart.Direct2D.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Data, Version=2019.2.618.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for WPF R2 2019\Binaries\WPF45\Telerik.Windows.Data.dll</HintPath>
-    </Reference>
     <Reference Include="ToggleSwitch, Version=1.1.2.0, Culture=neutral, PublicKeyToken=8637099990568f75, processorArchitecture=MSIL">
       <HintPath>..\packages\ToggleSwitch.1.1.2\lib\net40-client\ToggleSwitch.dll</HintPath>
     </Reference>
@@ -179,8 +163,8 @@
       <DependentUpon>PatientMonitor.xaml</DependentUpon>
     </Compile>
     <Compile Include="RelayCommand.cs" />
-    <Compile Include="TimeBasedGraph.xaml.cs">
-      <DependentUpon>TimeBasedGraph.xaml</DependentUpon>
+    <Compile Include="TrendGraph.xaml.cs">
+      <DependentUpon>TrendGraph.xaml</DependentUpon>
     </Compile>
     <Page Include="LoopGraph.xaml">
       <SubType>Designer</SubType>
@@ -210,7 +194,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TimeBasedGraph.xaml">
+    <Page Include="TrendGraph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

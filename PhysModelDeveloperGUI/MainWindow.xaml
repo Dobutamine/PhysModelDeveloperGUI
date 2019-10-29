@@ -2658,14 +2658,14 @@
                 </Expander>
 
                 <Expander IsExpanded="{Binding TrendVitalsVisible, Mode=TwoWay}" Margin="0,0,0,10"  Header="Vital trends" Background="DarkSlateGray" Padding="5,5,5,5" Foreground="White" BorderThickness="0">
-                    <Border BorderBrush="White"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="Black" >
-                        <local:TimeBasedGraph x:Name="graphTrends" Margin="10,10,10,10" Height="250" ></local:TimeBasedGraph>
+                    <Border BorderBrush="Black"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="White" >
+                        <local:TrendGraph x:Name="graphVitalsTrend" Margin="5,5,5,5"  Height="300"/>
                     </Border>
                 </Expander>
 
                 <Expander IsExpanded="{Binding TrendBloodgasVisible, Mode=TwoWay}" Margin="0,0,0,10"  Header="Bloodgas trends" Background="DarkSlateGray" Padding="5,5,5,5" Foreground="White" BorderThickness="0">
-                    <Border BorderBrush="White"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="Black" >
-                        <local:TimeBasedGraph x:Name="graphBloodgas" Margin="10,10,10,10"  Height="250"/>
+                    <Border BorderBrush="Black"  BorderThickness="1" CornerRadius="5" Margin="10,0,10,10" Background="White" >
+                        <local:TrendGraph x:Name="graphBloodgasTrend" Margin="5,5,5,5"  Height="300"/>
                     </Border>
                 </Expander>
               

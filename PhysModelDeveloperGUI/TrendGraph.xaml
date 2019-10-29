@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="PhysModelDeveloperGUI.TrendGraph"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
+             xmlns:local="clr-namespace:PhysModelDeveloperGUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="800" Background="White">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Label Content="{Binding ParameterValue}" HorizontalAlignment="Center" FontSize="{Binding FontSizeValue}" FontWeight="Bold" VerticalAlignment="Center" Foreground="{Binding GraphTitleColor}" Grid.Row="1"></Label>
+        </Grid>
+
+        <skia:SKElement x:Name="graphGrid" Grid.Column="0" Grid.ColumnSpan="{Binding GraphWidth}" PaintSurface="GraphGrid_PaintSurface"></skia:SKElement>
+        <skia:SKElement x:Name="graphMain" Grid.Column="0" Grid.ColumnSpan="{Binding GraphWidth}" Opacity="0.6" PaintSurface="GraphMain_PaintSurface"></skia:SKElement>
+        <Label Content="{Binding GraphTitle}" Grid.Column="0" Foreground="{Binding GraphTitleColor}" FontSize="{Binding FontSizeTitle}" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
+
+
+
+
+    </Grid>
+</UserControl>

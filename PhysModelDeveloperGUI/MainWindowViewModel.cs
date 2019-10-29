@@ -27,6 +27,7 @@ namespace PhysModelDeveloperGUI
 
         readonly DispatcherTimer updateTimer = new DispatcherTimer(DispatcherPriority.Render);
         int slowUpdater = 0;
+        int slowUpdater2 = 0;
         int graphicsRefreshInterval = 15;
 
         #region "PANEL VISIBILITIES"
@@ -111,8 +112,8 @@ namespace PhysModelDeveloperGUI
         LoopGraph GraphPVLoop { get; set; }
         ModelDiagram GraphModelDiagram { get; set; }
         FastScrollingGraph FlowGraph { get; set; }
-        TimeBasedGraph TrendGraph { get; set; }
-        TimeBasedGraph BloodgasGraph { get; set; }
+        TrendGraph VitalsTrendGraph { get; set; }
+        TrendGraph LabTrendGraph { get; set; }
 
         #region "COMMANDS"
         public RelayCommand ToggleAutoPulseCommand { get; set; }
@@ -743,13 +744,25 @@ namespace PhysModelDeveloperGUI
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
             if (DiagramVisible) GraphModelDiagram.UpdatedMainDiagram();
-            if (TrendVitalsVisible) TrendGraph.DrawData();
-            if (trendBloodgasVisible) BloodgasGraph.DrawData();
+         
             if (FlowGraphVisible) FlowGraph.Draw();
+
+           
+            if (slowUpdater2 > 500)
+            {
+                UpdateTrendGraph();
+
+                UpdateBloodgasGraph();
+
+                slowUpdater2 = 0;
+
+            }
+
+            slowUpdater2 += graphicsRefreshInterval;
 
             if (slowUpdater > 1000)
             {
-              
+    
 
                 slowUpdater = 0;
                 if (currentModel.modelState.Name != ModelName) ModelName = currentModel.modelState.Name;
@@ -852,8 +865,7 @@ namespace PhysModelDeveloperGUI
                                                          currentModel.modelInterface.RespiratoryRate.ToString());
                 }
 
-                UpdateTrendGraph();
-                UpdateBloodgasGraph();
+                
 
                 if (PVLoopVisible) GraphPVLoop.Draw();
 
@@ -861,6 +873,7 @@ namespace PhysModelDeveloperGUI
            
             slowUpdater += graphicsRefreshInterval;
         }
+
         private void ModelInterface_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "ModelUpdated")
@@ -3116,67 +3129,85 @@ namespace PhysModelDeveloperGUI
             GraphModelDiagram.UpdateSkeleton();
             GraphModelDiagram.UpdatedMainDiagram();
         }
-        public void InitTrendGraph(TimeBasedGraph p)
+        public void InitTrendGraph(TrendGraph p)
         {
-            TrendGraph = p;
+            VitalsTrendGraph = p;
 
-            TrendGraph.InitGraph(300, 400);
-            TrendGraph.GridXStep = 60;
-            TrendGraph.GridYStep = 25;
-            TrendGraph.MaxY = 200;
-            TrendGraph.ShowXLabels = true;
-            TrendGraph.ShowYLabels = true;
+            VitalsTrendGraph.GraphTitle = "";
+            VitalsTrendGraph.GraphWidth = 4;
+            VitalsTrendGraph.GridYMax = 200;
+            VitalsTrendGraph.GridYMin = 0;
+            VitalsTrendGraph.GridYStep = 20;
+            VitalsTrendGraph.ParameterTitle = "vitals";
+           
+            VitalsTrendGraph.ParameterUnit = "";
+            VitalsTrendGraph.PointMode1 = SKPointMode.Polygon;
+            VitalsTrendGraph.xStepSize = 1f;
+            VitalsTrendGraph.AutoScale = false;
+            VitalsTrendGraph.FontSizeValue = 14;
+            VitalsTrendGraph.FontSizeTitle = 10;
+            VitalsTrendGraph.GridXEnabled = false;
+            VitalsTrendGraph.GridYEnabled = true;
+           
+            VitalsTrendGraph.GraphPaint1.StrokeWidth = 3;
+            VitalsTrendGraph.GraphPaint2.StrokeWidth = 3;
+            VitalsTrendGraph.GraphPaint3.StrokeWidth = 3;
+            VitalsTrendGraph.GraphPaint4.StrokeWidth = 3;
+            VitalsTrendGraph.GraphPaint5.StrokeWidth = 3;
 
-            TrendGraph.Data1Enabled = true;
-            TrendGraph.Data2Enabled = true;
-            TrendGraph.Data3Enabled = true;
-            TrendGraph.Data4Enabled = true;
-            TrendGraph.Data5Enabled = true;
 
         }
-        public void InitBloodgasGraph(TimeBasedGraph p)
+        public void InitBloodgasGraph(TrendGraph p)
         {
-            BloodgasGraph = p;
+            LabTrendGraph = p;
 
-            BloodgasGraph.InitGraph(300, 400);
-            BloodgasGraph.GridXStep = 60;
-            BloodgasGraph.GridYStep = 2;
-            BloodgasGraph.MaxY = 40;
-            BloodgasGraph.MinY = 0;
-            BloodgasGraph.Series1Legend = "ATP";
-            BloodgasGraph.Series2Legend = "NADH";
-            BloodgasGraph.Series3Legend = "Gluc";
-            BloodgasGraph.Series4Legend = "o2";
-            BloodgasGraph.Series4Color = new SolidColorBrush(Colors.Blue);
-            BloodgasGraph.Series5Legend = "Lactate";
+            LabTrendGraph.GraphTitle = "";
+            LabTrendGraph.GraphWidth = 4;
+            LabTrendGraph.GridYMax = 20;
+            LabTrendGraph.GridYMin = 0;
+            LabTrendGraph.GridYStep = 2;
+            LabTrendGraph.ParameterTitle = "lab";
 
+            LabTrendGraph.Legend1 = "PH";
+            LabTrendGraph.Legend2 = "PO2";
+            LabTrendGraph.Legend3 = "PCO2";
+            LabTrendGraph.Legend4 = "HCO3-";
+            LabTrendGraph.Legend5 = "LACT";
 
-            BloodgasGraph.ShowXLabels = true;
-            BloodgasGraph.ShowYLabels = true;
+            LabTrendGraph.ParameterUnit = "";
+            LabTrendGraph.PointMode1 = SKPointMode.Polygon;
+            LabTrendGraph.xStepSize = 1f;
+            LabTrendGraph.AutoScale = false;
+            LabTrendGraph.FontSizeValue = 14;
+            LabTrendGraph.FontSizeTitle = 10;
+            LabTrendGraph.GridXEnabled = false;
+            LabTrendGraph.GridYEnabled = true;
 
-            BloodgasGraph.Data1Enabled = true;
-            BloodgasGraph.Data2Enabled = true;
-            BloodgasGraph.Data3Enabled = true;
-            BloodgasGraph.Data4Enabled = true;
-            BloodgasGraph.Data5Enabled = true;
+            LabTrendGraph.GraphPaint1.StrokeWidth = 3;
+            LabTrendGraph.GraphPaint2.StrokeWidth = 3;
+            LabTrendGraph.GraphPaint3.StrokeWidth = 3;
+            LabTrendGraph.GraphPaint4.StrokeWidth = 3;
+            LabTrendGraph.GraphPaint5.StrokeWidth = 3;
+
         }
         void UpdateTrendGraph()
         {
-            if (TrendGraph != null)
+            if (VitalsTrendGraph != null)
             {
-
-                TrendGraph.UpdateData(currentModel.modelInterface.HeartRate, currentModel.modelInterface.PulseOximeterOutput, currentModel.modelInterface.SystolicSystemicArterialPressure, currentModel.modelInterface.DiastolicSystemicArterialPressure, currentModel.modelInterface.RespiratoryRate);
-
+                VitalsTrendGraph.WriteBuffer(currentModel.modelInterface.HeartRate, currentModel.modelInterface.PulseOximeterOutput, currentModel.modelInterface.RespiratoryRate, currentModel.modelInterface.SystolicSystemicArterialPressure, currentModel.modelInterface.DiastolicSystemicArterialPressure);
+                if (TrendVitalsVisible) VitalsTrendGraph.Draw();
             }
+      
         }
         void UpdateBloodgasGraph()
         {
-            if (BloodgasGraph != null)
+            if (LabTrendGraph != null)
             {
+                LabTrendGraph.WriteBuffer(currentModel.modelInterface.ArterialPH, currentModel.modelInterface.ArterialPO2, currentModel.modelInterface.ArterialPCO2, currentModel.modelInterface.ArterialHCO3, currentModel.modelInterface.ArterialLactate);
 
-                BloodgasGraph.UpdateData(currentModel.modelState.LB.ATP_concentration, currentModel.modelState.LB.NADH_concentration, currentModel.modelState.LB.glucose, currentModel.modelState.LB.o2_concentration, currentModel.modelState.LB.lactate);
-
+                if (TrendBloodgasVisible) LabTrendGraph.Draw();
             }
+          
         }
 
         #endregion
