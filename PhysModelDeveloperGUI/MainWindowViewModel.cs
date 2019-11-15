@@ -411,7 +411,7 @@ namespace PhysModelDeveloperGUI
             screeny = _screeny;
             dpi = _dpi_scale;
 
-            currentModel.InitializePaul();
+            currentModel.Initialize();
             currentModel.modelInterface.PropertyChanged += ModelInterface_PropertyChanged;
             currentModel.Start();
 

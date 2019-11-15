@@ -62,6 +62,8 @@ namespace PhysModelDeveloperGUI
         public AnimatedBloodCompartment PLACENTA;
         public AnimatedBloodConnector ADPLACENTA;
         public AnimatedBloodConnector PLACENTAIVC;
+        public AnimatedBloodConnector RAECMO;
+        public AnimatedBloodConnector ECMOAD;
 
         public AnimatedBloodConnector AAUB;
         public AnimatedBloodCompartment upperBody;
@@ -367,6 +369,30 @@ namespace PhysModelDeveloperGUI
             placenta.AddCompartment(currentModel.modelState.PLACENTA);
             //animatedBloodCompartments.Add(placenta);
 
+            ecmolungblood = new AnimatedBloodCompartment(dpi)
+            {
+
+                scaleRelative = 0.035f,
+                IsVessel = true,
+                RadiusYOffset = 0.72f,
+                StartAngle = 110,
+                EndAngle = 70,
+                Degrees = 60,
+                Direction = -1,
+                Name = "ECMO"
+            };
+            ecmolungblood.AddCompartment(currentModel.modelState.ECMOBLOOD);
+            animatedBloodCompartments.Add(ecmolungblood);
+
+            ecmolunggas = new AnimatedGasComp(dpi)
+            {
+                scaleRelative = 0.035f,
+                RadiusYOffset = 1.20f,
+                Degrees = 60,
+                Name = "ECMOGAS"
+            };
+            ecmolunggas.AddCompartment(currentModel.modelState.ECMOGAS);
+            //animatedGasCompartments.Add(ecmolunggas);
 
             lungs = new AnimatedBloodCompartment(dpi)
             {
@@ -486,6 +512,34 @@ namespace PhysModelDeveloperGUI
             };
             SVCRA.AddConnector(currentModel.modelState.SVC_RA);
             animatedBloodConnectors.Add(SVCRA);
+
+            RAECMO = new AnimatedBloodConnector(dpi)
+            {
+                scaleRelative = 0.035f,
+                RadiusYOffset = 0.72f,
+                RadiusXOffset = 1f,
+                NoLoss = true,
+                StartAngle = 110,
+                EndAngle = 170,
+                Direction = 1,
+                Name = "RA->PLACENTA"
+            };
+            RAECMO.AddConnector(currentModel.modelState.RA_ECMO);
+            animatedBloodConnectors.Add(RAECMO);
+
+            ECMOAD = new AnimatedBloodConnector(dpi)
+            {
+                scaleRelative = 0.035f,
+                RadiusYOffset = 0.72f,
+                RadiusXOffset = 1f,
+                NoLoss = true,
+                StartAngle = 30,
+                EndAngle = 70,
+                Direction = 1,
+                Name = "ECMO->AD"
+            };
+            ECMOAD.AddConnector(currentModel.modelState.ECMO_AD);
+            animatedBloodConnectors.Add(ECMOAD);
 
             PLACENTAIVC = new AnimatedBloodConnector(dpi)
             {
@@ -750,6 +804,8 @@ namespace PhysModelDeveloperGUI
                 Name = "MYO->RA"
             };
             MYORA.AddConnector(currentModel.modelState.MYO_RA);
+
+
 
       
         }
