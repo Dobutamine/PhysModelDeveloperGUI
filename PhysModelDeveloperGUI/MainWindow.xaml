@@ -8,7 +8,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:PhysModelDeveloperGUI"
         mc:Ignorable="d"
-        Title="Neonatal Physiological Model - Developer Edition" Height="800" Width="1280" WindowStartupLocation="CenterScreen" WindowState="Normal">
+        Title="Neonatal Physiological Model - Developer Edition" Height="900" Width="1440" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Window.Resources>
 
         <Style TargetType="{x:Type ex:DoubleUpDown}">
