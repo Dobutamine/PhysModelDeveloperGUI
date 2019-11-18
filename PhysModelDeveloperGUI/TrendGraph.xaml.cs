@@ -207,7 +207,7 @@ namespace PhysModelDeveloperGUI
                 Color = SKColors.DarkGreen,
                 StrokeWidth = 1,
                 TextSize = 20,
-                Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Black, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright),
+                Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright),
                 StrokeCap = SKStrokeCap.Round,
                 IsAntialias = true
             };
@@ -218,7 +218,7 @@ namespace PhysModelDeveloperGUI
                 Color = SKColors.Fuchsia,
                 StrokeWidth = 1,
                 TextSize = 20,
-                Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Black, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright),
+                Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright),
 
                 StrokeCap = SKStrokeCap.Round,
                 IsAntialias = true
@@ -230,7 +230,7 @@ namespace PhysModelDeveloperGUI
                 Color = SKColors.Black,
                 StrokeWidth = 1,
                 TextSize = 20,
-                Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Black, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright),
+                Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright),
 
                 StrokeCap = SKStrokeCap.Round,
                 IsAntialias = true
@@ -242,7 +242,7 @@ namespace PhysModelDeveloperGUI
                 Color = SKColors.Red,
                 StrokeWidth = 1,
                 TextSize = 20,
-                Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Black, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright),
+                Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright),
 
                 StrokeCap = SKStrokeCap.Round,
                 IsAntialias = true
@@ -250,11 +250,11 @@ namespace PhysModelDeveloperGUI
 
             GraphPaint5 = new SKPaint
             {
-                Style = SKPaintStyle.StrokeAndFill,
+                Style = SKPaintStyle.Stroke,
                 Color = SKColors.Red,
                 StrokeWidth = 1,
                 TextSize = 20,
-                Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Black, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright),
+                Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright),
 
                 StrokeCap = SKStrokeCap.Round,
                 IsAntialias = true
