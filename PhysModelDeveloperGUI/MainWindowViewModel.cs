@@ -411,7 +411,7 @@ namespace PhysModelDeveloperGUI
             screeny = _screeny;
             dpi = _dpi_scale;
 
-            currentModel.Initialize();
+            currentModel.InitializePaul();
             currentModel.modelInterface.PropertyChanged += ModelInterface_PropertyChanged;
             currentModel.Start();
 
@@ -1420,6 +1420,21 @@ namespace PhysModelDeveloperGUI
                 if (currentModel != null)
                 {
                     currentModel.modelState.GPHCont = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public double LungVolHpThreshold
+        {
+            get
+            {
+                return currentModel != null ? currentModel.modelState.LungVolHpThreshold : 0;
+            }
+            set
+            {
+                if (currentModel != null)
+                {
+                    currentModel.modelState.LungVolHpThreshold = value;
                     OnPropertyChanged();
                 }
             }
@@ -3194,7 +3209,7 @@ namespace PhysModelDeveloperGUI
         {
             if (VitalsTrendGraph != null)
             {
-                VitalsTrendGraph.WriteBuffer(currentModel.modelInterface.HeartRate, currentModel.modelInterface.PulseOximeterOutput, currentModel.modelInterface.RespiratoryRate, currentModel.modelInterface.SystolicSystemicArterialPressure, currentModel.modelInterface.DiastolicSystemicArterialPressure);
+                VitalsTrendGraph.WriteBuffer(currentModel.modelState.HeartRate, currentModel.modelInterface.PulseOximeterOutput, currentModel.modelInterface.RespiratoryRate, currentModel.modelInterface.SystolicSystemicArterialPressure, currentModel.modelInterface.DiastolicSystemicArterialPressure);
                 if (TrendVitalsVisible) VitalsTrendGraph.Draw();
             }
       
