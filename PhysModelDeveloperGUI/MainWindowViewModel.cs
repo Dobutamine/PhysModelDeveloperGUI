@@ -3225,7 +3225,7 @@ namespace PhysModelDeveloperGUI
         {
             if (VitalsTrendGraph != null)
             {
-                VitalsTrendGraph.WriteBuffer(currentModel.modelState.HeartRate, currentModel.modelInterface.PulseOximeterOutput, currentModel.modelInterface.RespiratoryRate, currentModel.modelInterface.SystolicSystemicArterialPressure, currentModel.modelInterface.DiastolicSystemicArterialPressure);
+                VitalsTrendGraph.WriteBuffer(currentModel.modelState.HeartRate, currentModel.modelInterface.PulseOximeterOutput, currentModel.modelInterface.RespiratoryRate, currentModel.modelInterface.SystolicSystemicArterialPressure, currentModel.contractionsModel.pMus);
                 if (TrendVitalsVisible) VitalsTrendGraph.Draw();
             }
       

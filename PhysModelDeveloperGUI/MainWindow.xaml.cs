@@ -8,7 +8,6 @@ namespace PhysModelDeveloperGUI
     {
         MainWindowViewModel mainWindowViewModel;
 
-
         public MainWindow()
         {
             InitializeComponent();
