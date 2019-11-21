@@ -382,7 +382,7 @@ namespace PhysModelDeveloperGUI
                 Name = "ECMO"
             };
             ecmolungblood.AddCompartment(currentModel.modelState.ECMOBLOOD);
-            animatedBloodCompartments.Add(ecmolungblood);
+            //animatedBloodCompartments.Add(ecmolungblood);
 
             ecmolunggas = new AnimatedGasComp(dpi)
             {
@@ -525,7 +525,7 @@ namespace PhysModelDeveloperGUI
                 Name = "RA->PLACENTA"
             };
             RAECMO.AddConnector(currentModel.modelState.RA_ECMO);
-            animatedBloodConnectors.Add(RAECMO);
+            //animatedBloodConnectors.Add(RAECMO);
 
             ECMOAD = new AnimatedBloodConnector(dpi)
             {
@@ -539,7 +539,7 @@ namespace PhysModelDeveloperGUI
                 Name = "ECMO->AD"
             };
             ECMOAD.AddConnector(currentModel.modelState.ECMO_AD);
-            animatedBloodConnectors.Add(ECMOAD);
+            //animatedBloodConnectors.Add(ECMOAD);
 
             PLACENTAIVC = new AnimatedBloodConnector(dpi)
             {
@@ -1275,6 +1275,30 @@ namespace PhysModelDeveloperGUI
             {
                 if (animatedShunts.Contains(LUNGSHUNT))
                     animatedShunts.Remove(LUNGSHUNT);
+            }
+        }
+        public void VAECMOView(bool state)
+        {
+            if (state)
+            {
+                if (!animatedBloodCompartments.Contains(ecmolungblood))
+                    animatedBloodCompartments.Add(ecmolungblood);
+                if (!animatedGasCompartments.Contains(ecmolunggas))
+                    animatedGasCompartments.Add(ecmolunggas);
+                if (!animatedBloodConnectors.Contains(ECMOAD))
+                    animatedBloodConnectors.Add(ECMOAD);
+                if (!animatedBloodConnectors.Contains(RAECMO))
+                    animatedBloodConnectors.Add(RAECMO);
+            } else
+            {
+                if (animatedBloodCompartments.Contains(ecmolungblood))
+                    animatedBloodCompartments.Remove(ecmolungblood);
+                if (animatedGasCompartments.Contains(ecmolunggas))
+                    animatedGasCompartments.Remove(ecmolunggas);
+                if (animatedBloodConnectors.Contains(ECMOAD))
+                    animatedBloodConnectors.Remove(ECMOAD);
+                if (animatedBloodConnectors.Contains(RAECMO))
+                    animatedBloodConnectors.Remove(RAECMO);
             }
         }
         public void PulmonaryView(bool state)

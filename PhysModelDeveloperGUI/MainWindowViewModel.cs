@@ -106,6 +106,12 @@ namespace PhysModelDeveloperGUI
             get { return additionalVisible; }
             set { additionalVisible = value; OnPropertyChanged(); }
         }
+        private bool vaECMOToggle = false;
+        public bool VAECMOToggle
+        {
+            get { return vaECMOToggle; }
+            set { vaECMOToggle = value; VAECMO(vaECMOToggle); OnPropertyChanged(); }
+        }
         #endregion
 
         PatientMonitor GraphPatientMonitor { get; set; }
@@ -145,6 +151,7 @@ namespace PhysModelDeveloperGUI
         public RelayCommand DrugNormalSalineCommand { get; set; }
         public RelayCommand SepsisCommand { get; set; }
         public RelayCommand DrugSurfactantCommand { get; set; }
+        public RelayCommand FetalCirculationCommand { get; set; }
 
         #endregion
 
@@ -455,8 +462,17 @@ namespace PhysModelDeveloperGUI
             SepsisCommand = new RelayCommand(Sepsis);
             DrugSurfactantCommand = new RelayCommand(DrugSurfactant);
             DrugNormalSalineCommand = new RelayCommand(DrugNormalSaline);
+            FetalCirculationCommand = new RelayCommand(FetalCirculation);
 
-
+        }
+        void VAECMO(bool state)
+        {
+            GraphModelDiagram.VAECMOView(state);
+        }
+        void FetalCirculation(object p)
+        {
+            currentModel.modelInterface.SwitchToFetalCirculatoin();
+            SwitchToFetus(true);
         }
         void IRDS(object p)
         {

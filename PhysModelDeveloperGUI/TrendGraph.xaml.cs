@@ -341,7 +341,7 @@ namespace PhysModelDeveloperGUI
 
             if (refresh)
             {
-                MainCanvas.Clear(SKColors.White);
+                MainCanvas.Clear(SKColors.Transparent);
                 refresh = false;
             }
             // draw eraser

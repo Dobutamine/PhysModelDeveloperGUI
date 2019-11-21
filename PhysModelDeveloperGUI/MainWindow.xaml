@@ -75,8 +75,9 @@
                 </MenuItem>
                 <MenuItem x:Name="menuArrest" Header="_Cardiac arrest" IsCheckable="True" Command="{Binding StopCardiacOutputCommand}" CommandParameter="{Binding ElementName=menuArrest, Path=IsChecked}"/>
                 <MenuItem x:Name="menuAutoPulse" Header="_Auto pulse" IsCheckable="True" Command="{Binding ToggleAutoPulseCommand}" CommandParameter="{Binding ElementName=menuAutoPulse, Path=IsChecked}"/>
-            
-                
+                <MenuItem x:Name="menuFetalCirculation" Header="_Fetus" IsCheckable="True" Command="{Binding FetalCirculationCommand}" CommandParameter="{Binding ElementName=menuFetalCirculation, Path=IsChecked}"/>
+
+
             </MenuItem>
             <MenuItem Header="_Views">
                 <MenuItem x:Name="menuResetDisplay" Header="_Clear view" IsCheckable="False" Command="{Binding ResetDisplayCommand}"></MenuItem>
@@ -86,7 +87,7 @@
                     <MenuItem x:Name="menuOFO" Header="_Foramen ovale" IsCheckable="True" IsChecked="{Binding OFOVisible, Mode=TwoWay}"/>
                     <MenuItem x:Name="menuVSD1" Header="_Ventricular septal defect" IsCheckable="True" IsChecked="{Binding VSDVisible, Mode=TwoWay}"/>
                     <MenuItem x:Name="menuPDA1" Header="_Ductus arteriosus" IsCheckable="True" IsChecked="{Binding PDAVisible, Mode=TwoWay}"/>
-
+                    
                 </MenuItem>
                 <MenuItem Header="_Cardiac views">
                     <MenuItem x:Name="menuTAPVC1" Header="_TAPVC cardiac type" IsCheckable="True" IsChecked="{Binding TAPVC1Visible, Mode=TwoWay}"/>
@@ -95,6 +96,9 @@
                     <MenuItem x:Name="menuTGA" Header="_Transposition of the great arteries" IsCheckable="True" IsChecked="{Binding TGAVisible, Mode=TwoWay}"/>
                     <MenuItem x:Name="menuTRUNCUS" Header="_Truncus arteriosus" IsCheckable="True" IsChecked="{Binding TRUNCUSVisible, Mode=TwoWay}"/>
                 </MenuItem>
+                <MenuItem Header="_ECMO">
+                    <MenuItem x:Name="menuVAECMO" Header="_VA ECMO" IsCheckable="True" IsChecked="{Binding VAECMOToggle, Mode=TwoWay}"/>
+                </MenuItem>>
 
             </MenuItem>
    
