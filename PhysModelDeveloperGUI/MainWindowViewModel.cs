@@ -120,6 +120,7 @@ namespace PhysModelDeveloperGUI
         FastScrollingGraph FlowGraph { get; set; }
         TrendGraph VitalsTrendGraph { get; set; }
         TrendGraph LabTrendGraph { get; set; }
+        SignalPaulTester tester = new SignalPaulTester();
 
         #region "COMMANDS"
         public RelayCommand ToggleAutoPulseCommand { get; set; }
@@ -759,6 +760,8 @@ namespace PhysModelDeveloperGUI
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
+            // currentModel.modelInterface.SetAirwayPressure(tester.SignalUpdate());
+
             if (DiagramVisible) GraphModelDiagram.UpdatedMainDiagram();
          
             if (FlowGraphVisible) FlowGraph.Draw();
@@ -854,6 +857,7 @@ namespace PhysModelDeveloperGUI
                     LactateUB = Math.Round(currentModel.modelState.UB.Lact, 1).ToString();
                     LactateLB = Math.Round(currentModel.modelState.LB.Lact, 1).ToString();
                     LactateBRAIN = Math.Round(currentModel.modelState.BRAIN.Lact, 1).ToString();
+                    LactateBRAIN = Math.Round(currentModel.modelState.AA.TCO2, 2).ToString();
                     LactateLIVER = Math.Round(currentModel.modelState.LIVER.Lact, 1).ToString();
                 }
 
@@ -897,6 +901,7 @@ namespace PhysModelDeveloperGUI
                 UpdatePatientMonitor();
                 UpdatePVLoopGraph();
                 UpdateFlowGraph();
+               
             }
             if (e.PropertyName == "StatusMessage")
             {

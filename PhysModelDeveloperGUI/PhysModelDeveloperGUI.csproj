@@ -143,6 +143,7 @@
       <DependentUpon>PatientMonitor.xaml</DependentUpon>
     </Compile>
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="Testers\SignalPaulTester.cs" />
     <Compile Include="TrendGraph.xaml.cs">
       <DependentUpon>TrendGraph.xaml</DependentUpon>
     </Compile>

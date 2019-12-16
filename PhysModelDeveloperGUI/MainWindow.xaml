@@ -2348,9 +2348,9 @@
                                 <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding LactateAA}" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
                                 <TextBlock Grid.Column="1" Grid.Row="1" Text="mmol/l" TextAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,2" FontSize="8"></TextBlock>
 
-                            <TextBlock Visibility="Collapsed" Grid.Column="2" Grid.Row="1" Text="Lactate (BRAIN)" TextAlignment="Left" VerticalAlignment="Top" FontSize="8" Margin="5,0,0,0"></TextBlock>
-                            <TextBlock  Visibility="Collapsed" Grid.Column="2" Grid.Row="1" Text="{Binding LactateBRAIN}" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
-                            <TextBlock  Visibility="Collapsed" Grid.Column="2" Grid.Row="1" Text="mmol/l" TextAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,2" FontSize="8"></TextBlock>
+                            <TextBlock Visibility="Visible" Grid.Column="2" Grid.Row="1" Text="Lactate (BRAIN)" TextAlignment="Left" VerticalAlignment="Top" FontSize="8" Margin="5,0,0,0"></TextBlock>
+                            <TextBlock  Visibility="Visible" Grid.Column="2" Grid.Row="1" Text="{Binding LactateBRAIN}" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            <TextBlock  Visibility="Visible" Grid.Column="2" Grid.Row="1" Text="mmol/l" TextAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,2" FontSize="8"></TextBlock>
 
                             <TextBlock  Visibility="Collapsed" Grid.Column="3" Grid.Row="1" Text="Lactate (LB)" TextAlignment="Left" VerticalAlignment="Top" FontSize="8" Margin="5,0,0,0"></TextBlock>
                             <TextBlock  Visibility="Collapsed" Grid.Column="3" Grid.Row="1" Text="{Binding LactateLB}" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
